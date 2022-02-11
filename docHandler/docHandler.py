@@ -1,1 +1,1 @@
-## Clerk logic for handling camp documents
+# Clerk logic for handling camp documents

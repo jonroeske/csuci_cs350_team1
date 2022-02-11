@@ -1,1 +1,1 @@
-## Clerk logic for camper post acceptance criteria
+# Clerk logic for camper post acceptance criteria

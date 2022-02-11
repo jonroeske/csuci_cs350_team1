@@ -3,4 +3,3 @@ class CamperRelation:
         self.requestingcamper = requestingcamper
         self.relatedcamper = relatedcamper
         self.relationfloat = relationfloat
-    
