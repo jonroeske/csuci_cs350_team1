@@ -1,6 +1,5 @@
 # CLI System
 import sys
-import camper
 
 
 def helpprompt():
@@ -25,48 +24,71 @@ def helpprompt():
     print('__________________________')
 
 
+def statushandler(status, index, argv):
+    argsarr = str(argv)
+    print(argsarr)
+
+
+
 def main(argv):
-    args = str(argv)
-    for arg in args:
+    status = 0
+    index = 0
+    argsarr = str(argv)
+    for arg in argsarr:
         if arg == 'h':
+            index+=1
             helpprompt()
             sys.exit(2)
         if arg == 'v':
+            index+=1
             print('Build Feb132022')
             sys.exit(2)
         if arg == 'a':  # Grabs camper obj and prints app status
-            print('')
+            index+=1
+            statushandler(1,index,argsarr)
             sys.exit(2)
         if arg == 'an':  # Creates new camper obj
-            print('')
+            index += 1
+            statushandler(2, index, argsarr)
             sys.exit(2)
         if arg == 'aw':  # Removes camper obj
-            print('')
+            index += 1
+            statushandler(3, index, argsarr)
             sys.exit(2)
         if arg == 'b':  # Grabs camper obj and prints balance
-            print('')
+            index += 1
+            statushandler(4, index, argsarr)
             sys.exit(2)
         if arg == 'br':  # Modifies balance field in camper obj
-            print('')
+            index += 1
+            statushandler(5, index, argsarr)
             sys.exit(2)
         if arg == 'bc':  # Sets balance field to 0 in camper obj
-            print('')
+            index += 1
+            statushandler(6, index, argsarr)
             sys.exit(2)
         if arg == 'n':  # Grabs camper obj and prints acceptance status
-            print('')
+            index += 1
+            statushandler(7, index, argsarr)
             sys.exit(2)
         if arg == 'na':  # Modifies acceptance status field in camper obj to accepted
-            print('')
+            index += 1
+            statushandler(8, index, argsarr)
             sys.exit(2)
         if arg == 'nd':  # Modifies acceptance status field in camper obj to declined
-            print('')
+            index += 1
+            statushandler(9, index, argsarr)
             sys.exit(2)
         if arg == 'i':  # Grabs camper obj and prints packet status
-            print('')
+            index += 1
+            statushandler(10, index, argsarr)
             sys.exit(2)
         if arg == 'is':  # Modifies packet status field to sent & date
-            print('')
+            index += 1
+            statushandler(11, index, argsarr)
             sys.exit(2)
+        else:
+            index+=1
 
 
 main(sys.argv[1:])
