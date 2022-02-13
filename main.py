@@ -32,39 +32,39 @@ def main(argv):
             helpprompt()
             sys.exit(2)
         if arg == 'v':
-            print('Alpha 0.1; Build Feb132022')
+            print('Build Feb132022')
             sys.exit(2)
-        if arg == 'a': # Grabs camper obj and prints app status
+        if arg == 'a':  # Grabs camper obj and prints app status
             print('')
             sys.exit(2)
-        if arg == 'an': # Creates new camper obj
+        if arg == 'an':  # Creates new camper obj
             print('')
             sys.exit(2)
-        if arg == 'aw': # Removes camper obj
+        if arg == 'aw':  # Removes camper obj
             print('')
             sys.exit(2)
-        if arg == 'b': # Grabs camper obj and prints balance
+        if arg == 'b':  # Grabs camper obj and prints balance
             print('')
             sys.exit(2)
-        if arg == 'br': # Modifies balance field in camper obj
+        if arg == 'br':  # Modifies balance field in camper obj
             print('')
             sys.exit(2)
-        if arg == 'bc': # Sets balance field to 0 in camper obj
+        if arg == 'bc':  # Sets balance field to 0 in camper obj
             print('')
             sys.exit(2)
-        if arg == 'n': # Grabs camper obj and prints acceptance status
+        if arg == 'n':  # Grabs camper obj and prints acceptance status
             print('')
             sys.exit(2)
-        if arg == 'na': # Modifies acceptance status field in camper obj to accepted
+        if arg == 'na':  # Modifies acceptance status field in camper obj to accepted
             print('')
             sys.exit(2)
-        if arg == 'nd': # Modifies acceptance status field in camper obj to declined
+        if arg == 'nd':  # Modifies acceptance status field in camper obj to declined
             print('')
             sys.exit(2)
-        if arg == 'i': # Grabs camper obj and prints packet status
+        if arg == 'i':  # Grabs camper obj and prints packet status
             print('')
             sys.exit(2)
-        if arg == 'is': # Modifies packet status field to sent & date
+        if arg == 'is':  # Modifies packet status field to sent & date
             print('')
             sys.exit(2)
 
