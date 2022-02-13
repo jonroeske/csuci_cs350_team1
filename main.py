@@ -1,5 +1,6 @@
 # CLI System
 import sys
+import camper
 
 
 def helpprompt():
