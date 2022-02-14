@@ -89,8 +89,6 @@ def statushandler(status, index, argv):
             print('Invalid arg field')
 
 
-
-
 def main(argv):
     status = 0
     index = 0
