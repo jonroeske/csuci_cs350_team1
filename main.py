@@ -26,7 +26,68 @@ def helpprompt():
 
 def statushandler(status, index, argv):
     argsarr = str(argv)
-    print(argsarr)
+    if status == 1:
+        try:
+            fullname = argsarr[index+1]
+        except:
+            print('Cannot find camper')
+        # TODO Find camper obj
+    if status == 2:
+        try: # TODO Call camper obj creator
+            fullname = argsarr[index + 1]
+            age = argsarr[index + 2]
+            gender = argsarr[index + 3]
+            address = argsarr[index + 4]
+        except:
+            print('Not all required fields present')
+    if status == 3:
+        try: # TODO call camper obj remove
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 4:
+        try: # TODO Find camper obj & print balance
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 5:
+        try: # TODO Find camper obj & modify balance
+            fullname = argsarr[index + 1]
+            amount = argsarr[index + 2]
+        except:
+            print('Cannot find camper')
+    if status == 6:
+        try: # TODO Find camper obj & zero balance
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 7:
+        try: # TODO Find camper obj & print acceptance status
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 8:
+        try: # TODO find camper obj & accept for acceptance
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 9:
+        try: # TODO find camper obj & decline for acceptance
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 10:
+        try: # TODO find camper obj & print packet status
+            fullname = argsarr[index + 1]
+        except:
+            print('Cannot find camper')
+    if status == 11:
+        try: # TODO find camper obj & modify packet send
+            fullname = argsarr[index + 1]
+            datesent = argsarr[index + 2]
+        except:
+            print('Invalid arg field')
+
 
 
 
@@ -45,7 +106,7 @@ def main(argv):
             sys.exit(2)
         if arg == 'a':  # Grabs camper obj and prints app status
             index+=1
-            statushandler(1,index,argsarr)
+            statushandler(1, index, argsarr)
             sys.exit(2)
         if arg == 'an':  # Creates new camper obj
             index += 1
