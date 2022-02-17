@@ -1,6 +1,8 @@
 # CLI System
 import sys
 
+from docHandler.docHandler import submitApplication
+
 
 def helpprompt():
     print('_____ Camp Clerk CLI _____')
@@ -8,7 +10,7 @@ def helpprompt():
     print('| -v  Show Version |')
     print('__________________________')
     print('| -a  [Fullname] Camper Application Status |')
-    print('| -an [Fullname] [Age] [Gender] [Address] Camper New Application |')
+    print('| -an [Fullname] [Age] [Gender] [Address] [Camp Session i.e June/July/August] Camper New Application |')
     print('| -aw [Fullname] Camper Withdraw Application |')
     print('__________________________')
     print('| -b  [Fullname] Camper Show Balance |')
@@ -38,6 +40,8 @@ def statushandler(status, index, argv):
             age = argsarr[index + 2]
             gender = argsarr[index + 3]
             address = argsarr[index + 4]
+            session = argsarr[index + 5].lower()
+            submitApplication(fullname, age, gender, address, session)
         except:
             print('Not all required fields present')
     if status == 3:
@@ -95,15 +99,15 @@ def main(argv):
     argsarr = str(argv)
     for arg in argsarr:
         if arg == 'h':
-            index+=1
+            index += 1
             helpprompt()
             sys.exit(2)
         if arg == 'v':
-            index+=1
+            index += 1
             print('Build Feb132022')
             sys.exit(2)
         if arg == 'a':  # Grabs camper obj and prints app status
-            index+=1
+            index += 1
             statushandler(1, index, argsarr)
             sys.exit(2)
         if arg == 'an':  # Creates new camper obj
@@ -147,7 +151,7 @@ def main(argv):
             statushandler(11, index, argsarr)
             sys.exit(2)
         else:
-            index+=1
+            index += 1
 
 
 main(sys.argv[1:])

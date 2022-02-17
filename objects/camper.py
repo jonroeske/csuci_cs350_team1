@@ -1,14 +1,14 @@
 class Camper:
-    def __int__(self, fullname, age, gender, address, appstatus, balance,
-                session, tribe, bunkhouse, acceptstatus, arrivalreqcert,
+    def __int__(self, fullname, age, gender, address, session, appstatus, balance,
+                tribe, bunkhouse, acceptstatus, arrivalreqcert,
                 checkedin, assignmentrequest, datesentnotice):
         self.fullname = fullname
         self.age = age
         self.gender = gender
         self.address = address
+        self.session = session
         self.appstatus = appstatus
         self.balance = balance
-        self.session = session
         self.tribe = tribe
         self.bunkhouse = bunkhouse
         self.acceptstatus = acceptstatus
