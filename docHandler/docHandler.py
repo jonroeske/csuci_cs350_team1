@@ -64,17 +64,67 @@ def checkApplicationDate(Camper):# checks application date to session start date
             return True
 
 
-
 def withdrawApplication(fullname): # remove camper obj
+    for juneCamper in juneCampers:
+        if juneCamper.fullname == fullname:
+            juneCampers.remove(juneCamper)
+            return True
+    for julyCamper in julyCampers:
+        if julyCamper.fullname == fullname:
+            julyCampers.remove(julyCamper)
+            return True
+    for augustCamper in augustCampers:
+        if augustCamper.fullname == fullname:
+            augustCampers.remove(augustCamper)
+            return True
+    return False
 
 
 def reduceBalance(fullname, amount): # reduce balance in camper obj by amount
+    for juneCamper in juneCampers:
+        if juneCamper.fullname == fullname:
+            juneCamper.balance -= amount
+            return True
+    for julyCamper in julyCampers:
+        if julyCamper.fullname == fullname:
+            julyCamper.balance -= amount
+            return True
+    for augustCamper in augustCampers:
+        if augustCamper.fullname == fullname:
+            augustCamper.balance -= amount
+            return True
+    return False
 
-
-def raiseBalance(fullname, amount): # raise balance in camper obj by amount
+def raiseBalance(fullname, amount):# raise balance in camper obj by amount
+    for juneCamper in juneCampers:
+        if juneCamper.fullname == fullname:
+            juneCamper.balance += amount
+            return True
+    for julyCamper in julyCampers:
+        if julyCamper.fullname == fullname:
+            julyCamper.balance += amount
+            return True
+    for augustCamper in augustCampers:
+        if augustCamper.fullname == fullname:
+            augustCamper.balance += amount
+            return True
+    return False
 
 
 def resetBalance(fullname): # zero balance in camper obj
+    for juneCamper in juneCampers:
+        if juneCamper.fullname == fullname:
+            juneCamper.balance = 0
+            return True
+    for julyCamper in julyCampers:
+        if julyCamper.fullname == fullname:
+            julyCamper.balance = 0
+            return True
+    for augustCamper in augustCampers:
+        if augustCamper.fullname == fullname:
+            augustCamper.balance = 0
+            return True
+    return False
 
 
 def sentAcceptanceNotice(fullname, date): # sent acceptance notice to camper on date
