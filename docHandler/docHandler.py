@@ -9,19 +9,23 @@ augustCampers = []
 def submitApplication(fullname, age, gender, address, session): # create camper obj using fields
     newCamper = Camper(fullname, age, gender, address, session)
 
-    if newCamper.session == "june" and checkApplicationDate(newCamper):
+    if newCamper.session == 1 and checkApplicationDate(newCamper):
         juneCampers.append(newCamper)
-    elif newCamper.session == "july" and checkApplicationDate(newCamper):
+        return True
+    elif newCamper.session == 2 and checkApplicationDate(newCamper):
         julyCampers.append(newCamper)
-    elif newCamper.session == "august" and checkApplicationDate(newCamper):
+        return True
+    elif newCamper.session == 3 and checkApplicationDate(newCamper):
         augustCampers.append(newCamper)
+        return True
     else:
         print("Error assigning Camper to camp session.")
+        return False
 
 def checkApplicationDate(Camper):# checks application date to session start date
     current_time = datetime.datetime.now()
 
-    if Camper.session == "june":
+    if Camper.session == 1:
         difference = current_time.month - 6
         if 5 > difference:
             print("Application DENIED:")
@@ -35,7 +39,7 @@ def checkApplicationDate(Camper):# checks application date to session start date
         else:
             return True
 
-    if Camper.session == "july":
+    if Camper.session == 2:
         difference = current_time.month - 7
         if 5 > difference:
             print("Application DENIED:")
@@ -49,7 +53,7 @@ def checkApplicationDate(Camper):# checks application date to session start date
         else:
             return True
 
-    if Camper.session == "august":
+    if Camper.session == 3:
         difference = current_time.month - 8
         if 5 > difference:
             print("Application DENIED:")
