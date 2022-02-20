@@ -6,7 +6,8 @@ juneCampers = []
 julyCampers = []
 augustCampers = []
 
-def submitApplication(fullname, age, gender, address, session): # create camper obj using fields
+
+def submitApplication(fullname, age, gender, address, session):  # create camper obj using fields
     newCamper = Camper(fullname, age, gender, address, session)
 
     if newCamper.session == 1 and checkApplicationDate(newCamper):
@@ -22,7 +23,8 @@ def submitApplication(fullname, age, gender, address, session): # create camper 
         print("Error assigning Camper to camp session.")
         return False
 
-def checkApplicationDate(Camper):# checks application date to session start date
+
+def checkApplicationDate(Camper):  # checks application date to session start date
     current_time = datetime.datetime.now()
 
     if Camper.session == 1:
@@ -99,7 +101,8 @@ def reduceBalance(fullname, amount): # reduce balance in camper obj by amount
             return True
     return False
 
-def raiseBalance(fullname, amount):# raise balance in camper obj by amount
+
+def raiseBalance(fullname, amount):  # raise balance in camper obj by amount
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             juneCamper.balance += amount
@@ -115,7 +118,7 @@ def raiseBalance(fullname, amount):# raise balance in camper obj by amount
     return False
 
 
-def resetBalance(fullname): # zero balance in camper obj
+def resetBalance(fullname):  # zero balance in camper obj
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             juneCamper.balance = 0
@@ -131,7 +134,7 @@ def resetBalance(fullname): # zero balance in camper obj
     return False
 
 
-def sentAcceptanceNotice(fullname, date): # sent acceptance notice to camper on date
+def sentAcceptanceNotice(fullname, date):  # sent acceptance notice to camper on date
     if date == null:
         for juneCamper in juneCampers:
             if juneCamper.fullname == fullname:
@@ -162,7 +165,7 @@ def sentAcceptanceNotice(fullname, date): # sent acceptance notice to camper on 
         return False
 
 
-def camperAcceptedNotice(fullname, date): # camper accepted notice on date
+def camperAcceptedNotice(fullname, date):  # camper accepted notice on date
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             if juneCamper.datesentnotice.date[2] - date.date[2] <= 2:
@@ -181,7 +184,7 @@ def camperAcceptedNotice(fullname, date): # camper accepted notice on date
     return False
 
 
-def camperDeclinedNotice(fullname, date): # camper declined notice on date
+def camperDeclinedNotice(fullname, date):  # camper declined notice on date
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             if juneCamper.datesentnotice < date:
@@ -199,6 +202,33 @@ def camperDeclinedNotice(fullname, date): # camper declined notice on date
             return True
     return False
 
-def instructionPacketSent(fullname): # first day instruction packet sent to camper
+
+def instructionPacketSent(fullname):  # first day instruction packet sent to camper
+    for juneCamper in juneCampers:
+        if juneCamper.fullname == fullname:
+            if juneCamper.acceptstatus:
+                juneCamper.packetstatus = True
+            else:
+                print("Camper has not accepted")
+                return False
+            return True
+    for julyCamper in julyCampers:
+        if julyCamper.fullname == fullname:
+            if julyCamper.acceptstatus:
+                julyCamper.packetstatus = True
+            else:
+                print("Camper has not accepted")
+                return False
+            return True
+    for augustCamper in augustCampers:
+        if augustCamper.fullname == fullname:
+            if augustCamper.acceptstatus:
+                augustCamper.packetstatus = True
+            else:
+                print("Camper has not accepted")
+                return False
+            return True
+    return False
+
 
 
