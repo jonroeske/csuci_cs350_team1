@@ -1,7 +1,7 @@
 # CSUCI CS 350 Team 1
 CSUCI Software Engineering Team 1 Spring 2022:
 *Jon Roeske, Zachary Drake, Aaron Urrea, Paul Kime & Connor Moore*
-## Doc Handler
+## docHandler.py
 ### Camp Applications
 #### submitApplication()
 #### checkApplicationDate()
@@ -16,11 +16,12 @@ CSUCI Software Engineering Team 1 Spring 2022:
 #### camperDeclinedNotice()
 ### Arrival Instruction Packets
 #### instructionPacketSent()
-## Post Acceptance
+## postAcceptance.py
 ### Refunds
 ### Misc Issues
-## First Day
+## firstDay.py
 ### Check-in
 ### Bunkhouse Assignment
 ### Tribe Assignment
-## CLI
+## main.py
+### CLI
