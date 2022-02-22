@@ -2,30 +2,7 @@
 import sys
 
 from docHandler.docHandler import submitApplication
-
-
-def helpprompt():
-    print('_____ Camp Clerk CLI _____')
-    print('| -h  Help Prompt |')
-    print('| -v  Show Version |')
-    print('__________________________')
-    print('| -a  [Fullname] Camper Application Status |')
-    print('| -an [Fullname] [Age] [Gender] [Address] ')
-    print('[Camp Session i.e (1) Jun 14 - 28 (2) Jul 14 - 28 (3) Aug 14 - 28] Camper New Application |')
-    print('| -aw [Fullname] Camper Withdraw Application |')
-    print('__________________________')
-    print('| -b  [Fullname] Camper Show Balance |')
-    print('| -br [Fullname] [Amount] Camper Reduce Balance |')
-    print('| -bc [Fullname] Camper Clear Balance |')
-    print('__________________________')
-    print('| -n  [Fullname] Camper Acceptance Status |')
-    print('| -na [Fullname] Camper Accept |')
-    print('| -nd [Fullname] Camper Decline |')
-    print('__________________________')
-    print('| -i  [Fullname] Camper Packet Status |')
-    print('| -is [Fullname] [Date] Camper Packet Sent |')
-    print('__________________________')
-
+from guiHandler.guiHandler import *
 
 def statushandler(status, index, argv):
     argsarr = str(argv)
@@ -97,6 +74,52 @@ def statushandler(status, index, argv):
 def main(argv):
     status = 0
     index = 0
+
+    refreshScreen()
+    while(1):
+        varInput = int(input(">> "))
+        match varInput:
+            case 1:
+                index += 1
+                refreshScreen()
+            case 2:
+                index += 1
+                refreshScreen()
+                print('| VERSION NUMBER: ' + versionNumber + '      |')
+                print('|--------------------------------------|')
+            case 3:
+                index += 1
+            case 4:
+                index += 1
+            case 5:
+                index += 1
+            case 6:
+                index += 1
+            case 7:
+                index += 1
+            case 8:
+                index += 1
+            case 9:
+                index += 1
+            case 10:
+                index += 1
+            case 11:
+                index += 1
+            case 12:
+                index += 1
+            case 13:
+                index += 1
+            case _:
+                index += 1
+                mainMenu()
+
+main(sys.argv[1:])
+
+"""
+    #ORIGINAL CODE
+
+    status = 0
+    index = 0
     argsarr = str(argv)
     for arg in argsarr:
         if arg == 'h':
@@ -153,6 +176,4 @@ def main(argv):
             sys.exit(2)
         else:
             index += 1
-
-
-main(sys.argv[1:])
+"""
