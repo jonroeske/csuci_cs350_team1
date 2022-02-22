@@ -91,10 +91,10 @@ def statushandler(status, index, argv):
         except:
             print('Invalid arg field')
 
-
 def main(argv):
     status = 0
     index = 0
+
 
     refreshScreen()
 
