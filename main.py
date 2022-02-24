@@ -10,7 +10,8 @@ def statushandler(status, index, argv):
     if status == 1:
         try:  # Calls findCamper()
             fullname = argsarr[index+1]
-            findCamper(fullname)
+            camper = findCamper(fullname)
+            camper.printApplication()
         except:
             print('Cannot find camper')
     if status == 2:
