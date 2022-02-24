@@ -3,7 +3,7 @@ def checkInCert(camper):
     print('')
 
 
-def assignBunkhouses(campers, bunkhouses):  # 1-3 girl houses, 4-6 boy houses with 12 each
+def assignBunkhouses(campers, bunkhouses):  # (1-3) 3 girl houses, (4-6) 3 boy houses with 12 each
     housenum = 1
     for camper in campers:
         if camper.gender == 'male':
