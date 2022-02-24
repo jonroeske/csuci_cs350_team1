@@ -1,9 +1,10 @@
 # Clerk logic for handling day one of camp sessions
-def checkInCert():
+def checkInCert(camper):
+    print('')
 
+def assignBunkhouses(campers[], bunkhouses[], requests[]):
+    print('')
 
-def assignBunkhouses():
-
-
-def assignTribes():
+def assignTribes(campers[], tribes[], requests[]):
+    print('')
 
