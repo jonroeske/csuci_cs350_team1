@@ -4,16 +4,17 @@ import sys
 from docHandler.docHandler import submitApplication
 from guiHandler.guiHandler import *
 
+
 def statushandler(status, index, argv):
     argsarr = str(argv)
     if status == 1:
-        try:
+        try:  # Calls findCamper()
             fullname = argsarr[index+1]
+            findCamper(fullname)
         except:
             print('Cannot find camper')
-        # TODO Find camper obj
     if status == 2:
-        try:  # TODO Call camper obj creator
+        try:  # Calls submitApplication()
             fullname = argsarr[index + 1]
             age = argsarr[index + 2]
             gender = argsarr[index + 3]
@@ -23,50 +24,68 @@ def statushandler(status, index, argv):
         except:
             print('Not all required fields present')
     if status == 3:
-        try:  # TODO call camper obj remove
+        try:  # Calls removeCamper()
             fullname = argsarr[index + 1]
+            removeCamper(fullname)
         except:
             print('Cannot find camper')
     if status == 4:
-        try:  # TODO Find camper obj & print balance
+        try:  # Calls findCamper() & printBalance()
             fullname = argsarr[index + 1]
+            camper = findCamper(fullname)
+            camper.printBalance()
         except:
             print('Cannot find camper')
     if status == 5:
-        try:  # TODO Find camper obj & modify balance
+        try:  # Calls balance functions
             fullname = argsarr[index + 1]
             amount = argsarr[index + 2]
+            if amount > 0:
+                raiseBalance(fullname, amount)
+            elif amount < 0:
+                reduceBalance(fullname, amount)
+            elif amount == 0:
+                resetBalance(fullname)
         except:
             print('Cannot find camper')
     if status == 6:
-        try:  # TODO Find camper obj & zero balance
+        try:  # Calls resetBalance()
             fullname = argsarr[index + 1]
+            resetBalance(fullname)
         except:
             print('Cannot find camper')
     if status == 7:
-        try:  # TODO Find camper obj & print acceptance status
+        try:  # Calls printAcceptance()
             fullname = argsarr[index + 1]
+            camper = findCamper(fullname)
+            camper.printAcceptance()
         except:
             print('Cannot find camper')
     if status == 8:
-        try:  # TODO find camper obj & accept for acceptance
+        try:  # Calls camperAcceptedNotice()
             fullname = argsarr[index + 1]
+            date = argsarr[index + 2]
+            camperAcceptedNotice(fullname, date)
         except:
             print('Cannot find camper')
     if status == 9:
-        try:  # TODO find camper obj & decline for acceptance
+        try:  # Calls camperDeclinedNotice()
             fullname = argsarr[index + 1]
+            date = argsarr[index + 2]
+            camperDeclinedNotice(fullname, date)
         except:
             print('Cannot find camper')
     if status == 10:
-        try:  # TODO find camper obj & print packet status
+        try:  # Calls printPacket()
             fullname = argsarr[index + 1]
+            camper = findCamper(fullname)
+            camper.printPacket()
         except:
             print('Cannot find camper')
     if status == 11:
-        try:  # TODO find camper obj & modify packet send
+        try:  # Calls instructionPacketSent()
             fullname = argsarr[index + 1]
-            datesent = argsarr[index + 2]
+            instructionPacketSent(fullname)
         except:
             print('Invalid arg field')
 
@@ -112,6 +131,7 @@ def main(argv):
             case _:
                 index += 1
                 mainMenu()
+
 
 main(sys.argv[1:])
 
