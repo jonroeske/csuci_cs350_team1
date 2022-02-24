@@ -17,3 +17,15 @@ class Camper:
         self.assignmentrequest = assignmentrequest
         self.datesentnotice = datesentnotice
         self.packetstatus = packetstatus
+
+    def printApplication(self):
+        print(self.appstatus)
+
+    def printAcceptance(self):
+        print(self.acceptstatus)
+
+    def printPacket(self):
+        print(self.packetstatus)
+
+    def printBalance(self):
+        print(self.balance)
