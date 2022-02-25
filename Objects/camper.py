@@ -17,6 +17,15 @@ class Camper:
             self.assignmentRequest = assignmentrequest
             self.dateSentNotice = datesentnotice
             self.packetStatus = packetstatus
+            self.medical = None
+            self.legal = None
+            self.emergencycontacts = None
+            self.helmet = None
+            self.boots = None
+            self.sleepingbag = None
+            self.waterbottle = None
+            self.sunscreen = None
+            self.bugspray = None
 
     def getName(self):
         return self.fullName
@@ -32,6 +41,8 @@ class Camper:
 
     def getIndex(self):
         return self.index
+                tribe, bunkhouse, acceptstatus, arrivalreqcert,
+                checkedin, assignmentrequest, datesentnotice, packetstatus):
 
     def printApplication(self):
         print(self.appstatus)
