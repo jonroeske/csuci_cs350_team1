@@ -4,57 +4,76 @@ import sys
 from Handlers.docHandler import *
 from Handlers.guiHandler import *
 from Handlers.camperHandler import *
+from Handlers.statusHandler import *
+from Objects.camper import *
 
-def main(argv):
-    status = 0
+global camperArray
+global bunkhouseArray
+global tribeArray
+
+def main():
     index = 0
 
     refreshScreen()
 
+    camperArray = list()
+
     while(1):
+        try:
+            varInput = int(input(">> "))
 
-        varInput = int(input(">> "))
+            match varInput:
+                case 1:                                 # Credits
+                    refreshScreen()
+                    showCredits()
+                case 2:                                 # Version
+                    refreshScreen()
+                    showVersion()
+                case 3:                                 # Create New Camper
+                    newCamper = createCamper()
 
-        match varInput:
-            case 1:                                 # Main Menu
-                index += 1
-                refreshScreen()
-            case 2:                                 # Version
-                index += 1
-                showVersion()
-            case 3:                                 # Create New Camper
-                index += 1
-                refreshScreen()
-            case 4:
-                index += 1
-                namePrompt()
-                camperFullname = input(">> ")
-                # TODO - Implement Camper Lookup
-                #         Print results here
-                refreshScreen()
-            case 5:
-                index += 1
-            case 6:
-                index += 1
-            case 7:
-                index += 1
-            case 8:
-                index += 1
-            case 9:
-                index += 1
-            case 10:
-                index += 1
-            case 11:
-                index += 1
-            case 12:
-                index += 1
-            case 13:
-                index += 1
-            case 14:
-                index += 1
-            case _:
-                index += 1
-                exit("ERROR")
+                    refreshScreen()
+                    try:
+                        if(newCamper != None):
+                            if(newCamper.getGender() == "FEMALE"):
+                                camperArray.insert(index + 36, newCamper)  # If we want to create a female camper, put them further down the array.
+                            else:                                          #  Indexes 0 - 35 are reserved for males, 36 - 72 are reserved for females
+                                camperArray.insert(index, newCamper)
 
+                            index += 1
+                            camperCreateSuccess()
+                    except:
+                        camperCreateFailure()
 
-main(sys.argv[1:])
+                case 4:
+                    index += 1
+                    refreshScreen()
+                case 5:
+                    break
+                case 6:
+                   break
+                case 7:
+                    break
+                case 8:
+                    break
+                case 9:
+                    break
+                case 10:
+                    break
+                case 11:
+                    break
+                case 12:
+                    break
+                case 13:
+                    break
+                case 14:
+                    break
+                case _:
+                    nonFatalError()
+                    refreshScreen()
+        except:
+            nonFatalError()
+            refreshScreen()
+
+#main(sys.argv[1:])
+main()

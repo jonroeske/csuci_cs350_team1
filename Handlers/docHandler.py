@@ -1,6 +1,6 @@
 # Clerk logic for handling camp documents
 import datetime
-from objects.camper import Camper
+from Objects.camper import Camper
 
 juneCampers = []
 julyCampers = []

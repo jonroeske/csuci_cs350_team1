@@ -1,6 +1,6 @@
 import sys
 
-from Handlers.camperHandler import *awd
+from Handlers.camperHandler import *
 
 def statusHandler(status, index, argv):
     argsarr = str(argv)
