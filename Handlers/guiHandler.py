@@ -106,3 +106,9 @@ def nonFatalError():
     print("|  Retrying...                                 | ")
     print('|----------------------------------------------|')
     time.sleep(2)
+
+def notYetImplemented():
+    print("| ERROR: Not yet implemented.                  | ")
+    print('|----------------------------------------------|')
+    time.sleep(2)
+    refreshScreen()

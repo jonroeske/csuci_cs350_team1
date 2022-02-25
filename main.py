@@ -31,7 +31,6 @@ def main():
                     showVersion()
                 case 3:                                 # Create New Camper
                     newCamper = createCamper()
-
                     refreshScreen()
                     try:
                         if(newCamper != None):
@@ -46,28 +45,29 @@ def main():
                         camperCreateFailure()
 
                 case 4:
-                    index += 1
+                    # View all campers
+                    viewCampers(camperArray)
                     refreshScreen()
                 case 5:
-                    break
+                    notYetImplemented()
                 case 6:
-                   break
+                    notYetImplemented()
                 case 7:
-                    break
+                    notYetImplemented()
                 case 8:
-                    break
+                    notYetImplemented()
                 case 9:
-                    break
+                    notYetImplemented()
                 case 10:
-                    break
+                    notYetImplemented()
                 case 11:
-                    break
+                    notYetImplemented()
                 case 12:
-                    break
+                    notYetImplemented()
                 case 13:
-                    break
+                    notYetImplemented()
                 case 14:
-                    break
+                    notYetImplemented()
                 case _:
                     nonFatalError()
                     refreshScreen()
