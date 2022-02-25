@@ -46,36 +46,48 @@ def showVersion():
     print('|----------------------------------------------|')
 
 def namePrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
     print('|----------------------------------------------|')
     print('| Please insert camper name: (First + Last)    |')
     print('|  EXAMPLE: "John Doe"                         |')
     print('|----------------------------------------------|')
-    fullname: str = input(">> ")
+    fullname = str(input(">> "))
 
     return fullname
 
 def agePrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
     print('|----------------------------------------------|')
     print('| Please insert camper age:                    |')
     print('|----------------------------------------------|')
-    age: str = input(">> ")
+    age = int(input(">> "))
 
     return age
 
 def genderPrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
     print('|----------------------------------------------|')
     print('| Please insert camper gender:                 |')
-    print('|  NOTE: "Male" or "Female" only, sue us later |')
+    print('|  NOTE: "M" or "F" only, sue us later         |')
     print('|----------------------------------------------|')
-    gender: str = input(">> ")
+    gender = str(input(">> "))
 
     return gender
 
 def addressPrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
     print('|----------------------------------------------|')
     print('| Please insert camper home address:           |')
     print('|----------------------------------------------|')
-    address: str = input(">> ")
+    address = str(input(">> "))
 
     return address
 
@@ -85,7 +97,7 @@ def camperConfirmation(newCamper):
     print('|  "Y" for Yes, "N" for No                     |')
     print('|----------------------------------------------|')
     print('  Name:    ' + newCamper.getName())
-    print('  Age:     ' + newCamper.getAge())
+    print('  Age:     ' + str(newCamper.getAge()))
     print('  Gender:  ' + newCamper.getGender())
     print('  Address: ' + newCamper.getAddress())
     print('|----------------------------------------------|')
@@ -101,9 +113,30 @@ def camperCreateFailure():
     print('| ERROR: Camper creation failed!               |')
     print('|----------------------------------------------|')
 
-def nonFatalError():
-    print("| ERROR: Invalid character inputted.           | ")
-    print("|  Retrying...                                 | ")
+def viewAllCampers(camperArray):
+    if (len(camperArray) <= 0):
+        refreshScreen()
+        print('| There are currently no campers!              |')
+        print('|----------------------------------------------|')
+        return
+    clearScreen()
+    for Camper in camperArray:
+        print('|----------------------------------------------|')
+        print('  Name:    ' + Camper.getName())
+        print('  Age:     ' + str(Camper.getAge()))
+        print('  Gender:  ' + Camper.getGender())
+        print('  Address: ' + Camper.getAddress())
+    print('|----------------------------------------------|')
+    print('| Press enter to return!                       |')
+    print('|----------------------------------------------|')
+    input()
+    refreshScreen()
+    return
+
+def nonFatalError(message):
+    print("  ERROR: " + message)
+    print('|----------------------------------------------|')
+    print("| Retrying...                                  | ")
     print('|----------------------------------------------|')
     time.sleep(2)
 

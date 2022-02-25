@@ -1,45 +1,41 @@
 from Handlers.guiHandler import *
 from Objects.camper import Camper
 
-import time
-
 def createCamper():
-
-    clearScreen()
-
     newCamper = Camper()
-
-    print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit creation.    |')
 
     try:
         newCamper.fullName = namePrompt()
-        if(newCamper.fullName == 'EXIT'):
+        if(newCamper.fullName == 'EXIT' or newCamper.fullName == ''):
             return None
 
-        newCamper.age = agePrompt()
-        if(newCamper.age == 'EXIT'):
-            return None
+        check = 0
 
-        newCamper.gender = genderPrompt()
-        if(newCamper.gender == 'EXIT'):
-            return None
+        while(check == 0):
+            newCamper.age = agePrompt()
+            if(newCamper.age == 'EXIT' or newCamper.age == ''):
+                return None
+
+            elif(newCamper.age >= 9 and newCamper.age <= 18):
+                check = 1
+            else:
+                nonFatalError("Applicant must be between 9 and 18 years old.")
+
+        check = 0
+
+        while(check == 0):
+            newCamper.gender = genderPrompt()
+            if (newCamper.gender == 'EXIT' or newCamper.gender == ''):
+                return None
+
+            elif(newCamper.gender == 'F' or newCamper.gender == 'M'):
+                check = 1
+            else:
+                nonFatalError('Applicant must be "M" or "F".')
 
         newCamper.address = addressPrompt()
-        if(newCamper.address == 'EXIT'):
+        if(newCamper.address == 'EXIT' or newCamper.address == ''):
             return None
-
-        #newCamper.session = "unassigned"
-        #newCamper.appstatus = "pending"
-        #newCamper.balance = "pending"
-        #newCamper.tribe = "unassigned"
-        #newCamper.bunkhouse = "unassigned"
-        #newCamper.acceptstatus = "pending"
-        #newCamper.arrivalreqcert = "unassigned"
-        #newCamper.checkedin = "false"
-        #newcamper.assignmentrequest = "unassigned"
-        #newcamper.datesentnotice = "pending"
-        #newcamper.packetstatus = "pending"
 
     except:
         exit("CODE 2: Exception during camper creation")
@@ -55,30 +51,6 @@ def createCamper():
             return None
 
         else:
-            nonFatalError()
+            nonFatalError('Must be "Y" or "N"')
 
-def viewCampers(camperArray):
-
-    if(len(camperArray) <= 0 ):
-        refreshScreen()
-
-        print('| There are currently no campers!              |')
-        print('|----------------------------------------------|')
-        return
-
-    clearScreen()
-
-    for Camper in camperArray:
-        print('|----------------------------------------------|')
-        print('  Name:    ' + Camper.getName())
-        print('  Age:     ' + Camper.getAge())
-        print('  Gender:  ' + Camper.getGender())
-        print('  Address: ' + Camper.getAddress())
-
-    print('|----------------------------------------------|')
-    print('| Press enter to return!                       |')
-    print('|----------------------------------------------|')
-
-    input()
-    return
 

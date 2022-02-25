@@ -7,16 +7,16 @@ class Camper:
             self.gender = gender
             self.address = address
             self.session = session
-            self.appstatus = appstatus
+            self.appStatus = appstatus
             self.balance = balance
             self.tribe = tribe
             self.bunkhouse = bunkhouse
-            self.acceptstatus = acceptstatus
-            self.arrivalreqcert = arrivalreqcert
-            self.checkedin = checkedin
-            self.assignmentrequest = assignmentrequest
-            self.datesentnotice = datesentnotice
-            self.packetstatus = packetstatus
+            self.acceptStatus = acceptstatus
+            self.arrivalReqCert = arrivalreqcert
+            self.checkedIn = checkedin
+            self.assignmentRequest = assignmentrequest
+            self.dateSentNotice = datesentnotice
+            self.packetStatus = packetstatus
 
     def getName(self):
         return self.fullName
@@ -29,6 +29,9 @@ class Camper:
 
     def getAddress(self):
         return self.address
+
+    def getIndex(self):
+        return self.index
 
     def printApplication(self):
         print(self.appstatus)
