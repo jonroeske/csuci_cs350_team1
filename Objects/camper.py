@@ -39,11 +39,6 @@ class Camper:
     def getAddress(self):
         return self.address
 
-    def getIndex(self):
-        return self.index
-                tribe, bunkhouse, acceptstatus, arrivalreqcert,
-                checkedin, assignmentrequest, datesentnotice, packetstatus):
-
     def printApplication(self):
         print(self.appstatus)
 
