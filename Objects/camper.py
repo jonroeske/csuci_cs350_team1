@@ -39,6 +39,9 @@ class Camper:
     def getAddress(self):
         return self.address
 
+    def getIndex(self):
+        return self.index
+
     def printApplication(self):
         print(self.appstatus)
 
