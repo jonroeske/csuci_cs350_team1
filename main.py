@@ -44,7 +44,7 @@ def main():
                 case '5':
                     # Accept camper application
                 case '6':
-                    # Withdraw camper application
+                    # Withdraw/Decline camper application
                 case '7':
                     # View camper balance
                 case '8':
@@ -55,6 +55,8 @@ def main():
                     # View camper application status
                 case '11':
                     # Show camper packet status
+                case '12':
+                    # Update camper packet status
                 case _:
                     refreshScreen()
         except:
