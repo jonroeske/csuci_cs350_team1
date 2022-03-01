@@ -112,6 +112,24 @@ def camperCreateFailure():
     print('| ERROR: Camper creation failed!               |')
     print('|----------------------------------------------|')
 
+def camperApplicationUpdateSuccess():
+    print('| Camper app status successfully updated!      |')
+    print('|----------------------------------------------|')
+
+def camperApplicationUpdateFailure():
+    print('| ERROR: Camper app update failed!             |')
+    print('|----------------------------------------------|')
+
+
+def camperBalanceUpdateSuccess():
+    print('| Camper balance successfully updated!         |')
+    print('|----------------------------------------------|')
+
+
+def camperBalanceUpdateFailure():
+    print('| ERROR: Camper balance update failed!         |')
+    print('|----------------------------------------------|')
+
 def viewAllCampers(camperArray):
     if (len(camperArray) <= 0):
         refreshScreen()
