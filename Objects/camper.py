@@ -48,3 +48,17 @@ class Camper:
 
     def getBalance(self):
         return self.balance
+
+    def setAppStatus(self, status):
+        try:
+            self.appStatus = status
+            return True
+        except:
+            return False
+
+    def setBalance(self, balance):
+       try:
+           self.balance = balance
+           return True
+       except:
+           return False

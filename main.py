@@ -44,69 +44,22 @@ def main():
                     viewCamperApplication()
                 case '6':
                     # Accept camper application
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        camper.appstatus = True
-                        camperApplicationUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperApplicationUpdateFailure()
+                    acceptCamperApplication()
                 case '7':
                     # Decline/withdraw camper application
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        camper.appstatus = False
-                        camperApplicationUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperApplicationUpdateFailure()
+                    rejectCamperApplication()
                 case '8':
                     # View camper balance
-                    try:
-                        fullname = namePrompt()
-                        viewCamperBalance(newCampers, fullname)
-                    except:
-                        refreshScreen()
-                        statusGetFailure()
+                    viewCamperBalance()
                 case '9':
                     # Reduce camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        amount = amountPrompt()
-                        camper.balance -= amount
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    reduceCamperBalance()
                 case '10':
                     # Raise camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        amount = amountPrompt()
-                        camper.balance += amount
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    raiseCamperBalance()
                 case '11':
                     # Clear camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        camper.balance = 0
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    clearCamperBalance()
                 case '12':
                     # Show camper packet status
                     try:

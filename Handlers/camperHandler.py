@@ -53,6 +53,7 @@ def createCamper():
             return None
 
         newCamper.appStatus = 0
+        newCamper.balance = 0.00
 
         while (1):
             clearScreen()
@@ -90,7 +91,7 @@ def printNewCampers():
     refreshScreen()
 
 def viewCamperApplication():
-    #try:
+    try:
         fullname = namePrompt()
         camper = searchCamperArr(newCampers, fullname)
 
@@ -112,6 +113,151 @@ def viewCamperApplication():
             print('  Application Status: Rejected!')
             print('|----------------------------------------------|')
             return
-    #except:
-    #    refreshScreen()
-    #    statusGetFailure()
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def acceptCamperApplication():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        camper.setBalance(1000.00)
+
+        refreshScreen()
+
+        if(camper.setAppStatus(1)):
+            print('  Camper Found: ' + camper.getName())
+            print('  Application Status: Accepted!')
+            print('|----------------------------------------------|')
+        else:
+            refreshScreen()
+            statusGetFailure()
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def rejectCamperApplication():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        refreshScreen()
+
+        if(camper.setAppStatus(2)):
+            print('  Camper Found: ' + camper.getName())
+            print('  Application Status: Rejected!')
+            print('|----------------------------------------------|')
+        else:
+            refreshScreen()
+            statusGetFailure()
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def viewCamperBalance():
+
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        refreshScreen()
+
+        if(not isCamperAccepted(camper)):
+            return
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Balance Due: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def reduceCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        amount = amountPrompt()
+
+        refreshScreen()
+
+        if(not isCamperAccepted(camper)):
+            return
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(camper.getBalance() - float(amount))
+        if(camper.getBalance() < 0):
+            camper.setBalance(0)
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def raiseCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        amount = amountPrompt()
+
+        refreshScreen()
+
+        if(not isCamperAccepted(camper)):
+            return
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(camper.getBalance() + float(amount))
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def clearCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        refreshScreen()
+
+        if(not isCamperAccepted(camper)):
+            return
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(0)
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def isCamperAccepted(camper):
+    if (camper.getAppStatus() == 0):
+        print('| Camper has not been accepted!                |')
+        print('|----------------------------------------------|')
+        return False
+    elif (camper.getAppStatus() == 2):
+        print('| Camper has been Rejected!                    |')
+        print('|----------------------------------------------|')
+        return False
+    else:
+        return True
