@@ -21,6 +21,10 @@ def main():
         try:
             varInput = input(">> ")
             match varInput:
+                case '0':
+                    # Stops application
+                    time.sleep(2)
+                    break
                 case '1':
                     # Shows app credits
                     refreshScreen()
@@ -88,6 +92,7 @@ def main():
                     try:
                         fullname = namePrompt()
                         index = searchCamperArr(camperArray, fullname)
+                        amount = amountPrompt()
                         camperArray[index].balance -= amount
                         camperBalanceUpdateSuccess()
                         refreshScreen()
@@ -99,6 +104,7 @@ def main():
                     try:
                         fullname = namePrompt()
                         index =  searchCamperArr(camperArray, fullname)
+                        amount = amountPrompt()
                         camperArray[index].balance += amount
                         camperBalanceUpdateSuccess()
                         refreshScreen()

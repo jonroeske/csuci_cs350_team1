@@ -11,6 +11,7 @@ def clearScreen():
 def refreshScreen():
     clearScreen()
     print('|----------------Camp Clerk CLI----------------| ')
+    print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
     print('| (2)  Show Version                            |')
     print('|----------------------------------------------|')
@@ -89,6 +90,17 @@ def addressPrompt():
     address = str(input(">> "))
 
     return address
+
+def amountPrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
+    print('|----------------------------------------------|')
+    print('| Please enter amount:                         |')
+    print('|----------------------------------------------|')
+    amount = str(input(">> "))
+
+    return amount
 
 def camperConfirmation(newCamper):
     print('|----------------------------------------------|')
