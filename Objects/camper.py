@@ -1,22 +1,20 @@
 class Camper:
-    def __int__(self, fullname, age, gender, address, session, appstatus, balance,
-                    tribe, bunkhouse, acceptstatus, arrivalreqcert,
-                    checkedin, assignmentrequest, datesentnotice, packetstatus):
+    def __int__(self, fullname, age, gender, address):
             self.fullName = fullname
             self.age = age
             self.gender = gender
             self.address = address
-            self.session = session
-            self.appStatus = appstatus
-            self.balance = balance
-            self.tribe = tribe
-            self.bunkhouse = bunkhouse
-            self.acceptStatus = acceptstatus
-            self.arrivalReqCert = arrivalreqcert
-            self.checkedIn = checkedin
-            self.assignmentRequest = assignmentrequest
-            self.dateSentNotice = datesentnotice
-            self.packetStatus = packetstatus
+            self.session = None
+            self.appStatus = False
+            self.balance = 0.00
+            self.tribe = None
+            self.bunkhouse = None
+            self.acceptStatus = False
+            self.arrivalReqCert = False
+            self.checkedIn = False
+            self.assignmentRequest = None
+            self.dateSentNotice = None
+            self.packetStatus = False
             self.medical = None
             self.legal = None
             self.emergencycontacts = None
@@ -39,17 +37,14 @@ class Camper:
     def getAddress(self):
         return self.address
 
-    def getIndex(self):
-        return self.index
+    def getApplication(self):
+        return self.appstatus
 
-    def printApplication(self):
-        print(self.appstatus)
+    def getAcceptance(self):
+        return self.acceptstatus
 
-    def printAcceptance(self):
-        print(self.acceptstatus)
+    def getPacket(self):
+        return self.packetstatus
 
-    def printPacket(self):
-        print(self.packetstatus)
-
-    def printBalance(self):
-        print(self.balance)
+    def getBalance(self):
+        return self.balance

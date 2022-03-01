@@ -81,9 +81,7 @@ def main():
                     # View camper balance
                     try:
                         fullname = namePrompt()
-                        index = searchCamperArr(camperArray, fullname)
-                        camperArray[index].printBalance()
-                        refreshScreen()
+                        viewCamperBalance(camperArray, fullname)
                     except:
                         refreshScreen()
                         statusGetFailure()

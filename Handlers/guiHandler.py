@@ -175,6 +175,24 @@ def viewAllCampers(camperArray):
     refreshScreen()
     return
 
+
+def viewCamperBalance(camperArray, name):
+    if (len(camperArray) <= 0):
+        refreshScreen()
+        print('| There are currently no campers!              |')
+        print('|----------------------------------------------|')
+        return
+    clearScreen()
+    for Camper in camperArray:
+        if Camper.getName() == name:
+            print('  Balance: ' + str(Camper.getBalance()))
+    print('|----------------------------------------------|')
+    print('| Press enter to return!                       |')
+    print('|----------------------------------------------|')
+    input()
+    refreshScreen()
+    return
+
 def nonFatalError(message):
     print("  ERROR: " + message)
     print('|----------------------------------------------|')
