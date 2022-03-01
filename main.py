@@ -41,6 +41,20 @@ def main():
                 case '4':
                     # View all campers
                     viewAllCampers(camperArray)
+                case '5':
+                    # Accept camper application
+                case '6':
+                    # Withdraw camper application
+                case '7':
+                    # View camper balance
+                case '8':
+                    # Reduce camper balance
+                case '9':
+                    # Clear camper balance
+                case '10':
+                    # View camper application status
+                case '11':
+                    # Show camper packet status
                 case _:
                     refreshScreen()
         except:
