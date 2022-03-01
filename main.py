@@ -53,7 +53,7 @@ def main():
                     try:
                         fullname = namePrompt()
                         camper = this.searchCamperArr(camperArray, fullname)
-                        print(str(camper.printApplication()))
+                        print(str(camper.getApplication()))
                         refreshScreen()
                     except:
                         refreshScreen()
@@ -148,18 +148,5 @@ def main():
                     refreshScreen()
         except:
             exit("main() has stopped")
-
-
-
-def searchCamperArr(camperArr, name):
-    try:
-        for currCamper in camperArr:
-            if currCamper.fullName == name:
-                return currCamper
-        nonFatalError("Cannot find camper")
-    except:
-        nonFatalError("Cannot find camper")
-    return None
-
 
 main()

@@ -193,6 +193,15 @@ def viewCamperBalance(camperArray, name):
     refreshScreen()
     return
 
+def searchCamperArr(camperArr, name):
+    try:
+        for currCamper in camperArr:
+            if str(currCamper.getName()) == name:
+                return currCamper
+    except:
+        nonFatalError("Cannot find camper")
+    return None
+
 def nonFatalError(message):
     print("  ERROR: " + message)
     print('|----------------------------------------------|')
