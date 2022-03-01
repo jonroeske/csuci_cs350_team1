@@ -5,7 +5,7 @@ class Camper:
         self.gender = gender
         self.address = address
         self.session = None
-        self.appStatus = None
+        self.appStatus = 0
         self.balance = 0.00
         self.tribe = None
         self.bunkhouse = None
@@ -17,13 +17,13 @@ class Camper:
         self.packetStatus = False
         self.medical = None
         self.legal = None
-        self.emergencycontacts = None
+        self.emergencyContacts = None
         self.helmet = None
         self.boots = None
-        self.sleepingbag = None
-        self.waterbottle = None
+        self.sleepingBag = None
+        self.waterBottle = None
         self.sunscreen = None
-        self.bugspray = None
+        self.bugSpray = None
 
     def getName(self):
         return self.fullName
@@ -57,8 +57,8 @@ class Camper:
             return False
 
     def setBalance(self, balance):
-       try:
-           self.balance = balance
-           return True
-       except:
-           return False
+        try:
+            self.balance = balance
+            return True
+        except:
+            return False

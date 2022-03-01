@@ -70,7 +70,7 @@ def checkApplicationDate(Camper):  # checks application date to session start da
             return True
 
 
-def withdrawApplication(fullname): # remove camper obj
+def withdrawApplication(fullname):  # remove camper obj
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             juneCampers.remove(juneCamper)
@@ -86,7 +86,7 @@ def withdrawApplication(fullname): # remove camper obj
     return False
 
 
-def reduceBalance(fullname, amount): # reduce balance in camper obj by amount
+def reduceBalance(fullname, amount):  # reduce balance in camper obj by amount
     for juneCamper in juneCampers:
         if juneCamper.fullname == fullname:
             juneCamper.balance -= amount
@@ -229,6 +229,3 @@ def instructionPacketSent(fullname):  # first day instruction packet sent to cam
                 return False
             return True
     return False
-
-
-

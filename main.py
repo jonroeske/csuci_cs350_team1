@@ -4,15 +4,15 @@ import sys
 from Handlers.docHandler import *
 from Handlers.guiHandler import *
 from Handlers.camperHandler import *
-from Handlers.statusHandler import *
 from Objects.camper import *
+
 
 def main():
     refreshScreen()
 
     initializeData()
-    
-    while(1):
+
+    while 1:
         try:
             varInput = input(">> ")
             match varInput:
@@ -32,7 +32,7 @@ def main():
                     # Creates a new camper
                     newCamper = createCamper()
                     refreshScreen()
-                    if(newCamper == True):
+                    if newCamper:
                         camperCreateSuccess()
                     else:
                         camperCreateFailure()
@@ -62,25 +62,27 @@ def main():
                     clearCamperBalance()
                 case '12':
                     # Show camper packet status
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        print(str(camper.getPacket()))
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        statusGetFailure()
+                    # try:
+                    #    fullname = namePrompt()
+                    #    camper = searchCamperArr(newCampers, fullname)
+                    #    print(str(camper.getPacket()))
+                    #    refreshScreen()
+                    # except:
+                    #    refreshScreen()
+                    #    statusGetFailure()
+                    notYetImplemented()
                 case '13':
                     # Update camper packet status
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(newCampers, fullname)
-                        camper.packetStatus = True
-                        refreshScreen()
-                        camperPacketSentSuccess()
-                    except:
-                        refreshScreen()
-                        camperPacketSentFailure()
+                    # try:
+                    #    fullname = namePrompt()
+                    #    camper = searchCamperArr(newCampers, fullname)
+                    #    camper.packetStatus = True
+                    #    refreshScreen()
+                    #    camperPacketSentSuccess()
+                    # except:
+                    #    refreshScreen()
+                    #    camperPacketSentFailure()
+                    notYetImplemented()
                 case _:
                     refreshScreen()
         except:
