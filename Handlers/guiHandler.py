@@ -3,33 +3,36 @@ import time
 
 from Objects.camper import *
 
-versionNumber = "Build Feb192022"
+versionNumber = "Build Feb282022"
+
 
 def clearScreen():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def refreshScreen():
     clearScreen()
     print('|----------------Camp Clerk CLI----------------| ')
+    print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
     print('| (2)  Show Version                            |')
     print('|----------------------------------------------|')
     print('| (3)  Create New Camper                       |')
     print('| (4)  View All Campers                        |')
-    print('| (5)  Accept Camper Application               |')
-    print('| (6)  Withdraw Camper Application             |')
     print('|----------------------------------------------|')
-    print('| (7)  View Current Camper Balance             |')
-    print('| (8)  Reduce Camper Balance                   |')
-    print('| (9)  Clear Camper Balance                    |')
+    print('| (5)  View Camper Application Status          |')
+    print('| (6)  Accept Camper Application               |')
+    print('| (7)  Decline/Withdraw Camper Application     |')
     print('|----------------------------------------------|')
-    print('| (10) View Camper Application Status          |')
-    print('| (11) Accept Camper Application               |')
-    print('| (12) Decline Camper Application              |')
+    print('| (8)  View Current Camper Balance             |')
+    print('| (9)  Reduce Camper Balance                   |')
+    print('| (10) Raise Camper Balance                    |')
+    print('| (11) Clear Camper Balance                    |')
     print('|----------------------------------------------|')
-    print('| (13) Show Camper Packet Status               |')
-    print('| (14) Send Camper Packet                      |')
+    print('| (12) Show Camper Packet Status               |')
+    print('| (13) Send Camper Packet                      |')
     print('|----------------------------------------------|')
+
 
 def showCredits():
     print('| COMP-350 Team One                            |')
@@ -41,9 +44,11 @@ def showCredits():
     print('|  Aaron Urrea                                 |')
     print('|----------------------------------------------|')
 
+
 def showVersion():
     print('| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')
+
 
 def namePrompt():
     clearScreen()
@@ -57,6 +62,7 @@ def namePrompt():
 
     return fullname
 
+
 def agePrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -67,6 +73,7 @@ def agePrompt():
     age = int(input(">> "))
 
     return age
+
 
 def genderPrompt():
     clearScreen()
@@ -80,6 +87,7 @@ def genderPrompt():
 
     return gender
 
+
 def addressPrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -90,6 +98,19 @@ def addressPrompt():
     address = str(input(">> "))
 
     return address
+
+
+def amountPrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Type "EXIT" at any time to exit.             |')
+    print('|----------------------------------------------|')
+    print('| Please enter amount:                         |')
+    print('|----------------------------------------------|')
+    amount = str(input(">> "))
+
+    return amount
+
 
 def camperConfirmation(newCamper):
     print('|----------------------------------------------|')
@@ -105,16 +126,54 @@ def camperConfirmation(newCamper):
 
     return confirm
 
+
 def camperCreateSuccess():
     print('| Camper successfully created!                 |')
     print('|----------------------------------------------|')
+
 
 def camperCreateFailure():
     print('| ERROR: Camper creation failed!               |')
     print('|----------------------------------------------|')
 
+
+def camperApplicationUpdateSuccess():
+    print('| Camper app status successfully updated!      |')
+    print('|----------------------------------------------|')
+
+
+def camperApplicationUpdateFailure():
+    print('| ERROR: Camper app update failed!             |')
+    print('|----------------------------------------------|')
+
+
+def camperBalanceUpdateSuccess():
+    print('| Camper balance successfully updated!         |')
+    print('|----------------------------------------------|')
+
+
+def camperBalanceUpdateFailure():
+    print('| ERROR: Camper balance update failed!         |')
+    print('|----------------------------------------------|')
+
+
+def camperPacketSentSuccess():
+    print('| Camper packet has been sent!                 |')
+    print('|----------------------------------------------|')
+
+
+def camperPacketSentFailure():
+    print('| ERROR: Camper packet failed to send!         |')
+    print('|----------------------------------------------|')
+
+
+def statusGetFailure():
+    print('| ERROR: Failed to get status!                 |')
+    print('|----------------------------------------------|')
+
+
 def viewAllCampers(camperArray):
-    if (len(camperArray) <= 0):
+    if len(camperArray) <= 0:
         refreshScreen()
         print('| There are currently no campers!              |')
         print('|----------------------------------------------|')
@@ -133,12 +192,42 @@ def viewAllCampers(camperArray):
     refreshScreen()
     return
 
+
+def viewCamperBalance(camperArray, name):
+    if len(camperArray) <= 0:
+        refreshScreen()
+        print('| There are currently no campers!              |')
+        print('|----------------------------------------------|')
+        return
+    clearScreen()
+    for Camper in camperArray:
+        if Camper.getName() == name:
+            print('  Balance: ' + str(Camper.getBalance()))
+    print('|----------------------------------------------|')
+    print('| Press enter to return!                       |')
+    print('|----------------------------------------------|')
+    input()
+    refreshScreen()
+    return
+
+
+def searchCamperArr(camperArr, name):
+    try:
+        for currCamper in camperArr:
+            if str(currCamper.getName()) == name:
+                return currCamper
+    except:
+        nonFatalError("Cannot find camper")
+    return None
+
+
 def nonFatalError(message):
     print("  ERROR: " + message)
     print('|----------------------------------------------|')
     print("| Retrying...                                  | ")
     print('|----------------------------------------------|')
     time.sleep(2)
+
 
 def notYetImplemented():
     print("| ERROR: Not yet implemented.                  | ")
