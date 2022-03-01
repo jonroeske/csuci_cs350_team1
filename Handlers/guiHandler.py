@@ -12,7 +12,7 @@ def clearScreen():
 
 def refreshScreen():
     clearScreen()
-    print('|----------------Camp Clerk CLI----------------| ')
+    print('|----------------Camp Clerk CLI----------------|')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
     print('| (2)  Show Version                            |')
@@ -53,7 +53,7 @@ def showVersion():
 def namePrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper name: (First + Last)    |')
     print('|  EXAMPLE: "John Doe"                         |')
@@ -66,11 +66,11 @@ def namePrompt():
 def agePrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper age:                    |')
     print('|----------------------------------------------|')
-    age = int(input(">> "))
+    age = input(">> ")
 
     return age
 
@@ -78,7 +78,7 @@ def agePrompt():
 def genderPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper gender:                 |')
     print('|  NOTE: "M" or "F" only, sue us later         |')
@@ -91,7 +91,7 @@ def genderPrompt():
 def addressPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper home address:           |')
     print('|----------------------------------------------|')
@@ -103,7 +103,7 @@ def addressPrompt():
 def amountPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please enter amount:                         |')
     print('|----------------------------------------------|')
@@ -183,7 +183,7 @@ def viewCamperBalance(camperArray, name):
         if Camper.getName() == name:
             print('  Balance: ' + str(Camper.getBalance()))
     print('|----------------------------------------------|')
-    print('| Press enter to return!                       |')
+    print('| Press "Enter" to return!                     |')
     print('|----------------------------------------------|')
     input()
     refreshScreen()
