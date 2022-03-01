@@ -14,12 +14,8 @@ global index
 
 
 def main():
-    index = 0
     refreshScreen()
     camperArray = list()
-    camper = None
-    fullname = ""
-    amount = 0
     while(1):
         try:
             varInput = input(">> ")
@@ -52,7 +48,7 @@ def main():
                     # View camper application status
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         print(str(camper.getApplication()))
                         refreshScreen()
                     except:
@@ -62,7 +58,7 @@ def main():
                     # Accept camper application
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         camper.appstatus = True
                         camperApplicationUpdateSuccess()
                         refreshScreen()
@@ -73,7 +69,7 @@ def main():
                     # Decline/withdraw camper application
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         camper.appstatus = False
                         camperApplicationUpdateSuccess()
                         refreshScreen()
@@ -92,7 +88,7 @@ def main():
                     # Reduce camper balance
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         amount = amountPrompt()
                         camper.balance -= amount
                         camperBalanceUpdateSuccess()
@@ -104,7 +100,7 @@ def main():
                     # Raise camper balance
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         amount = amountPrompt()
                         camper.balance += amount
                         camperBalanceUpdateSuccess()
@@ -116,7 +112,7 @@ def main():
                     # Clear camper balance
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         camper.balance = 0
                         camperBalanceUpdateSuccess()
                         refreshScreen()
@@ -127,7 +123,7 @@ def main():
                     # Show camper packet status
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         print(str(camper.getPacket()))
                         refreshScreen()
                     except:
@@ -137,7 +133,7 @@ def main():
                     # Update camper packet status
                     try:
                         fullname = namePrompt()
-                        camper = this.searchCamperArr(camperArray, fullname)
+                        camper = searchCamperArr(camperArray, fullname)
                         camper.packetStatus = True
                         refreshScreen()
                         camperPacketSentSuccess()
@@ -148,5 +144,6 @@ def main():
                     refreshScreen()
         except:
             exit("main() has stopped")
+
 
 main()

@@ -5,8 +5,10 @@ from Objects.camper import *
 
 versionNumber = "Build Feb282022"
 
+
 def clearScreen():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def refreshScreen():
     clearScreen()
@@ -31,6 +33,7 @@ def refreshScreen():
     print('| (13) Send Camper Packet                      |')
     print('|----------------------------------------------|')
 
+
 def showCredits():
     print('| COMP-350 Team One                            |')
     print('| Created by:                                  |')
@@ -41,9 +44,11 @@ def showCredits():
     print('|  Aaron Urrea                                 |')
     print('|----------------------------------------------|')
 
+
 def showVersion():
     print('| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')
+
 
 def namePrompt():
     clearScreen()
@@ -57,6 +62,7 @@ def namePrompt():
 
     return fullname
 
+
 def agePrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -67,6 +73,7 @@ def agePrompt():
     age = int(input(">> "))
 
     return age
+
 
 def genderPrompt():
     clearScreen()
@@ -80,6 +87,7 @@ def genderPrompt():
 
     return gender
 
+
 def addressPrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -91,6 +99,7 @@ def addressPrompt():
 
     return address
 
+
 def amountPrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -101,6 +110,7 @@ def amountPrompt():
     amount = str(input(">> "))
 
     return amount
+
 
 def camperConfirmation(newCamper):
     print('|----------------------------------------------|')
@@ -116,17 +126,21 @@ def camperConfirmation(newCamper):
 
     return confirm
 
+
 def camperCreateSuccess():
     print('| Camper successfully created!                 |')
     print('|----------------------------------------------|')
+
 
 def camperCreateFailure():
     print('| ERROR: Camper creation failed!               |')
     print('|----------------------------------------------|')
 
+
 def camperApplicationUpdateSuccess():
     print('| Camper app status successfully updated!      |')
     print('|----------------------------------------------|')
+
 
 def camperApplicationUpdateFailure():
     print('| ERROR: Camper app update failed!             |')
@@ -147,16 +161,19 @@ def camperPacketSentSuccess():
     print('| Camper packet has been sent!                 |')
     print('|----------------------------------------------|')
 
+
 def camperPacketSentFailure():
     print('| ERROR: Camper packet failed to send!         |')
     print('|----------------------------------------------|')
+
 
 def statusGetFailure():
     print('| ERROR: Failed to get status!                 |')
     print('|----------------------------------------------|')
 
+
 def viewAllCampers(camperArray):
-    if (len(camperArray) <= 0):
+    if len(camperArray) <= 0:
         refreshScreen()
         print('| There are currently no campers!              |')
         print('|----------------------------------------------|')
@@ -177,7 +194,7 @@ def viewAllCampers(camperArray):
 
 
 def viewCamperBalance(camperArray, name):
-    if (len(camperArray) <= 0):
+    if len(camperArray) <= 0:
         refreshScreen()
         print('| There are currently no campers!              |')
         print('|----------------------------------------------|')
@@ -193,6 +210,7 @@ def viewCamperBalance(camperArray, name):
     refreshScreen()
     return
 
+
 def searchCamperArr(camperArr, name):
     try:
         for currCamper in camperArr:
@@ -202,12 +220,14 @@ def searchCamperArr(camperArr, name):
         nonFatalError("Cannot find camper")
     return None
 
+
 def nonFatalError(message):
     print("  ERROR: " + message)
     print('|----------------------------------------------|')
     print("| Retrying...                                  | ")
     print('|----------------------------------------------|')
     time.sleep(2)
+
 
 def notYetImplemented():
     print("| ERROR: Not yet implemented.                  | ")
