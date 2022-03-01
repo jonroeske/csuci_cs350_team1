@@ -3,7 +3,7 @@ import time
 
 from Objects.camper import *
 
-versionNumber = "Build Feb192022"
+versionNumber = "Build Feb282022"
 
 def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -16,16 +16,18 @@ def refreshScreen():
     print('|----------------------------------------------|')
     print('| (3)  Create New Camper                       |')
     print('| (4)  View All Campers                        |')
-    print('| (5)  Accept Camper Application               |')
-    print('| (6)  Decline/Withdraw Camper Application     |')
     print('|----------------------------------------------|')
-    print('| (7)  View Current Camper Balance             |')
-    print('| (8)  Reduce Camper Balance                   |')
-    print('| (9)  Clear Camper Balance                    |')
+    print('| (5)  View Camper Application Status          |')
+    print('| (6)  Accept Camper Application               |')
+    print('| (7)  Decline/Withdraw Camper Application     |')
     print('|----------------------------------------------|')
-    print('| (10) View Camper Application Status          |')
-    print('| (11) Show Camper Packet Status               |')
-    print('| (12) Send Camper Packet                      |')
+    print('| (8)  View Current Camper Balance             |')
+    print('| (9)  Reduce Camper Balance                   |')
+    print('| (10) Raise Camper Balance                    |')
+    print('| (11) Clear Camper Balance                    |')
+    print('|----------------------------------------------|')
+    print('| (12) Show Camper Packet Status               |')
+    print('| (13) Send Camper Packet                      |')
     print('|----------------------------------------------|')
 
 def showCredits():

@@ -42,25 +42,78 @@ def main():
                     # View all campers
                     viewAllCampers(camperArray)
                 case '5':
-                    # Accept camper application
-                case '6':
-                    # Withdraw/Decline camper application
-                case '7':
-                    # View camper balance
-                case '8':
-                    # Reduce camper balance
-                case '9':
-                    # Clear camper balance
-                case '10':
                     # View camper application status
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].printApplication()
+                    refreshScreen()
+                case '6':
+                    # Accept camper application
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].appstatus = True
+                    print("Camper application updated")
+                    refreshScreen()
+                case '7':
+                    # Decline/withdraw camper application
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].appstatus = False
+                    print("Camper application updated")
+                    refreshScreen()
+                case '8':
+                    # View camper balance
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].printBalance()
+                    refreshScreen()
+                case '9':
+                    # Reduce camper balance
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].balance -= amount
+                    print("Camper balance updated")
+                    refreshScreen()
+                case '10':
+                    # Raise camper balance
+                    fullname = namePrompt()
+                    index =  searchCamperArr(camperArray, fullname)
+                    camperArray[index].balance += amount
+                    print("Camper balance updated")
+                    refreshScreen()
                 case '11':
-                    # Show camper packet status
+                    # Clear camper balance
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].balance = 0
+                    print("Camper balance cleared")
+                    refreshScreen()
                 case '12':
+                    # Show camper packet status
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].printPacket()
+                    refreshScreen()
+                case '13':
                     # Update camper packet status
+                    fullname = namePrompt()
+                    index = searchCamperArr(camperArray, fullname)
+                    camperArray[index].packetStatus = True
+                    print("Camper packet sent")
+                    refreshScreen()
                 case _:
                     refreshScreen()
         except:
             exit("Somehow, we messed this up in main()")
+
+
+
+def searchCamperArr(camperArr, fullname):
+    try:
+        found = camperArr.index(fullname)
+        return found
+    except:
+        nonFatalError("Cannot find camper")
 
 
 main()
