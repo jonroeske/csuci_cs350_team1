@@ -12,7 +12,7 @@ def clearScreen():
 
 def refreshScreen():
     clearScreen()
-    print('|----------------Camp Clerk CLI----------------|')
+    print('|----------------Camp Clerk CLI----------------| ')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
     print('| (2)  Show Version                            |')
