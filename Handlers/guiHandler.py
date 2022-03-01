@@ -130,6 +130,19 @@ def camperBalanceUpdateFailure():
     print('| ERROR: Camper balance update failed!         |')
     print('|----------------------------------------------|')
 
+
+def camperPacketSentSuccess():
+    print('| Camper packet has been sent!                 |')
+    print('|----------------------------------------------|')
+
+def camperPacketSentFailure():
+    print('| ERROR: Camper packet failed to send!         |')
+    print('|----------------------------------------------|')
+
+def statusGetFailure():
+    print('| ERROR: Failed to get status!                 |')
+    print('|----------------------------------------------|')
+
 def viewAllCampers(camperArray):
     if (len(camperArray) <= 0):
         refreshScreen()

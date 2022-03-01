@@ -43,10 +43,14 @@ def main():
                     viewAllCampers(camperArray)
                 case '5':
                     # View camper application status
-                    fullname = namePrompt()
-                    index = searchCamperArr(camperArray, fullname)
-                    camperArray[index].printApplication()
-                    refreshScreen()
+                    try:
+                        fullname = namePrompt()
+                        index = searchCamperArr(camperArray, fullname)
+                        camperArray[index].printApplication()
+                        refreshScreen()
+                    except:
+                        refreshScreen()
+                        statusGetFailure()
                 case '6':
                     # Accept camper application
                     try:
@@ -56,6 +60,7 @@ def main():
                         camperApplicationUpdateSuccess()
                         refreshScreen()
                     except:
+                        refreshScreen()
                         camperApplicationUpdateFailure()
                 case '7':
                     # Decline/withdraw camper application
@@ -66,13 +71,18 @@ def main():
                         camperApplicationUpdateSuccess()
                         refreshScreen()
                     except:
+                        refreshScreen()
                         camperApplicationUpdateFailure()
                 case '8':
                     # View camper balance
-                    fullname = namePrompt()
-                    index = searchCamperArr(camperArray, fullname)
-                    camperArray[index].printBalance()
-                    refreshScreen()
+                    try:
+                        fullname = namePrompt()
+                        index = searchCamperArr(camperArray, fullname)
+                        camperArray[index].printBalance()
+                        refreshScreen()
+                    except:
+                        refreshScreen()
+                        statusGetFailure()
                 case '9':
                     # Reduce camper balance
                     try:
@@ -82,6 +92,7 @@ def main():
                         camperBalanceUpdateSuccess()
                         refreshScreen()
                     except:
+                        refreshScreen()
                         camperBalanceUpdateFailure()
                 case '10':
                     # Raise camper balance
@@ -92,6 +103,7 @@ def main():
                         camperBalanceUpdateSuccess()
                         refreshScreen()
                     except:
+                        refreshScreen()
                         camperBalanceUpdateFailure()
                 case '11':
                     # Clear camper balance
@@ -102,31 +114,42 @@ def main():
                         camperBalanceUpdateSuccess()
                         refreshScreen()
                     except:
+                        refreshScreen()
                         camperBalanceUpdateFailure()
                 case '12':
                     # Show camper packet status
-                    fullname = namePrompt()
-                    index = searchCamperArr(camperArray, fullname)
-                    camperArray[index].printPacket()
-                    refreshScreen()
+                    try:
+                        fullname = namePrompt()
+                        index = searchCamperArr(camperArray, fullname)
+                        camperArray[index].printPacket()
+                        refreshScreen()
+                    except:
+                        refreshScreen()
+                        statusGetFailure()
                 case '13':
                     # Update camper packet status
-                    fullname = namePrompt()
-                    index = searchCamperArr(camperArray, fullname)
-                    camperArray[index].packetStatus = True
-                    print("Camper packet sent")
-                    refreshScreen()
+                    try:
+                        fullname = namePrompt()
+                        index = searchCamperArr(camperArray, fullname)
+                        camperArray[index].packetStatus = True
+                        refreshScreen()
+                        camperPacketSentSuccess()
+                    except:
+                        refreshScreen()
+                        camperPacketSentFailure()
                 case _:
                     refreshScreen()
         except:
-            exit("Somehow, we messed this up in main()")
+            exit("main() has stopped")
 
 
 
 def searchCamperArr(camperArr, fullname):
     try:
-        found = camperArr.index(fullname)
-        return found
+        for i in range(0, len(camperArr)):
+            if camperArr[i].fullname == fullname:
+                return i
+        nonFatalError("Cannot find camper")
     except:
         nonFatalError("Cannot find camper")
 
