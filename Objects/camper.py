@@ -5,7 +5,7 @@ class Camper:
         self.gender = gender
         self.address = address
         self.session = None
-        self.appStatus = False
+        self.appStatus = None
         self.balance = 0.00
         self.tribe = None
         self.bunkhouse = None
@@ -37,7 +37,7 @@ class Camper:
     def getAddress(self):
         return self.address
 
-    def getApplication(self):
+    def getAppStatus(self):
         return self.appStatus
 
     def getAcceptance(self):

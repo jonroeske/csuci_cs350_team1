@@ -172,27 +172,6 @@ def statusGetFailure():
     print('|----------------------------------------------|')
 
 
-def viewAllCampers(camperArray):
-    if len(camperArray) <= 0:
-        refreshScreen()
-        print('| There are currently no campers!              |')
-        print('|----------------------------------------------|')
-        return
-    clearScreen()
-    for Camper in camperArray:
-        print('|----------------------------------------------|')
-        print('  Name:    ' + Camper.getName())
-        print('  Age:     ' + str(Camper.getAge()))
-        print('  Gender:  ' + Camper.getGender())
-        print('  Address: ' + Camper.getAddress())
-    print('|----------------------------------------------|')
-    print('| Press enter to return!                       |')
-    print('|----------------------------------------------|')
-    input()
-    refreshScreen()
-    return
-
-
 def viewCamperBalance(camperArray, name):
     if len(camperArray) <= 0:
         refreshScreen()

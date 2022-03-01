@@ -1,6 +1,21 @@
 from Handlers.guiHandler import *
 from Objects.camper import Camper
 
+def initializeData():
+    global juneCampers
+    global julyCampers
+    global augustCampers
+    global newCampers
+    global bunkhouses
+    global tribes
+
+    juneCampers = []
+    julyCampers = []
+    augustCampers = []
+    newCampers = []
+    bunkhouses = []
+    tribes = []
+
 def createCamper():
     newCamper = Camper()
 
@@ -37,20 +52,66 @@ def createCamper():
         if(newCamper.address == 'EXIT' or newCamper.address == ''):
             return None
 
+        newCamper.appStatus = 0
+
+        while (1):
+            clearScreen()
+            confirmation = camperConfirmation(newCamper)
+
+            if (confirmation == 'Y'):
+                newCampers.append(newCamper)
+                return True
+            elif (confirmation == 'N'):
+                return False
+
+            else:
+                nonFatalError('Must be "Y" or "N"')
+
     except:
         exit("CODE 2: Exception during camper creation")
 
-    while(1):
-        clearScreen()
-        confirmation = camperConfirmation(newCamper)
+def printNewCampers():
+    if len(newCampers) <= 0:
+        refreshScreen()
+        print('| There are currently no campers!              |')
+        print('|----------------------------------------------|')
+        return
+    clearScreen()
+    for Camper in newCampers:
+        print('|----------------------------------------------|')
+        print('  Name:    ' + Camper.getName())
+        print('  Age:     ' + str(Camper.getAge()))
+        print('  Gender:  ' + Camper.getGender())
+        print('  Address: ' + Camper.getAddress())
+    print('|----------------------------------------------|')
+    print('| Press enter to return!                       |')
+    print('|----------------------------------------------|')
+    input()
+    refreshScreen()
 
-        if(confirmation == 'Y'):
-            return newCamper
+def viewCamperApplication():
+    #try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
 
-        elif(confirmation == 'N'):
-            return None
+        status = camper.getAppStatus()
 
-        else:
-            nonFatalError('Must be "Y" or "N"')
-
-
+        refreshScreen()
+        if(status == 0):
+            print('  Camper Found: ' + camper.getName())
+            print('  Application Status: Pending!')
+            print('|----------------------------------------------|')
+            return
+        elif(status == 1):
+            print('  Camper Found: ' + camper.getName())
+            print('  Application Status: Accepted!')
+            print('|----------------------------------------------|')
+            return
+        elif (status == 2):
+            print('  Camper Found: ' + camper.getName())
+            print('  Application Status: Rejected!')
+            print('|----------------------------------------------|')
+            return
+    #except:
+    #    refreshScreen()
+    #    statusGetFailure()
