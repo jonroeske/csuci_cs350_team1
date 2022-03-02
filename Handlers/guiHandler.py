@@ -53,7 +53,7 @@ def showVersion():
 def namePrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper name: (First + Last)    |')
     print('|  EXAMPLE: "John Doe"                         |')
@@ -66,11 +66,11 @@ def namePrompt():
 def agePrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper age:                    |')
     print('|----------------------------------------------|')
-    age = int(input(">> "))
+    age = input(">> ")
 
     return age
 
@@ -78,7 +78,7 @@ def agePrompt():
 def genderPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper gender:                 |')
     print('|  NOTE: "M" or "F" only, sue us later         |')
@@ -91,7 +91,7 @@ def genderPrompt():
 def addressPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please insert camper home address:           |')
     print('|----------------------------------------------|')
@@ -103,7 +103,7 @@ def addressPrompt():
 def amountPrompt():
     clearScreen()
     print('|----------------------------------------------|')
-    print('| Type "EXIT" at any time to exit.             |')
+    print('| Press "Enter" to return at any time          |')
     print('|----------------------------------------------|')
     print('| Please enter amount:                         |')
     print('|----------------------------------------------|')
@@ -172,27 +172,6 @@ def statusGetFailure():
     print('|----------------------------------------------|')
 
 
-def viewAllCampers(camperArray):
-    if len(camperArray) <= 0:
-        refreshScreen()
-        print('| There are currently no campers!              |')
-        print('|----------------------------------------------|')
-        return
-    clearScreen()
-    for Camper in camperArray:
-        print('|----------------------------------------------|')
-        print('  Name:    ' + Camper.getName())
-        print('  Age:     ' + str(Camper.getAge()))
-        print('  Gender:  ' + Camper.getGender())
-        print('  Address: ' + Camper.getAddress())
-    print('|----------------------------------------------|')
-    print('| Press enter to return!                       |')
-    print('|----------------------------------------------|')
-    input()
-    refreshScreen()
-    return
-
-
 def viewCamperBalance(camperArray, name):
     if len(camperArray) <= 0:
         refreshScreen()
@@ -204,21 +183,11 @@ def viewCamperBalance(camperArray, name):
         if Camper.getName() == name:
             print('  Balance: ' + str(Camper.getBalance()))
     print('|----------------------------------------------|')
-    print('| Press enter to return!                       |')
+    print('| Press "Enter" to return!                     |')
     print('|----------------------------------------------|')
     input()
     refreshScreen()
     return
-
-
-def searchCamperArr(camperArr, name):
-    try:
-        for currCamper in camperArr:
-            if str(currCamper.getName()) == name:
-                return currCamper
-    except:
-        nonFatalError("Cannot find camper")
-    return None
 
 
 def nonFatalError(message):

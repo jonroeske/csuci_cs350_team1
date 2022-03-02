@@ -4,19 +4,15 @@ import sys
 from Handlers.docHandler import *
 from Handlers.guiHandler import *
 from Handlers.camperHandler import *
-from Handlers.statusHandler import *
 from Objects.camper import *
-
-global camperArray
-global bunkhouseArray
-global tribeArray
-global index
 
 
 def main():
     refreshScreen()
-    camperArray = list()
-    while(1):
+
+    initializeData()
+
+    while 1:
         try:
             varInput = input(">> ")
             match varInput:
@@ -36,110 +32,57 @@ def main():
                     # Creates a new camper
                     newCamper = createCamper()
                     refreshScreen()
-                    if(newCamper):
-                        camperArray.append(newCamper)
+                    if newCamper:
                         camperCreateSuccess()
                     else:
                         camperCreateFailure()
                 case '4':
                     # View all campers
-                    viewAllCampers(camperArray)
+                    printNewCampers()
                 case '5':
                     # View camper application status
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        print(str(camper.getApplication()))
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        statusGetFailure()
+                    viewCamperApplication()
                 case '6':
                     # Accept camper application
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        camper.appstatus = True
-                        camperApplicationUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperApplicationUpdateFailure()
+                    acceptCamperApplication()
                 case '7':
                     # Decline/withdraw camper application
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        camper.appstatus = False
-                        camperApplicationUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperApplicationUpdateFailure()
+                    rejectCamperApplication()
                 case '8':
                     # View camper balance
-                    try:
-                        fullname = namePrompt()
-                        viewCamperBalance(camperArray, fullname)
-                    except:
-                        refreshScreen()
-                        statusGetFailure()
+                    viewCamperBalance()
                 case '9':
                     # Reduce camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        amount = amountPrompt()
-                        camper.balance -= amount
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    reduceCamperBalance()
                 case '10':
                     # Raise camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        amount = amountPrompt()
-                        camper.balance += amount
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    raiseCamperBalance()
                 case '11':
                     # Clear camper balance
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        camper.balance = 0
-                        camperBalanceUpdateSuccess()
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        camperBalanceUpdateFailure()
+                    clearCamperBalance()
                 case '12':
                     # Show camper packet status
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        print(str(camper.getPacket()))
-                        refreshScreen()
-                    except:
-                        refreshScreen()
-                        statusGetFailure()
+                    # try:
+                    #    fullname = namePrompt()
+                    #    camper = searchCamperArr(newCampers, fullname)
+                    #    print(str(camper.getPacket()))
+                    #    refreshScreen()
+                    # except:
+                    #    refreshScreen()
+                    #    statusGetFailure()
+                    notYetImplemented()
                 case '13':
                     # Update camper packet status
-                    try:
-                        fullname = namePrompt()
-                        camper = searchCamperArr(camperArray, fullname)
-                        camper.packetStatus = True
-                        refreshScreen()
-                        camperPacketSentSuccess()
-                    except:
-                        refreshScreen()
-                        camperPacketSentFailure()
+                    # try:
+                    #    fullname = namePrompt()
+                    #    camper = searchCamperArr(newCampers, fullname)
+                    #    camper.packetStatus = True
+                    #    refreshScreen()
+                    #    camperPacketSentSuccess()
+                    # except:
+                    #    refreshScreen()
+                    #    camperPacketSentFailure()
+                    notYetImplemented()
                 case _:
                     refreshScreen()
         except:
