@@ -1,4 +1,4 @@
 FROM python:3.10
 WORKDIR /code
-COPY src/ .
+COPY . .
 CMD ["python","./main.py"]
