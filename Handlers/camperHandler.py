@@ -1,5 +1,7 @@
 from Handlers.guiHandler import *
 from Objects.camper import Camper
+import pickle
+import os
 
 
 def initializeData():
@@ -26,6 +28,42 @@ def searchCamperArr(camperArr, name):
     except:
         nonFatalError("Cannot find camper")
     return None
+
+
+def loadFromPickle():
+    refreshScreen()
+    try:
+        loadedCampers = pickle.load(open('./campers.pkl', 'rb'))
+        for camper in loadedCampers:
+            newCampers.append(camper)
+        print('| Successfully loaded campers from file!       |')
+        print('|----------------------------------------------|')
+    except:
+        nonFatalError('ERROR: Loading campers from persistent file')
+
+def resetPickle():
+    refreshScreen()
+    try:
+        if os.path.exists('./campers.pkl'):
+            os.remove('./campers.pkl')
+            fp = open('./campers.pkl', 'x')
+            fp.close()
+            print('| Successfully cleared file!                   |')
+            print('|----------------------------------------------|')
+        else:
+            nonFatalError('Error: Finding persistent file')
+    except:
+        nonFatalError('ERROR: Clearing persistent file')
+
+
+def dumpToPickle():
+    refreshScreen()
+    try:
+        pickle.dump(newCampers, open('./campers.pkl', 'wb'))
+        print('| Successfully dumped campers to file!          |')
+        print('|----------------------------------------------|')
+    except:
+        nonFatalError('ERROR: Dumping campers to persistent file')
 
 
 def createCamper():
@@ -62,6 +100,7 @@ def createCamper():
             return False
 
         newCamper.appStatus = 0
+        pickle.dump(newCamper, open('campers.pkl','wb'))
         newCamper.balance = 1000.00
 
         while 1:
@@ -76,7 +115,6 @@ def createCamper():
 
             else:
                 nonFatalError('Must be "Y" or "N"')
-
     except:
         exit("CODE 2: Exception during camper creation")
 
