@@ -60,7 +60,7 @@ def dumpToPickle():
     refreshScreen()
     try:
         pickle.dump(newCampers, open('./campers.pkl', 'wb'))
-        print('| Successfully dumped campers to file!          |')
+        print('| Successfully dumped campers to file!         |')
         print('|----------------------------------------------|')
     except:
         nonFatalError('ERROR: Dumping campers to persistent file')

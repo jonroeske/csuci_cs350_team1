@@ -32,6 +32,10 @@ def refreshScreen():
     print('| (12) Show Camper Packet Status               |')
     print('| (13) Send Camper Packet                      |')
     print('|----------------------------------------------|')
+    print('| (14) Dump to file                            |')
+    print('| (15) Load from file                          |')
+    print('| (16) Reset file                              |')
+    print('|----------------------------------------------|')
 
 
 def showCredits():

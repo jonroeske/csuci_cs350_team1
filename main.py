@@ -83,6 +83,15 @@ def main():
                     #    refreshScreen()
                     #    camperPacketSentFailure()
                     notYetImplemented()
+                case '14':
+                    # Dumps campers to pickle file
+                    dumpToPickle()
+                case '15':
+                    # Loads pickle file
+                    loadFromPickle()
+                case '16':
+                    # Clears pickle file
+                    resetPickle()
                 case _:
                     refreshScreen()
         except:
