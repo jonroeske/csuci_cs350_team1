@@ -51,14 +51,28 @@ class Camper:
 
     def setAppStatus(self, status):
         try:
-            self.appStatus = status
+            self.appStatus = int(status)
             return True
         except:
             return False
 
     def setBalance(self, balance):
         try:
-            self.balance = balance
+            self.balance = float(balance)
+            return True
+        except:
+            return False
+
+    def setTribe(self, tribe):
+        try:
+            self.tribe = int(tribe)
+            return True
+        except:
+            return False
+
+    def setBunkhouse(self, bunkhouse):
+        try:
+            self.bunkhouse = int(bunkhouse)
             return True
         except:
             return False

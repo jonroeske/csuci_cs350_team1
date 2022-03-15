@@ -1,3 +1,6 @@
+import operator
+
+
 # Clerk logic for handling day one of camp sessions
 def checkInCert(camper):  # Verifies required forms for arrival packet
     camper.checkedIn = False
@@ -39,27 +42,41 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
         camper.checkedin = True
 
 
-def assignBunkhouses(campers, bunkhouses):  # (1-3) 3 girl houses, (4-6) 3 boy houses with 12 each
-    housenum = 1
-    for camper in campers:
-        if camper.gender == 'male':
+def assignBunkhouses(campers, bunkhouses):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-5] 3 male houses with 12 cap
+    campersAgeSorted = sorted(campers, key=operator.attrgetter('age'))
+    housenum = 0
+    camperHouseCap = int(campers.length() / 6) + 1
+    for camper in campersAgeSorted:
+        if camper.gender == 'M':
             housenum += 3
-        if not bunkhouses[housenum].isFull():
-            if not bunkhouses[housenum+1].isFull():
-                if not bunkhouses[housenum+2].isFull():
-                    print('No capacity for camper')
+        if bunkhouses[housenum].length() == camperHouseCap:
+            if bunkhouses[housenum+1].length() == camperHouseCap:
+                if bunkhouses[housenum+2].length() == camperHouseCap:
+                    print('No capacity for camper: ' + camper.getName())
                     return False
                 else:
                     bunkhouses[housenum+2].append(camper)
-                    return True
+                    camper.setBunkhouse(housenum+2)
+                    continue
             else:
                 bunkhouses[housenum+1].append(camper)
-                return True
+                camper.setBunkhouse(housenum+1)
+                continue
         else:
             bunkhouses[housenum].append(camper)
-            return True
+            camper.setBunkhouse(housenum)
+            continue
 
 
-def assignTribes(campers):
-    print('')
-
+def assignTribes(campers, tribes):  # tribes[0-5] 6 tribes, with 12 cap
+    campersGenderSorted = sorted(campers, key=operator.attrgetter('gender'))
+    tribenum = 0
+    for camper in campersGenderSorted:
+        if tribenum > 5:
+            tribenum = 0
+        if tribes[tribenum].length() == 12:
+            tribenum += 1
+            continue
+        else:
+            tribes[tribenum].append(camper)
+            tribenum += 1
