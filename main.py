@@ -62,26 +62,9 @@ def main():
                     clearCamperBalance()
                 case '12':
                     # Show camper packet status
-                    # try:
-                    #    fullname = namePrompt()
-                    #    camper = searchCamperArr(newCampers, fullname)
-                    #    print(str(camper.getPacket()))
-                    #    refreshScreen()
-                    # except:
-                    #    refreshScreen()
-                    #    statusGetFailure()
                     notYetImplemented()
                 case '13':
                     # Update camper packet status
-                    # try:
-                    #    fullname = namePrompt()
-                    #    camper = searchCamperArr(newCampers, fullname)
-                    #    camper.packetStatus = True
-                    #    refreshScreen()
-                    #    camperPacketSentSuccess()
-                    # except:
-                    #    refreshScreen()
-                    #    camperPacketSentFailure()
                     notYetImplemented()
                 case '14':
                     # Dumps campers to pickle file
