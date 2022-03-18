@@ -73,46 +73,53 @@ def createCamper():
         newCamper.fullName = namePrompt()
         if newCamper.fullName == '':
             return False
-
         check = 0
-
         while check == 0:
             newCamper.age = agePrompt()
             if 9 <= int(newCamper.age) <= 18:
                 check = 1
             else:
                 nonFatalError("Applicant must be between 9 and 18 years old.")
-
         check = 0
-
         while check == 0:
             newCamper.gender = genderPrompt()
             if newCamper.gender == '':
                 return False
-
             elif newCamper.gender == 'F' or newCamper.gender == 'M':
                 check = 1
             else:
                 nonFatalError('Applicant must be "M" or "F".')
-
         newCamper.address = addressPrompt()
         if newCamper.address == 'EXIT' or newCamper.address == '':
             return False
-
         newCamper.appStatus = 0
-        pickle.dump(newCamper, open('campers.pkl','wb'))
         newCamper.balance = 1000.00
-
+        newCamper.packetStatus = False
+        newCamper.checkedIn = False
+        newCamper.acceptStatus = False
+        newCamper.arrivalReqCert = False
+        newCamper.session = None
+        newCamper.tribe = None
+        newCamper.bunkhouse = None
+        newCamper.assignmentRequest = None
+        newCamper.dateSentNotice = None
+        newCamper.medical = None
+        newCamper.legal = None
+        newCamper.emergencyContacts = None
+        newCamper.helmet = None
+        newCamper.boots = None
+        newCamper.sleepingBag = None
+        newCamper.waterBottle = None
+        newCamper.sunscreen = None
+        newCamper.bugSpray = None
         while 1:
             clearScreen()
             confirmation = camperConfirmation(newCamper)
-
             if confirmation == 'Y':
                 newCampers.append(newCamper)
                 return True
             elif confirmation == 'N':
                 return False
-
             else:
                 nonFatalError('Must be "Y" or "N"')
     except:
@@ -243,6 +250,20 @@ def viewCamperBalance():
         refreshScreen()
         statusGetFailure()
 
+def viewCamperPacketStatus():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        refreshScreen()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Packet Status: ' + str(camper.getPacket()))
+        print('|----------------------------------------------|')
+
+    except:
+        refreshScreen()
+        statusGetFailure()
 
 def reduceCamperBalance():
     try:

@@ -62,7 +62,7 @@ def main():
                     clearCamperBalance()
                 case '12':
                     # Show camper packet status
-                    notYetImplemented()
+                    viewCamperPacketStatus()
                 case '13':
                     # Update camper packet status
                     notYetImplemented()
