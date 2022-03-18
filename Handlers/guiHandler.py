@@ -36,6 +36,9 @@ def refreshScreen():
     print('| (15) Load from file                          |')
     print('| (16) Reset file                              |')
     print('|----------------------------------------------|')
+    print('| (17) Assign tribes                           |')
+    print('| (18) Assign bunkhouses                       |')
+    print('|----------------------------------------------|')
 
 
 def showCredits():

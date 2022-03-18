@@ -75,6 +75,12 @@ def main():
                 case '16':
                     # Clears pickle file
                     resetPickle()
+                case '17':
+                    # Assign tribes
+                    notYetImplemented()
+                case '18':
+                    # Assign bunkhouses
+                    notYetImplemented()
                 case _:
                     refreshScreen()
         except:
