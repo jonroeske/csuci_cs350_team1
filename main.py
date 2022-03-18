@@ -65,7 +65,7 @@ def main():
                     viewCamperPacketStatus()
                 case '13':
                     # Update camper packet status
-                    notYetImplemented()
+                    updateCamperPacketStatus()
                 case '14':
                     # Dumps campers to pickle file
                     dumpToPickle()

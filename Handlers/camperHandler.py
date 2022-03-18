@@ -259,8 +259,25 @@ def viewCamperPacketStatus():
 
         print('  Camper Found: ' + camper.getName())
         print('  Packet Status: ' + str(camper.getPacket()))
+        print('  Send Date: ' + str(camper.getPacketSendDate()))
         print('|----------------------------------------------|')
 
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def updateCamperPacketStatus():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+
+        refreshScreen()
+
+        camper.setPacketSend()
+        print('  Camper Found: ' + camper.getName())
+        print('  Packet Status: ' + str(camper.getPacket()))
+        print('  Send Date: ' + str(camper.getPacketSendDate()))
+        print('|----------------------------------------------|')
     except:
         refreshScreen()
         statusGetFailure()

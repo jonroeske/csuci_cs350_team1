@@ -1,3 +1,4 @@
+from datetime import datetime
 class Camper:
     def __int__(self, fullname, age, gender, address):
         self.fullName = fullname
@@ -48,6 +49,17 @@ class Camper:
 
     def getBalance(self):
         return self.balance
+
+    def getPacketSendDate(self):
+        return self.dateSentNotice
+
+    def setPacketSend(self):
+        try:
+            self.packetStatus = True
+            self.dateSentNotice = datetime.now()
+            return True
+        except:
+            return False
 
     def setAppStatus(self, status):
         try:
