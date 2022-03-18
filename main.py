@@ -81,6 +81,9 @@ def main():
                 case '18':
                     # Assign bunkhouses
                     notYetImplemented()
+                case '19':
+                    # Certify camper
+                    notYetImplemented()
                 case _:
                     refreshScreen()
         except:
