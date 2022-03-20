@@ -1,5 +1,7 @@
 from Handlers.guiHandler import *
 from Objects.camper import Camper
+from firstDay.firstDay import assignTribes
+from firstDay.firstDay import assignBunkhouses
 import pickle
 import os
 
@@ -347,6 +349,30 @@ def clearCamperBalance():
         refreshScreen()
         statusGetFailure()
 
+
+def assignTribesToCampers():
+    try:
+        refreshScreen()
+        assignTribes(newCampers, tribes)
+        print(' Tribes: ')
+        for camper in newCampers:
+            print(' ' + str(camper.getName()) + " Tribe: " + str(camper.getTribe()))
+        print('|----------------------------------------------|')
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def assignBunkhouseToCampers():
+    try:
+        refreshScreen()
+        assignBunkhouses(newCampers, bunkhouses)
+        print(' Bunkhouses: ')
+        for camper in newCampers:
+            print(' ' + str(camper.getName()) + " Bunkhouse: " + str(camper.getBunkhouse()))
+        print('|----------------------------------------------|')
+    except:
+        refreshScreen()
+        statusGetFailure()
 
 def isCamperAccepted(camper):
     if camper.getAppStatus() == 0:

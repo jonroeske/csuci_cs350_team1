@@ -77,10 +77,10 @@ def main():
                     resetPickle()
                 case '17':
                     # Assign tribes
-                    notYetImplemented()
+                    assignTribesToCampers()
                 case '18':
                     # Assign bunkhouses
-                    notYetImplemented()
+                    assignBunkhouseToCampers()
                 case '19':
                     # Certify camper
                     notYetImplemented()

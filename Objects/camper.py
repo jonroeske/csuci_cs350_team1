@@ -53,6 +53,12 @@ class Camper:
     def getPacketSendDate(self):
         return self.dateSentNotice
 
+    def getTribe(self):
+        return self.tribe
+
+    def getBunkhouse(self):
+        return self.bunkhouse
+
     def setPacketSend(self):
         try:
             self.packetStatus = True
