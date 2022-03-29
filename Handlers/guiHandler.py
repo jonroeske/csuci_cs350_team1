@@ -39,6 +39,9 @@ def refreshScreen():
     print('| (17) Assign tribes                           |')
     print('| (18) Assign bunkhouses                       |')
     print('| (19) Certify camper first day reqs           |')
+    print('| (20) Camper pair request                     |')
+    print('|----------------------------------------------|')
+    print('| (21) Launch Django GUI                       |')
     print('|----------------------------------------------|')
 
 

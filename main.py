@@ -84,6 +84,12 @@ def main():
                 case '19':
                     # Certify camper
                     certifyCamperReqs()
+                case '20':
+                    # Pair request
+                    notYetImplemented()
+                case '21':
+                    # Launch Django
+                    notYetImplemented()
                 case _:
                     refreshScreen()
         except:
