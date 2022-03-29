@@ -388,13 +388,16 @@ def certifyCamperReqs():
 
 def assignPairRequest():
     try:
-        print('Add requesting camper: ')
         subjectname = namePrompt()
         subjectcamper = searchCamperArr(newCampers, subjectname)
-        print('Add requested camper: ')
+
         requestname = namePrompt()
         requestcamper = searchCamperArr(newCampers, requestname)
         subjectcamper.setRequest(requestcamper)
+
+        refreshScreen()
+        print(' Added pair request between ' + str(subjectcamper.getName()) + ' and ' + str(requestcamper.getName()))
+        print('|----------------------------------------------|')
     except:
         refreshScreen()
         statusGetFailure()
