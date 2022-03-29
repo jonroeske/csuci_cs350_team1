@@ -3,7 +3,7 @@ import time
 
 from Objects.camper import *
 
-versionNumber = "Build Mar182022"
+versionNumber = "Build Mar292022"
 
 
 def clearScreen():
@@ -38,6 +38,7 @@ def refreshScreen():
     print('|----------------------------------------------|')
     print('| (17) Assign tribes                           |')
     print('| (18) Assign bunkhouses                       |')
+    print('| (19) Certify camper first day reqs           |')
     print('|----------------------------------------------|')
 
 

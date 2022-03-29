@@ -83,7 +83,7 @@ def main():
                     assignBunkhouseToCampers()
                 case '19':
                     # Certify camper
-                    notYetImplemented()
+                    certifyCamperReqs()
                 case _:
                     refreshScreen()
         except:

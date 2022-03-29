@@ -2,6 +2,7 @@ from Handlers.guiHandler import *
 from Objects.camper import Camper
 from firstDay.firstDay import assignTribes
 from firstDay.firstDay import assignBunkhouses
+from firstDay.firstDay import checkInCert
 import pickle
 import os
 
@@ -369,6 +370,17 @@ def assignBunkhouseToCampers():
         print(' Bunkhouses: ')
         for camper in newCampers:
             print(' ' + str(camper.getName()) + " Bunkhouse: " + str(camper.getBunkhouse()))
+        print('|----------------------------------------------|')
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def certifyCamperReqs():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(newCampers, fullname)
+        refreshScreen()
+        checkInCert(camper)
         print('|----------------------------------------------|')
     except:
         refreshScreen()
