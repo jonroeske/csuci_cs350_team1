@@ -94,3 +94,10 @@ class Camper:
             return True
         except:
             return False
+
+    def setRequest(self, camper):
+        try:
+            self.assignmentRequest = camper
+            return True
+        except:
+            return False

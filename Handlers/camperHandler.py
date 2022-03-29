@@ -386,6 +386,19 @@ def certifyCamperReqs():
         refreshScreen()
         statusGetFailure()
 
+def assignPairRequest():
+    try:
+        print('Add requesting camper: ')
+        subjectname = namePrompt()
+        subjectcamper = searchCamperArr(newCampers, subjectname)
+        print('Add requested camper: ')
+        requestname = namePrompt()
+        requestcamper = searchCamperArr(newCampers, requestname)
+        subjectcamper.setRequest(requestcamper)
+    except:
+        refreshScreen()
+        statusGetFailure()
+
 def isCamperAccepted(camper):
     if camper.getAppStatus() == 0:
         print('| Camper has not been accepted!                |')

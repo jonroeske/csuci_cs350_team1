@@ -86,7 +86,7 @@ def main():
                     certifyCamperReqs()
                 case '20':
                     # Pair request
-                    notYetImplemented()
+                    assignPairRequest()
                 case '21':
                     # Launch Django
                     notYetImplemented()
