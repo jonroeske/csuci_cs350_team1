@@ -81,14 +81,17 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
         camper.checkedIn = True
 
 
-def assignBunkhouses(campers, bunkhouses):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-5] 3 male houses with 12 cap
+def assignBunkhouses(campers):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-5] 3 male houses with 12 cap
     campersAgeSorted = sorted(campers, key=operator.attrgetter('age'))
     bunkhouses = [[], [], [], [], [], []]
+    requests = []
     camperHouseCap = int(len(campers) / 6) + 1
-    for camper in campersAgeSorted:
+    for camper in campersAgeSorted: # initial sort
         housenum = 0
         if camper.gender == 'M':
             housenum += 3
+        if camper.assignmentRequest:
+            requests.append(camper)
         if len(bunkhouses[housenum]) == camperHouseCap:
             if len(bunkhouses[housenum+1]) == camperHouseCap:
                 if len(bunkhouses[housenum+2]) == camperHouseCap:
@@ -106,9 +109,34 @@ def assignBunkhouses(campers, bunkhouses):  # bunkhouses[0-2] 3 female houses, b
             bunkhouses[housenum].append(camper)
             camper.setBunkhouse(housenum)
             continue
+    for camper in requests:  # scrubs assignment requests
+        requestingbunkhouse = camper.getBunkhouse()
+        requestingcamper = searchCamperArr(campers, camper.assignmentRequest.getName())
+        if not bunkhouses[requestingbunkhouse].__contains__(requestingcamper):
+            if not len(bunkhouses[requestingbunkhouse]) == 12:  # if requesting bunkhouse is not full, append request
+                bunkhouses[requestingcamper.getBunkhouse()].remove(requestingcamper)
+                bunkhouses[requestingbunkhouse].append(requestingcamper)
+                requestingcamper.setBunkhouse(requestingbunkhouse)
+            else:  # if requesting bunkhouse is full
+                bunkagesorted = sorted(bunkhouses[requestingbunkhouse], key=operator.attrgetter('age'))
+                for bunkmember in bunkagesorted:
+                    if not camper:  # adds requestingcamper
+                        bunkhouses[requestingbunkhouse].remove(bunkmember)
+                        bunkhouses[requestingbunkhouse].append(requestingcamper)
+                        requestingcamper.setBunkhouse(requestingbunkhouse)
+                        if requestingbunkhouse < 3:
+                            for potentialhouse in range(0, 2):
+                                if not len(bunkhouses[potentialhouse]) == 12:  # if potential bunkhouse is not full
+                                    bunkhouses[potentialhouse].append(bunkmember)
+                                    bunkmember.setBunkhouse(potentialhouse)
+                        else:
+                            for potentialhouse in range(3, 5):
+                                if not len(bunkhouses[potentialhouse]) == 12:  # if potential bunkhouse is not full
+                                    bunkhouses[potentialhouse].append(bunkmember)
+                                    bunkmember.setBunkhouse(potentialhouse)
 
 
-def assignTribes(campers, tribes):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 gender mix
+def assignTribes(campers):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 gender mix
     campersGenderSorted = sorted(campers, key=operator.attrgetter('gender'))
     tribenum = 0
     tribes = [[], [], [], [], [], []]

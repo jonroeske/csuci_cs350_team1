@@ -354,7 +354,7 @@ def clearCamperBalance():
 def assignTribesToCampers():
     try:
         refreshScreen()
-        assignTribes(newCampers, tribes)
+        assignTribes(newCampers)
         print(' Tribes: ')
         for camper in newCampers:
             print(' ' + str(camper.getName()) + " Tribe: " + str(camper.getTribe()))
@@ -366,7 +366,7 @@ def assignTribesToCampers():
 def assignBunkhouseToCampers():
     try:
         refreshScreen()
-        assignBunkhouses(newCampers, bunkhouses)
+        assignBunkhouses(newCampers)
         print(' Bunkhouses: ')
         for camper in newCampers:
             print(' ' + str(camper.getName()) + " Bunkhouse: " + str(camper.getBunkhouse()))
