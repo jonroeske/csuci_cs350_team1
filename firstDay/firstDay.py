@@ -1,5 +1,4 @@
 import operator
-from Handlers.camperHandler import searchCamperArr
 
 # Clerk logic for handling day one of camp sessions
 def checkInCert(camper):  # Verifies required forms for arrival packet
@@ -79,6 +78,16 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
     else:
         print(camper.fullName + " has all required packet information and equipment for camp!")
         camper.checkedIn = True
+
+
+def searchCamperArr(camperArr, name):
+    try:
+        for currCamper in camperArr:
+            if str(currCamper.getName()) == name:
+                return currCamper
+    except:
+        print("Cannot find camper")
+    return None
 
 
 def assignBunkhouses(campers):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-5] 3 male houses with 12 cap
