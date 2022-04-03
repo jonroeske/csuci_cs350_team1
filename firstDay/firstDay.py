@@ -1,5 +1,5 @@
 import operator
-
+from Handlers.camperHandler import searchCamperArr
 
 # Clerk logic for handling day one of camp sessions
 def checkInCert(camper):  # Verifies required forms for arrival packet
@@ -83,7 +83,6 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
 
 def assignBunkhouses(campers, bunkhouses):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-5] 3 male houses with 12 cap
     campersAgeSorted = sorted(campers, key=operator.attrgetter('age'))
-    housenum = 0
     bunkhouses = [[], [], [], [], [], []]
     camperHouseCap = int(len(campers) / 6) + 1
     for camper in campersAgeSorted:
@@ -113,7 +112,10 @@ def assignTribes(campers, tribes):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 g
     campersGenderSorted = sorted(campers, key=operator.attrgetter('gender'))
     tribenum = 0
     tribes = [[], [], [], [], [], []]
-    for camper in campersGenderSorted:
+    requests = []
+    for camper in campersGenderSorted:  # initial sort
+        if camper.assignmentRequest:
+            requests.append(camper)
         if tribenum > 5:
             tribenum = 0
         elif len(tribes[tribenum]) == 12:
@@ -123,3 +125,22 @@ def assignTribes(campers, tribes):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 g
             tribes[tribenum].append(camper)
             camper.setTribe(tribenum)
             tribenum += 1
+    for camper in requests:  # scrubs assignment requests
+        requestingtribe = camper.getTribe()
+        requestingcamper = searchCamperArr(campers, camper.assignmentRequest.getName())
+        if not tribes[requestingtribe].__contains__(requestingcamper):
+            if not len(tribes[requestingtribe]) == 12:  # if requesting tribe is not full, append requesting camper
+                tribes[requestingcamper.getTribe()].remove(requestingcamper)
+                requestingcamper.setTribe(requestingtribe)
+                tribes[requestingtribe].append(requestingcamper)
+            else:  # if requesting tribe is full
+                tribegendersorted = sorted(tribes[requestingtribe], key=operator.attrgetter('gender'))
+                for tribemember in tribegendersorted:
+                    if tribemember.getGender() == requestingcamper.getGender() and not camper:  # adds requestingcamper
+                        tribes[requestingtribe].remove(tribemember)
+                        tribes[requestingtribe].append(requestingcamper)
+                        requestingcamper.setTribe(requestingtribe)
+                        for tribe in range(0, 5):
+                            if not len(tribes[tribe]) == 12:  # if potential tribe for tribemember is not full
+                                tribes[tribe].append(tribemember)
+                                tribemember.setTribe(tribe)
