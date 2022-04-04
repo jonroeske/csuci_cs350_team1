@@ -39,10 +39,15 @@ def loadFromPickle():
         loadedCampers = pickle.load(open('./campers.pkl', 'rb'))
         for camper in loadedCampers:
             newCampers.append(camper)
+
         print('| Successfully loaded campers from file!       |')
+        print('|----------------------------------------------|')
+    except EOFError:
+        print('| File is empty!                               |')
         print('|----------------------------------------------|')
     except:
         nonFatalError('ERROR: Loading campers from persistent file')
+        refreshScreen()
 
 def resetPickle():
     refreshScreen()
@@ -63,6 +68,11 @@ def dumpToPickle():
     refreshScreen()
     try:
         pickle.dump(newCampers, open('./campers.pkl', 'wb'))
+
+        # Added by Aaron, duplication occurs. Dump and Pump baby
+        for camper in newCampers:
+            newCampers.remove(camper)
+
         print('| Successfully dumped campers to file!         |')
         print('|----------------------------------------------|')
     except:
