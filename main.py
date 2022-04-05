@@ -88,6 +88,9 @@ def main():
                     # Pair request
                     assignPairRequest()
                 case '21':
+                    # Withdraw & refund camper
+                    withdrawRefundCamper()
+                case '22':
                     # Launch Django
                     notYetImplemented()
                 case _:

@@ -40,8 +40,9 @@ def refreshScreen():
     print('| (18) Assign bunkhouses                       |')
     print('| (19) Certify camper first day reqs           |')
     print('| (20) Camper pair request                     |')
+    print('| (21) Withdraw camper                         |')
     print('|----------------------------------------------|')
-    print('| (21) Launch Django GUI                       |')
+    print('| (22) Launch Django GUI                       |')
     print('|----------------------------------------------|')
 
 

@@ -3,6 +3,7 @@ from Objects.camper import Camper
 from firstDay.firstDay import assignTribes
 from firstDay.firstDay import assignBunkhouses
 from firstDay.firstDay import checkInCert
+from postAcceptance.postAcceptance import withdrawCamper
 import pickle
 import os
 
@@ -407,6 +408,18 @@ def assignPairRequest():
 
         refreshScreen()
         print(' Added pair request between ' + str(subjectcamper.getName()) + ' and ' + str(requestcamper.getName()))
+        print('|----------------------------------------------|')
+    except:
+        refreshScreen()
+        statusGetFailure()
+
+def withdrawRefundCamper():
+    try:
+        name = namePrompt()
+        camper = searchCamperArr(newCampers, name)
+        withdrawCamper(camper, newCampers, tribes, bunkhouses)
+        refreshScreen()
+        print(' Withdrew ' + str(camper.getName()))
         print('|----------------------------------------------|')
     except:
         refreshScreen()
