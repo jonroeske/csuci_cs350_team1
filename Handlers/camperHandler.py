@@ -24,13 +24,10 @@ def initializeData():
     tribes = []
 
 
-def searchCamperArr(camperArr, name):
-    try:
-        for currCamper in camperArr:
-            if str(currCamper.getName()) == name:
-                return currCamper
-    except:
-        nonFatalError("Cannot find camper")
+def searchCamperArr(camperArr, camper):
+    for currCamper in camperArr:
+        if currCamper.__eq__(camper):
+            return currCamper
     return None
 
 
@@ -39,7 +36,8 @@ def loadFromPickle():
     try:
         loadedCampers = pickle.load(open('./campers.pkl', 'rb'))
         for camper in loadedCampers:
-            newCampers.append(camper)
+            if not (camper.__eq__(searchCamperArr(newCampers, camper))):
+                newCampers.append(camper)
 
         print('| Successfully loaded campers from file!       |')
         print('|----------------------------------------------|')
@@ -48,7 +46,6 @@ def loadFromPickle():
         print('|----------------------------------------------|')
     except:
         nonFatalError('ERROR: Loading campers from persistent file')
-        refreshScreen()
 
 def resetPickle():
     refreshScreen()
@@ -69,11 +66,6 @@ def dumpToPickle():
     refreshScreen()
     try:
         pickle.dump(newCampers, open('./campers.pkl', 'wb'))
-
-        # Added by Aaron, duplication occurs. Dump and Pump baby
-        for camper in newCampers:
-            newCampers.remove(camper)
-
         print('| Successfully dumped campers to file!         |')
         print('|----------------------------------------------|')
     except:

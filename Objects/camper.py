@@ -26,6 +26,12 @@ class Camper:
         self.sunscreen = None
         self.bugSpray = None
 
+    def __eq__(self, other):
+        if isinstance(other, Camper):
+            return (self.fullName, self.age, self.gender, self.address) == (other.fullName, other.age, other.gender, other.address)
+        else:
+            return False
+
     def getName(self):
         return self.fullName
 
