@@ -14,17 +14,23 @@ def cancellationRefund(camper):
     difference = (today - camper.dateSentNotice).days / 7
     if 3 > difference:
         print("Cancelled within 3 weeks - 90% Refund")
-        raiseBalance(camper.fullName, 900)
+        raiseBalance(camper.fullName, -900)
         return False
     elif 6 > difference:
         print("Cancelled within 6 weeks - 45% Refund")
-        raiseBalance(camper.fullName, 450)
+        raiseBalance(camper.fullName, -450)
         return False
     else:
         print("Cancellation too late for refund")
         return False
 
 
-def withdrawCamper(camper):
-    print('')
-
+def withdrawCamper(camper, campers, tribes, bunkhouses):
+    cancellationRefund(camper)
+    campers.remove(camper)
+    for tribe in tribes:
+        if tribe.contains(camper):
+            tribe.remove(camper)
+    for bunkhouse in bunkhouses:
+        if bunkhouse.contains(camper):
+            bunkhouse.remove(camper)
