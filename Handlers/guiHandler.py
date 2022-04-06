@@ -38,39 +38,9 @@ def mainMenu():
     print('| (15) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
 
-    # ORIGINAL
-    #print('|----------------Camp Clerk CLI----------------|')
-    #print('| (0)  Shutdown                                |')
-    #print('| (1)  Credits                                 |')
-    #print('| (2)  Show Version                            |')
-    #print('|----------------------------------------------|')
-    #print('| (3)  Create New Camper                       |')
-    #print('| (4)  View All Campers                        |')
-    #print('|----------------------------------------------|')
-    #print('| (5)  View Camper Application Status          |')
-    #print('| (6)  Accept Camper Application               |')
-    #print('| (7)  Decline/Withdraw Camper Application     |')
-    #print('|----------------------------------------------|')
-    #print('| (8)  View Current Camper Balance             |')
-    #print('| (9)  Reduce Camper Balance                   |')
-    #print('| (10) Raise Camper Balance                    |')
-    #print('| (11) Clear Camper Balance                    |')
-    #print('|----------------------------------------------|')
-    #print('| (12) Show Camper Packet Status               |')
-    #print('| (13) Send Camper Packet                      |')
-    #print('|----------------------------------------------|')
-    #print('| (14) Assign session                          |')
-    #print('| (15) Assign tribes                           |')
-    #print('| (16) Assign bunkhouses                       |')
-    #print('| (17) Certify camper first day reqs           |')
-    #print('| (18) Camper pair request                     |')
-    #print('| (19) Withdraw camper                         |')
-    #print('|----------------------------------------------|')
-    #print('| (20) Launch Django GUI                       |')
-    #print('|----------------------------------------------|')
 
-
-def camperSubmenu():
+def camperSubMenu():
+    clearScreen()
     print('|----------------Camp Clerk CLI----------------|')
     print('| Financial                                    |')
     print('| (0)  View Camper Balance                     |')
@@ -95,7 +65,7 @@ def camperSubmenu():
     print('| (13) Send Packet                             |')
     print('| (14) Certify First-Day Requirements          |')
     print('|----------------------------------------------|')
-    print('| Press "Enter" to return to the Main Menu     |')
+    print('| (15) Return to Main Menu                     |')
     print('|----------------------------------------------|')
 
 

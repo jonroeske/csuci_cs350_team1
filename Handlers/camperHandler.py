@@ -90,47 +90,6 @@ def searchCamperArr(camperArr, fullname):
     return None
 
 
-#def loadFromPickle():
-#   mainMenu()
-#   try:
-#       loadedCampers = pickle.load(open('./allCampers.pkl', 'rb'))
-#       for camper in loadedCampers:
-#           if not (camper.__eq__(searchCamperArr(allCampers, camper))):
-#               allCampers.append(camper)
-
-#       print('| Successfully loaded campers from file!       |')
-#       print('|----------------------------------------------|')
-#   except EOFError:
-#       print('| File is empty!                               |')
-#       print('|----------------------------------------------|')
-#   except:
-#       nonFatalError('ERROR: Loading campers from persistent file')
-
-
-#def resetPickle():
-#   mainMenu()
-#   try:
-#       if os.path.exists('./campers.pkl'):
-#           os.remove('./campers.pkl')
-#           fp = open('./campers.pkl', 'x')
-#           fp.close()
-#           print('| Successfully cleared file!                   |')
-#           print('|----------------------------------------------|')
-#       else:
-#           nonFatalError('Error: Finding persistent file')
-#   except:
-#       nonFatalError('ERROR: Clearing persistent file')
-
-
-#ef dumpToPickle():
-#   mainMenu()
-#   try:
-#       pickle.dump(allCampers, open('./campers.pkl', 'wb'))
-#       print('| Successfully dumped campers to file!         |')
-#       print('|----------------------------------------------|')
-#   except:
-#       nonFatalError('ERROR: Dumping campers to persistent file')
-
 def searchEmptySlot(array):
     return any(elem is None for elem in array)
 
@@ -220,6 +179,70 @@ def createCamper():
         exit("CODE 2: Exception during camper creation")
 
 
+def deleteCamper():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        for location in locations:
+            try:
+                if location == 'allCampers':
+                    globals()[location].remove(camper)
+                    #globals()[location].sort(key=attrgetter('fullName'))
+                else:
+                    for i in range(3):
+                        globals()[location][i].remove(camper)
+                        #globals()[location][i].sort(key=attrgetter('fullName'))
+
+            except ValueError:
+                pass
+
+        mainMenu()
+        print('| Camper has been deleted!                     |')
+        print('|----------------------------------------------|')
+
+    except:
+        mainMenu()
+        statusGetFailure()
+
+
+def printCamper():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        print('|----------------------------------------------|')
+        print('  Name:    ' + camper.getName())
+        print('  Age:     ' + str(camper.getAge()))
+        print('  Gender:  ' + camper.getGender())
+        print('  Address: ' + camper.getAddress())
+        print('  Balance: $' + str(camper.getBalance()))
+
+        status = camper.getAppStatus()
+
+        if status == 0:
+            print('  Application Status: Pending')
+        elif status == 1:
+            print('  Application Status: Accepted')
+        elif status == 2:
+            print('  Application Status: Rejected')
+
+        session = camper.getSession()
+
+        if session:
+            print('  Session: ' + session)
+
+        print('|----------------------------------------------|')
+        print('| Press enter to return!                       |')
+        print('|----------------------------------------------|')
+        input()
+        mainMenu()
+
+    except:
+        mainMenu()
+        statusGetFailure()
+
+
 def printAllCampers():
     try:
         if not searchFilledSlot(allCampers):
@@ -261,6 +284,40 @@ def printAllCampers():
         pass
     except Exception as e:
         print(e)
+
+
+def viewSessions():
+    try:
+        clearScreen()
+        print('|----------------------------------------------|')
+        print('| Sessions:                                    |')
+        for location in locations:
+            if location == 'allCampers':
+                pass
+            else:
+                range = len(globals()[location][0])
+                print("   " + location + ":")
+                for i in range(range):
+                    camper = globals()[location][0][i]
+                    print('    ' +camper.getName())
+            print()
+
+    except ValueError:
+        pass
+    except AttributeError:
+        pass
+    except Exception as e:
+        print(e)
+        #mainMenu()
+        #statusGetFailure()
+
+
+def viewBunkhouses():
+    print("Cry me a river")
+
+
+def viewTribes():
+    print("Cry me a river")
 
 
 def viewCamperApplication():
