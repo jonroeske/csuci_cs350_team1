@@ -1,30 +1,26 @@
 from datetime import datetime
 class Camper:
     def __int__(self, fullname, age, gender, address):
+        # CAMPER DESCRIPTION
         self.fullName = fullname
         self.age = age
         self.gender = gender
         self.address = address
-        self.session = None
-        self.appStatus = 0
         self.balance = 0.00
-        self.tribe = None
+        self.appStatus = 0
+        #self.acceptStatus = False  DEPRECIATED
+        # CAMPER CAMP DETAILS
+        self.session = None
         self.bunkhouse = None
-        self.acceptStatus = False
+        self.tribe = None
         self.arrivalReqCert = False
         self.checkedIn = False
+
+        # CAMPER SUPPLIES + REQUEST
         self.assignmentRequest = None
-        self.dateSentNotice = None
         self.packetStatus = False
-        self.medical = None
-        self.legal = None
-        self.emergencyContacts = None
-        self.helmet = None
-        self.boots = None
-        self.sleepingBag = None
-        self.waterBottle = None
-        self.sunscreen = None
-        self.bugSpray = None
+        self.dateSentNotice = None
+        self.materials = None
 
     def __eq__(self, other):
         if isinstance(other, Camper):
@@ -56,32 +52,43 @@ class Camper:
     def getAddress(self):
         return self.address
 
-    def getAppStatus(self):
-        return self.appStatus
-
-    def getAcceptance(self):
-        return self.acceptStatus
-
-    def getPacket(self):
-        return self.packetStatus
-
     def getBalance(self):
         return self.balance
 
-    def getPacketSendDate(self):
-        return self.dateSentNotice
+    def getAppStatus(self):
+        return self.appStatus
+
+    #def getAcceptance(self):       DEPRECIATED
+    #    return self.acceptStatus
 
     def getSession(self):
         return self.session
 
-    def getTribe(self):
-        return self.tribe
-
     def getBunkhouse(self):
         return self.bunkhouse
 
+    def getTribe(self):
+        return self.tribe
+
+    def getArrivalReqCert(self):
+        return self.arrivalReqCert
+
     def getCheckedIn(self):
         return self.checkedIn
+
+    def getAssignmentRequest(self):
+        return self.assignmentRequest
+
+    def getPacket(self):
+        return self.packetStatus
+
+    def getPacketSendDate(self):
+        return self.dateSentNotice
+
+    def getMaterials(self):
+        return self.materials
+
+
 
     def setPacketSend(self):
         try:

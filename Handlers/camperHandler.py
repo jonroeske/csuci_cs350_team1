@@ -1,5 +1,6 @@
 from Handlers.guiHandler import *
 from Objects.camper import Camper
+from Objects.materials import Materials
 from firstDay.firstDay import assignTribes
 from firstDay.firstDay import assignBunkhouses
 from firstDay.firstDay import checkInCert
@@ -98,7 +99,7 @@ def shutdown():
             break
 
 
-def searchCamperArr(camperArr, fullname):
+def searchCamperFullName(camperArr, fullname):
     try:
         for currCamper in camperArr:
             if isinstance(currCamper, Camper) and currCamper.getName() == fullname:
@@ -106,6 +107,35 @@ def searchCamperArr(camperArr, fullname):
     except AttributeError:
         pass
     return None
+
+
+def searchCamperLastName(camperArr, camper):
+    campersWithLastName = []
+
+    lastName = camper.getName()
+    lastName = lastName.split()[1]
+    try:
+        for currCamper in camperArr:
+            currCamperLastName = currCamper.getName()
+            currCamperLastName = currCamperLastName.split()[1]
+            if not camper.__eq__(currCamper) and lastName == currCamperLastName:
+                campersWithLastName.append(currCamper)
+    except AttributeError:
+        pass
+    return campersWithLastName
+
+def searchCamperGender(camperArr, camper):
+    campersWithGender = []
+
+    gender = camper.getGender()
+    try:
+        for currCamper in camperArr:
+            currCamperGender = currCamper.getGender()
+            if not camper.__eq__(currCamper) and gender == currCamperGender:
+                campersWithGender.append(currCamper)
+    except AttributeError:
+        pass
+    return campersWithGender
 
 
 def searchEmptySlot(array):
@@ -127,6 +157,22 @@ def isCamperAccepted(camper):
         return False
     else:
         return True
+
+
+def numberOfGender(array):
+    toReturn = [0, 0]
+
+    try:
+        for i in array:
+            gender = i.getGender()
+            if(gender == 'M'):
+                toReturn[0] += 1
+            elif(gender == 'F'):
+                toReturn[1] += 1
+
+        return toReturn
+    except Exception as e:
+        print(e)
 #====================================================================================================================================
 
 
@@ -163,27 +209,19 @@ def createCamper():
                 nonFatalError('Applicant must be "M" or "F".')
 
         newCamper.address = addressPrompt()
-
-        newCamper.appStatus = 0
         newCamper.balance = 1000.00
-        newCamper.packetStatus = False
-        newCamper.checkedIn = False
-        newCamper.acceptStatus = False
-        newCamper.arrivalReqCert = False
+        newCamper.appStatus = 0
+
         newCamper.session = None
-        newCamper.tribe = None
         newCamper.bunkhouse = None
+        newCamper.tribe = None
+        newCamper.arrivalReqCert = False
+        newCamper.checkedIn = False
+
         newCamper.assignmentRequest = None
+        newCamper.packetStatus = False
         newCamper.dateSentNotice = None
-        newCamper.medical = None
-        newCamper.legal = None
-        newCamper.emergencyContacts = None
-        newCamper.helmet = None
-        newCamper.boots = None
-        newCamper.sleepingBag = None
-        newCamper.waterBottle = None
-        newCamper.sunscreen = None
-        newCamper.bugSpray = None
+        newCamper.materials = Materials()
 
         while 1:
             clearScreen()
@@ -222,7 +260,7 @@ def deleteCamper():
             return
 
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         for location in locations:
             try:
@@ -255,7 +293,7 @@ def printCamper():
             return
 
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         print('|----------------------------------------------|')
         print('  Name:    ' + camper.getName())
@@ -319,11 +357,18 @@ def printAllCampers():
         clearScreen()
         print('|----------------------------------------------|')
         print(f'|  Amount: {len(allCampers)}                                 |')
+
+        genders = numberOfGender(allCampers)
+        print(f'|  Composition: {genders[0]} Male(s), {genders[1]} Female(s)      |')
         print('|  Name(s):                                    |')
 
         for camper in allCampers:
             if camper:
                 print('    ' + camper.getName())
+
+                if camper.getAssignmentRequest() is not None:
+                    print('     Partner: ' + camper.getAssignmentRequest().getName())
+
 
 
         print('|----------------------------------------------|')
@@ -388,7 +433,7 @@ def viewTribes():
 def viewCamperBalance():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         camperSubMenu()
 
@@ -404,7 +449,7 @@ def viewCamperBalance():
 def raiseCamperBalance():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         amount = amountPrompt()
 
@@ -426,7 +471,7 @@ def raiseCamperBalance():
 def reduceCamperBalance():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         amount = amountPrompt()
 
@@ -450,7 +495,7 @@ def reduceCamperBalance():
 def clearCamperBalance():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         camperSubMenu()
 
@@ -470,7 +515,7 @@ def clearCamperBalance():
 def viewCamperApplication():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         status = camper.getAppStatus()
 
@@ -498,7 +543,7 @@ def viewCamperApplication():
 def acceptCamperApplication():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         balance = camper.getBalance()
 
@@ -527,7 +572,7 @@ def acceptCamperApplication():
 def rejectCamperApplication():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         camperSubMenu()
 
@@ -549,7 +594,7 @@ def assignCamperToSession():
         maxCampers = 64
 
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
 
@@ -621,7 +666,7 @@ def assignCamperToSession():
         #statusGetFailure()
 
 
-def assignBunkhouseToCampers():
+def assignCamperToBunkhouse():
     try:
         camperSubMenu()
         assignBunkhouses(allCampers)
@@ -634,7 +679,7 @@ def assignBunkhouseToCampers():
         statusGetFailure()
 
 
-def assignTribesToCampers():
+def assignCamperToTribe():
     try:
         camperSubMenu()
         assignTribes(allCampers)
@@ -650,10 +695,10 @@ def assignTribesToCampers():
 def assignPairRequest():
     try:
         subjectname = namePrompt()
-        subjectcamper = searchCamperArr(allCampers, subjectname)
+        subjectcamper = searchCamperFullName(allCampers, subjectname)
 
         requestname = namePrompt()
-        requestcamper = searchCamperArr(allCampers, requestname)
+        requestcamper = searchCamperFullName(allCampers, requestname)
         subjectcamper.setRequest(requestcamper)
 
         camperSubMenu()
@@ -667,7 +712,7 @@ def assignPairRequest():
 def withdrawRefundCamper():
     try:
         name = namePrompt()
-        camper = searchCamperArr(allCampers, name)
+        camper = searchCamperFullName(allCampers, name)
         #withdrawCamper(camper, allCampers, tribes, bunkhouses)
         camperSubMenu()
         print(' Withdrew ' + str(camper.getName()))
@@ -680,7 +725,7 @@ def withdrawRefundCamper():
 def viewCamperPacketStatus():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         camperSubMenu()
 
@@ -697,7 +742,7 @@ def viewCamperPacketStatus():
 def updateCamperPacketStatus():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
 
         camperSubMenu()
 
@@ -714,7 +759,7 @@ def updateCamperPacketStatus():
 def certifyCamperReqs():
     try:
         fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
+        camper = searchCamperFullName(allCampers, fullname)
         clearScreen()
         checkInCert(camper)
     except:
@@ -776,47 +821,46 @@ def setEveryApplication():
 #====================================================================================================================================
 # DEBUG
 def populateMaxCampers():
+    random.seed()
     fake = Faker()
+
+    allCampers.sort(key=lambda x: (x is None, x))
 
     for i in range(maxCampersTotal):
         empty = searchEmptySlot(allCampers)
         if empty:
-
-            print("Camper is None!")
             newCamper = Camper()
 
-            maleOrFemale = random.randint(0, 1)
-            if maleOrFemale == 0:
-                newCamper.fullName = fake.name_male()
-                newCamper.gender = 'M'
-            elif maleOrFemale == 1:
-                newCamper.fullName = fake.name_female()
-                newCamper.gender = 'F'
+            check = 0
+
+            while check == 0:
+                if i < maxCampersTotal/2:
+                    newCamper.fullName = fake.first_name_male() + ' ' + fake.last_name_male()
+                    newCamper.gender = 'M'
+                elif i >= maxCampersTotal/2:
+                    newCamper.fullName = fake.first_name_female() + ' ' + fake.last_name_female()
+                    newCamper.gender = 'F'
+
+                if searchCamperFullName(allCampers, newCamper.fullName) is None:
+                    check = 1
 
             newCamper.age = random.randint(9, 18)
 
             newCamper.address = fake.street_address()
 
-            newCamper.appStatus = 0
             newCamper.balance = 1000.00
-            newCamper.packetStatus = False
-            newCamper.checkedIn = False
-            newCamper.acceptStatus = False
-            newCamper.arrivalReqCert = False
+            newCamper.appStatus = 0
+
             newCamper.session = None
-            newCamper.tribe = None
             newCamper.bunkhouse = None
+            newCamper.tribe = None
+            newCamper.arrivalReqCert = False
+            newCamper.checkedIn = False
+
             newCamper.assignmentRequest = None
+            newCamper.packetStatus = False
             newCamper.dateSentNotice = None
-            newCamper.medical = None
-            newCamper.legal = None
-            newCamper.emergencyContacts = None
-            newCamper.helmet = None
-            newCamper.boots = None
-            newCamper.sleepingBag = None
-            newCamper.waterBottle = None
-            newCamper.sunscreen = None
-            newCamper.bugSpray = None
+            newCamper.materials = Materials()
 
             try:
                 allCampers.remove(None)
@@ -828,6 +872,34 @@ def populateMaxCampers():
 
     allCampers.sort(key=lambda x: (x is None, x))
 
+    for camper in allCampers:
+
+        try:
+            if camper.getAssignmentRequest() is None:
+                # Here we find all campers with the same last name
+                matchingCampers = searchCamperLastName(allCampers, camper)
+
+                # Here we find all campers with the same last name
+                #  We can't pair up two campers of different genders
+                matchingCampers = searchCamperGender(matchingCampers, camper)
+
+                if len(matchingCampers) > 0:
+
+                    chanceRequest = random.randint(1, 4)
+                    if chanceRequest == 4:
+                        print("Pairing request started!")
+                        try:
+                            index = random.randint(0, len(matchingCampers) - 1)
+
+                            camper.setRequest(matchingCampers[index])
+                            matchingCampers[index].setRequest(camper)
+
+                            print(f"Successful pair! {camper.getName()} {matchingCampers[index].getName()}")
+                        except Exception as e:
+                            print(e)
+
+        except Exception as e:
+            print(e)
     mainMenu()
     print('| Max campers created, calm down there God...  |')
     print('|----------------------------------------------|')

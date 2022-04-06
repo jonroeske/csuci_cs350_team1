@@ -2,17 +2,12 @@
 import sys
 
 from Handlers.camperHandler import *
-import random
 
 def main():
     initializeData()
-
-    random.seed()
-
     currentRuntime = 'mainMenu'
 
     mainMenu()
-
     while 1:
 
         while currentRuntime == 'mainMenu':
@@ -54,9 +49,9 @@ def main():
                         notYetImplemented()
                     case '15': # TODO
                         notYetImplemented()
-                    case '16':
+                    case '16': # TODO - DONE
                         populateMaxCampers()
-                    case '17':
+                    case '17': # TODO - DONE
                         clearAllCampers()
                     case _:
                         mainMenu()
@@ -92,9 +87,9 @@ def main():
                     case '7': # TODO - DONE
                         assignCamperToSession()
                     case '8': # TODO
-                        assignBunkhouseToCampers() # CHECK
+                        assignCamperToBunkhouse() # CHECK
                     case '9': # TODO
-                        assignTribesToCampers() # CHECK
+                        assignCamperToTribe() # CHECK
                     case '10': # TODO
                         assignPairRequest()
                     case '11': # TODO
