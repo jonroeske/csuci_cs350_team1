@@ -32,6 +32,18 @@ class Camper:
         else:
             return False
 
+    def __lt__(self, other):
+        if isinstance(other, Camper):
+            return (self.fullName < other.fullName)
+        else:
+            return False
+
+    def __gt__(self, other):
+        if isinstance(other, Camper):
+            return (self.fullName > other.fullName)
+        else:
+            return False
+
     def getName(self):
         return self.fullName
 

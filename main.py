@@ -1,7 +1,6 @@
 # CLI System
 import sys
 
-from Handlers.docHandler import *
 from Handlers.guiHandler import *
 from Handlers.camperHandler import *
 from Objects.camper import *
@@ -9,137 +8,50 @@ from Objects.camper import *
 def main():
     initializeData()
 
-    # Original
-    #while 1:
-    #    try:
-    #        varInput = input(">> ")
-    #        match varInput:
-    #            case '0':
-    #                # Stops application
-    #                shutdown()
-    #                time.sleep(2)
-    #                exit()
-    #            case '1':
-    #                # Shows app credits
-    #                mainMenu()
-    #                showCredits()
-    #            case '2':
-    #                # Shows app version
-    #                mainMenu()
-    #                showVersion()
-    #            case '3':
-    #                # Creates a new camper
-    #                newCamper = createCamper()
-    #                if newCamper:
-    #                    camperCreateSuccess()
-    #                else:
-    #                    camperCreateFailure()
-    #            case '4':
-    #                # View all campers
-    #                printAllCampers()
-    #            case '5':
-    #                # View camper application status
-    #                viewCamperApplication()
-    #            case '6':
-    #                # Accept camper application
-    #                acceptCamperApplication()
-    #            case '7':
-    #                # Decline/withdraw camper application
-    #                rejectCamperApplication()
-    #            case '8':
-    #                # View camper balance
-    #                viewCamperBalance()
-    #            case '9':
-    #                # Reduce camper balance
-    #                reduceCamperBalance()
-    #            case '10':
-    #                # Raise camper balance
-    #                raiseCamperBalance()
-    #            case '11':
-    #                # Clear camper balance
-    #                clearCamperBalance()
-    #            case '12':
-    #                # Show camper packet status
-    #                viewCamperPacketStatus()
-    #            case '13':
-    #                # Update camper packet status
-    #                updateCamperPacketStatus()
-    #            case '14':
-    #                assignCamperToSession()
-    #            case '15':
-    #                # Assign tribes
-    #                assignTribesToCampers()
-    #            case '16':
-    #                # Assign bunkhouses
-    #                assignBunkhouseToCampers()
-    #            case '17':
-    #                # Certify camper
-    #                certifyCamperReqs()
-    #            case '18':
-    #                # Pair request
-    #                assignPairRequest()
-    #            case '19':
-    #                # Withdraw & refund camper
-    #                withdrawRefundCamper()
-    #            case '20':
-    #                # Launch Django
-    #                notYetImplemented()
-    #            case _:
-    #                mainMenu()
-    #    except KeyboardInterrupt:
-    #        shutdown()
-    #        time.sleep(2)
-    #        exit()
-    #    except SystemExit:
-    #        time.sleep(2)
-    #        exit()
-    #    except:
-    #        exit("main() has stopped")
-
     currentRuntime = 'mainMenu'
 
+    mainMenu()
     while 1:
 
         while currentRuntime == 'mainMenu':
-            mainMenu()
             try:
                 varInput = input(">> ")
                 match varInput:
-                    case '0':
+                    case '0': # TODO - DONE
                         shutdown()
-                        time.sleep(2)
                         exit()
-                    case '1':
+                    case '1': # TODO - DONE
                         mainMenu()
                         showCredits()
-                    case '2':
+                    case '2': # TODO - DONE
                         mainMenu()
                         showVersion()
-                    case '3':
+                    case '3': # TODO - DONE
                         createCamper()
-                    case '4':
+                    case '4': # TODO - DONE
                         deleteCamper()
-                    case '5':
+                    case '5': # TODO - DONE
                         currentRuntime = 'camperSubMenu'
-                    case '6':
+                        camperSubMenu()
+                    case '6': # TODO - DONE
                         printCamper()
-                    case '7':
+                    case '7': # TODO - DONE
                         printAllCampers()
-                    case '8':
+                    case '8': # TODO - DONE
                         viewSessions()
-                    case '9':
+                    case '9': # TODO
                         viewBunkhouses()
-                    case '10':
+                    case '10': # TODO
                         viewTribes()
-                    case '11':
+                    case '11': # TODO - DONE
+                        setEveryBalance()
+                    case '12': # TODO - DONE
+                        setEveryApplication()
+                    case '13': # TODO
                         notYetImplemented()
-                    case '12':
+                    case '14': # TODO
                         notYetImplemented()
-                    case '13':
-                        notYetImplemented()
-                    case '14':
-                        notYetImplemented()
-                    case '15':
+                    case '15': # TODO
                         notYetImplemented()
                     case _:
                         mainMenu()
@@ -155,43 +67,42 @@ def main():
                 exit("main() has stopped")
 
         while currentRuntime == 'camperSubMenu':
-            camperSubMenu()
             try:
                 varInput = input(">> ")
                 match varInput:
-                    case '0':
+                    case '0': # TODO - DONE
                         viewCamperBalance()
-                    case '1':
+                    case '1': # TODO - DONE
                         raiseCamperBalance()
-                    case '2':
+                    case '2': # TODO - DONE
                         reduceCamperBalance()
-                    case '3':
+                    case '3': # TODO - DONE
                         clearCamperBalance()
-                    case '4':
+                    case '4': # TODO - DONE
                         viewCamperApplication()
-                    case '5':
+                    case '5': # TODO - DONE
                         acceptCamperApplication()
-                    case '6':
+                    case '6':# TODO - DONE
                         rejectCamperApplication()
-                    case '7':
+                    case '7': # TODO - DONE
                         assignCamperToSession()
-                    case '8':
+                    case '8': # TODO
                         assignBunkhouseToCampers() # CHECK
-                    case '9':
+                    case '9': # TODO
                         assignTribesToCampers() # CHECK
-                    case '10':
+                    case '10': # TODO
                         assignPairRequest()
-                    case '11':
+                    case '11': # TODO
                         withdrawCamper()
-                    case '12':
+                    case '12': # TODO - DONE
                         viewCamperPacketStatus()
-                    case '13':
+                    case '13': # TODO - DONE
                         updateCamperPacketStatus()
-                    case '14':
+                    case '14': # TODO - IN PROGRESS
                         certifyCamperReqs()
-                    case '15':
+                    case '15': # TODO - DONE
                         currentRuntime = 'mainMenu'
-                        break
+                        mainMenu()
                     case _:
                         camperSubMenu()
             except KeyboardInterrupt:

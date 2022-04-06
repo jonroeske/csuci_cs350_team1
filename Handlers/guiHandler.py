@@ -31,8 +31,8 @@ def mainMenu():
     print('| (10) View Tribes                             |')
     print('|----------------------------------------------|')
     print('| Automation                                   |')
-    print('| (11) Set Every Balance to Zero               |')
-    print('| (12) Auto-Accept All Applications            |')
+    print('| (11) Set Every Balance                       |')
+    print('| (12) Set All Applications                    |')
     print('| (13) Auto-Assign All Sessions                |')
     print('| (14) Auto-Assign All Bunkhouses              |')
     print('| (15) Auto-Assign All Tribes                  |')
@@ -145,6 +145,21 @@ def amountPrompt():
     amount = str(input(">> "))
 
     return amount
+
+
+def applicationStatusPrompt():
+    clearScreen()
+    print('|----------------------------------------------|')
+    print('| Press "Enter" to return at any time          |')
+    print('|----------------------------------------------|')
+    print('| Which status would you like to set to?       |')
+    print('| (0)  Pending                                 |')
+    print('| (1)  Accepted                                |')
+    print('| (2)  Rejected                                |')
+    print('|----------------------------------------------|')
+    status = str(input(">> "))
+
+    return status
 
 
 def camperConfirmation(newCamper):

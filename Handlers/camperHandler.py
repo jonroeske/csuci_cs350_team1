@@ -10,6 +10,8 @@ import operator
 import pickle
 import os
 
+#====================================================================================================================================
+# UTILITY FUNCTIONS
 def initializeData():
     global allCampers
     global juneCampers
@@ -66,6 +68,16 @@ def initializeData():
                 #  The third list consists of the six tribes, which consists of a list of campers
                 globals()[location] = [campers, bunkhouses, tribes]
 
+        #try:
+        if location == 'allCampers':
+            globals()[location].sort(key=lambda x: (x is None, x))
+        else:
+            for i in range(3):
+                globals()[location][i].sort(key=lambda x: (x is None, x))
+        #except TypeError:
+        #    pass
+
+
     print(allCampers)
     print(juneCampers)
     print(julyCampers)
@@ -84,9 +96,12 @@ def shutdown():
 
 
 def searchCamperArr(camperArr, fullname):
-    for currCamper in camperArr:
-        if currCamper.getName() == fullname:
-            return currCamper
+    try:
+        for currCamper in camperArr:
+            if isinstance(currCamper, Camper) and currCamper.getName() == fullname:
+                return currCamper
+    except AttributeError:
+        pass
     return None
 
 
@@ -98,6 +113,22 @@ def searchFilledSlot(array):
     return any(elem is not None for elem in array)
 
 
+def isCamperAccepted(camper):
+    if camper.getAppStatus() == 0:
+        print('| Camper has not been accepted!                |')
+        print('|----------------------------------------------|')
+        return False
+    elif camper.getAppStatus() == 2:
+        print('| Camper has been Rejected!                    |')
+        print('|----------------------------------------------|')
+        return False
+    else:
+        return True
+#====================================================================================================================================
+
+
+#====================================================================================================================================
+# CAMPER OBJECT FUNCTIONS
 def createCamper():
     if not searchEmptySlot(allCampers):
         mainMenu()
@@ -181,6 +212,12 @@ def createCamper():
 
 def deleteCamper():
     try:
+        mainMenu()
+        if not searchFilledSlot(allCampers):
+            print('| There are currently no campers!              |')
+            print('|----------------------------------------------|')
+            return
+
         fullname = namePrompt()
         camper = searchCamperArr(allCampers, fullname)
 
@@ -208,6 +245,12 @@ def deleteCamper():
 
 def printCamper():
     try:
+        if not searchFilledSlot(allCampers):
+            mainMenu()
+            print('| There are currently no campers!              |')
+            print('|----------------------------------------------|')
+            return
+
         fullname = namePrompt()
         camper = searchCamperArr(allCampers, fullname)
 
@@ -229,7 +272,7 @@ def printCamper():
 
         session = camper.getSession()
 
-        if session:
+        if session is not None:
             print('  Session: ' + session)
 
         print('|----------------------------------------------|')
@@ -237,6 +280,7 @@ def printCamper():
         print('|----------------------------------------------|')
         input()
         mainMenu()
+
 
     except:
         mainMenu()
@@ -284,32 +328,42 @@ def printAllCampers():
         pass
     except Exception as e:
         print(e)
+#====================================================================================================================================
 
+
+#====================================================================================================================================
+# SESSIONS
 
 def viewSessions():
     try:
         clearScreen()
         print('|----------------------------------------------|')
         print('| Sessions:                                    |')
-        for location in locations:
+        for location in locations[1:]:
             if location == 'allCampers':
                 pass
             else:
-                range = len(globals()[location][0])
-                print("   " + location + ":")
-                for i in range(range):
-                    camper = globals()[location][0][i]
-                    print('    ' +camper.getName())
-            print()
+                month = location.split("Camper", maxsplit=1)[0].capitalize()
 
-    except ValueError:
-        pass
-    except AttributeError:
-        pass
+                print(f'    {month}:')
+                try:
+                    for i in range(maxCampersTotal):
+                        camper = globals()[location][0][i]
+                        print('     ' +camper.getName())
+                except ValueError:
+                    pass
+                except AttributeError:
+                    pass
+
+        print('|----------------------------------------------|')
+        print('| Press enter to return!                       |')
+        print('|----------------------------------------------|')
+        input()
+        mainMenu()
+
     except Exception as e:
-        print(e)
-        #mainMenu()
-        #statusGetFailure()
+        mainMenu()
+        statusGetFailure()
 
 
 def viewBunkhouses():
@@ -318,8 +372,94 @@ def viewBunkhouses():
 
 def viewTribes():
     print("Cry me a river")
+#====================================================================================================================================
 
 
+#====================================================================================================================================
+# CAMPER ATTRIBUTE FUNCTIONS
+#  BALANCE
+def viewCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        camperSubMenu()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Balance Due: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        camperSubMenu()
+        statusGetFailure()
+
+
+def raiseCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        amount = amountPrompt()
+
+        camperSubMenu()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(camper.getBalance() + float(amount))
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        camperSubMenu()
+        statusGetFailure()
+
+
+def reduceCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        amount = amountPrompt()
+
+        camperSubMenu()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(camper.getBalance() - float(amount))
+        if camper.getBalance() < 0:
+            camper.setBalance(0)
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        camperSubMenu()
+        statusGetFailure()
+
+
+def clearCamperBalance():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        camperSubMenu()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Old Balance: $' + str(camper.getBalance()))
+
+        camper.setBalance(0)
+
+        print('  New Balance: $' + str(camper.getBalance()))
+        print('|----------------------------------------------|')
+
+    except:
+        camperSubMenu()
+        statusGetFailure()
+
+#  APPLICATION
 def viewCamperApplication():
     try:
         fullname = namePrompt()
@@ -327,7 +467,7 @@ def viewCamperApplication():
 
         status = camper.getAppStatus()
 
-        mainMenu()
+        camperSubMenu()
         if status == 0:
             print('  Camper Found: ' + camper.getName())
             print('  Application Status: Pending!')
@@ -344,7 +484,7 @@ def viewCamperApplication():
             print('|----------------------------------------------|')
             return
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
 
@@ -355,7 +495,7 @@ def acceptCamperApplication():
 
         balance = camper.getBalance()
 
-        mainMenu()
+        camperSubMenu()
         if balance != 0:
             print('  Camper Found: ' + camper.getName())
             print('  Balance: $' + str(balance))
@@ -368,12 +508,12 @@ def acceptCamperApplication():
             print('|----------------------------------------------|')
             return
         else:
-            mainMenu()
+            camperSubMenu()
             statusGetFailure()
             return
 
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
 
@@ -382,137 +522,21 @@ def rejectCamperApplication():
         fullname = namePrompt()
         camper = searchCamperArr(allCampers, fullname)
 
-        mainMenu()
+        camperSubMenu()
 
         if camper.setAppStatus(2):
             print('  Camper Found: ' + camper.getName())
             print('  Application Status: Rejected!')
             print('|----------------------------------------------|')
         else:
-            mainMenu()
+            camperSubMenu()
             statusGetFailure()
 
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
-
-def viewCamperBalance():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        mainMenu()
-
-        print('  Camper Found: ' + camper.getName())
-        print('  Balance Due: $' + str(camper.getBalance()))
-        print('|----------------------------------------------|')
-
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
-def viewCamperPacketStatus():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        mainMenu()
-
-        print('  Camper Found: ' + camper.getName())
-        print('  Packet Status: ' + str(camper.getPacket()))
-        print('  Send Date: ' + str(camper.getPacketSendDate()))
-        print('|----------------------------------------------|')
-
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
-def updateCamperPacketStatus():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        mainMenu()
-
-        camper.setPacketSend()
-        print('  Camper Found: ' + camper.getName())
-        print('  Packet Status: ' + str(camper.getPacket()))
-        print('  Send Date: ' + str(camper.getPacketSendDate()))
-        print('|----------------------------------------------|')
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
-def reduceCamperBalance():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        amount = amountPrompt()
-
-        mainMenu()
-
-        print('  Camper Found: ' + camper.getName())
-        print('  Old Balance: $' + str(camper.getBalance()))
-
-        camper.setBalance(camper.getBalance() - float(amount))
-        if camper.getBalance() < 0:
-            camper.setBalance(0)
-
-        print('  New Balance: $' + str(camper.getBalance()))
-        print('|----------------------------------------------|')
-
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
-def raiseCamperBalance():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        amount = amountPrompt()
-
-        mainMenu()
-
-        print('  Camper Found: ' + camper.getName())
-        print('  Old Balance: $' + str(camper.getBalance()))
-
-        camper.setBalance(camper.getBalance() + float(amount))
-
-        print('  New Balance: $' + str(camper.getBalance()))
-        print('|----------------------------------------------|')
-
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
-def clearCamperBalance():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-
-        mainMenu()
-
-        print('  Camper Found: ' + camper.getName())
-        print('  Old Balance: $' + str(camper.getBalance()))
-
-        camper.setBalance(0)
-
-        print('  New Balance: $' + str(camper.getBalance()))
-        print('|----------------------------------------------|')
-
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
+#  ASSIGNMENT
 def assignCamperToSession():
     try:
         maxCampers = 64
@@ -523,13 +547,13 @@ def assignCamperToSession():
         availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
 
         if camper.getAppStatus() != 1:
-            mainMenu()
+            camperSubMenu()
             print('| Camper must be accepted!                     |')
             print('|----------------------------------------------|')
             return
 
         elif not any(availability):
-            mainMenu()
+            camperSubMenu()
             print('| Sorry, all sessions are full!                |')
             print('|----------------------------------------------|')
             return
@@ -540,7 +564,7 @@ def assignCamperToSession():
                     pass
                 else:
                     globals()[location][0].index(camper)
-                    mainMenu()
+                    camperSubMenu()
                     camperAlreadyEnrolled()
                     return
             except ValueError:
@@ -579,7 +603,7 @@ def assignCamperToSession():
             else:
                 nonFatalError('That session is full!')
 
-        mainMenu()
+        camperSubMenu()
         print('| Camper successfully added to session!        |')
         print('|----------------------------------------------|')
 
@@ -590,41 +614,29 @@ def assignCamperToSession():
         #statusGetFailure()
 
 
-def assignTribesToCampers():
-    try:
-        mainMenu()
-        assignTribes(allCampers)
-        print(' Tribes: ')
-        for camper in allCampers:
-            print(' ' + str(camper.getName()) + " Tribe: " + str(camper.getTribe()))
-        print('|----------------------------------------------|')
-    except:
-        mainMenu()
-        statusGetFailure()
-
-
 def assignBunkhouseToCampers():
     try:
-        mainMenu()
+        camperSubMenu()
         assignBunkhouses(allCampers)
         print(' Bunkhouses: ')
         for camper in allCampers:
             print(' ' + str(camper.getName()) + " Bunkhouse: " + str(camper.getBunkhouse()))
         print('|----------------------------------------------|')
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
 
-def certifyCamperReqs():
+def assignTribesToCampers():
     try:
-        fullname = namePrompt()
-        camper = searchCamperArr(allCampers, fullname)
-        mainMenu()
-        checkInCert(camper)
+        camperSubMenu()
+        assignTribes(allCampers)
+        print(' Tribes: ')
+        for camper in allCampers:
+            print(' ' + str(camper.getName()) + " Tribe: " + str(camper.getTribe()))
         print('|----------------------------------------------|')
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
 
@@ -637,11 +649,11 @@ def assignPairRequest():
         requestcamper = searchCamperArr(allCampers, requestname)
         subjectcamper.setRequest(requestcamper)
 
-        mainMenu()
+        camperSubMenu()
         print(' Added pair request between ' + str(subjectcamper.getName()) + ' and ' + str(requestcamper.getName()))
         print('|----------------------------------------------|')
     except:
-        mainMenu()
+        camperSubMenu()
         statusGetFailure()
 
 
@@ -650,22 +662,108 @@ def withdrawRefundCamper():
         name = namePrompt()
         camper = searchCamperArr(allCampers, name)
         withdrawCamper(camper, allCampers, tribes, bunkhouses)
-        mainMenu()
+        camperSubMenu()
         print(' Withdrew ' + str(camper.getName()))
         print('|----------------------------------------------|')
     except:
-        mainMenu()
+        camperSubMenu()
+        statusGetFailure()
+
+#  FIRST DAY MATERIALS
+def viewCamperPacketStatus():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        camperSubMenu()
+
+        print('  Camper Found: ' + camper.getName())
+        print('  Packet Status: ' + str(camper.getPacket()))
+        print('  Send Date: ' + str(camper.getPacketSendDate()))
+        print('|----------------------------------------------|')
+
+    except:
+        camperSubMenu()
         statusGetFailure()
 
 
-def isCamperAccepted(camper):
-    if camper.getAppStatus() == 0:
-        print('| Camper has not been accepted!                |')
+def updateCamperPacketStatus():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+
+        camperSubMenu()
+
+        camper.setPacketSend()
+        print('  Camper Found: ' + camper.getName())
+        print('  Packet Status: ' + str(camper.getPacket()))
+        print('  Send Date: ' + str(camper.getPacketSendDate()))
         print('|----------------------------------------------|')
-        return False
-    elif camper.getAppStatus() == 2:
-        print('| Camper has been Rejected!                    |')
+    except:
+        camperSubMenu()
+        statusGetFailure()
+
+
+def certifyCamperReqs():
+    try:
+        fullname = namePrompt()
+        camper = searchCamperArr(allCampers, fullname)
+        camperSubMenu()
+        checkInCert(camper)
         print('|----------------------------------------------|')
-        return False
-    else:
-        return True
+    except:
+        camperSubMenu()
+        statusGetFailure()
+#====================================================================================================================================
+
+
+#====================================================================================================================================
+# AUTOMATION
+def setEveryBalance():
+    try:
+        amount = amountPrompt()
+        mainMenu()
+        if not searchFilledSlot(allCampers):
+            print('| There are currently no campers!              |')
+            print('|----------------------------------------------|')
+            return
+
+        for camper in allCampers:
+            if camper:
+                camper.setBalance(amount)
+
+        print('| Every balance cleared!                       |')
+        print('|  PS: HR would like a word with you!          |')
+        print('|----------------------------------------------|')
+
+    except AttributeError:
+        pass
+    except Exception as e:
+        print(e)
+
+
+def setEveryApplication():
+    try:
+        status = applicationStatusPrompt()
+        mainMenu()
+        if not searchFilledSlot(allCampers):
+            print('| There are currently no campers!              |')
+            print('|----------------------------------------------|')
+            return
+
+        for camper in allCampers:
+            if camper:
+                if camper.getBalance() == 0:
+                    camper.setAppStatus(status)
+
+        print('| Every application status changed!            |')
+        print('|  PS: Some excellent quality control there...  |')
+        print('|----------------------------------------------|')
+
+    except AttributeError:
+        pass
+    except Exception as e:
+        print(e)
+
+
+#====================================================================================================================================
