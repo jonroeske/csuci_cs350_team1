@@ -4,8 +4,10 @@ import operator
 def checkInCert(camper):  # Verifies required forms for arrival packet
     camper.checkedIn = False
 
-    print('--------Campers Arrival Packet--------')
-    print('Please answer the following questions with "Y" for Yes, "N" for No')
+    print('|------------Campers Arrival Packet------------|')
+    print('| Please answer the following questions with   |')
+    print('|  "Y" for Yes, "N" for No                     |')
+    print('|----------------------------------------------|')
     camper.medical = input('Does the camper have his/her medical information filled out? ')
     camper.legal = input('Does the camper have his/her legal information filled out? ')
     camper.emergencyContacts = input('Does the camper have his/her emergency contacts filled out? ')
@@ -22,9 +24,10 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
         camper.emergencyContacts = True
     else:
         camper.emergencyContacts = False
-
-    print('--------Campers Required Equipment--------')
-    print('Please answer the following questions with "Y" for Yes, "N" for No')
+    print('|----------Campers Required Equipment----------|')
+    print('| Please answer the following questions with   |')
+    print('|  "Y" for Yes, "N" for No                     |')
+    print('|----------------------------------------------|')
     camper.helmet = input('Does the camper have his/her riding helmet? ')
     camper.boots = input('Does the camper have his/her boots? ')
     camper.sleepingBag = input('Does the camper have his/her sleeping bag? ')
@@ -79,6 +82,11 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
         print(camper.fullName + " has all required packet information and equipment for camp!")
         camper.checkedIn = True
 
+    print('|----------------------------------------------|')
+    print('| Press enter to return!                       |')
+    print('|----------------------------------------------|')
+    input()
+    camperSubMenu()
 
 def searchCamperArr(camperArr, name):
     try:

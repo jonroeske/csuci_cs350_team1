@@ -80,10 +80,13 @@ class Camper:
     def getBunkhouse(self):
         return self.bunkhouse
 
+    def getCheckedIn(self):
+        return self.checkedIn
+
     def setPacketSend(self):
         try:
             self.packetStatus = True
-            self.dateSentNotice = datetime.now()
+            self.dateSentNotice = datetime.now().replace(microsecond = 0)
             return True
         except:
             return False

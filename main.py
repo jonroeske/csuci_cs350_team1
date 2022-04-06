@@ -1,16 +1,18 @@
 # CLI System
 import sys
 
-from Handlers.guiHandler import *
 from Handlers.camperHandler import *
-from Objects.camper import *
+import random
 
 def main():
     initializeData()
 
+    random.seed()
+
     currentRuntime = 'mainMenu'
 
     mainMenu()
+
     while 1:
 
         while currentRuntime == 'mainMenu':
@@ -18,7 +20,6 @@ def main():
                 varInput = input(">> ")
                 match varInput:
                     case '0': # TODO - DONE
-                        shutdown()
                         exit()
                     case '1': # TODO - DONE
                         mainMenu()
@@ -53,6 +54,10 @@ def main():
                         notYetImplemented()
                     case '15': # TODO
                         notYetImplemented()
+                    case '16':
+                        populateMaxCampers()
+                    case '17':
+                        clearAllCampers()
                     case _:
                         mainMenu()
             except KeyboardInterrupt:

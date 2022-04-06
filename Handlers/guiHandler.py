@@ -37,6 +37,10 @@ def mainMenu():
     print('| (14) Auto-Assign All Bunkhouses              |')
     print('| (15) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
+    print('| DEBUG                                        |')
+    print('| (16) Populate Max Campers                    |')
+    print('| (17) Clear All Campers                       |')
+    print('|----------------------------------------------|')
 
 
 def camperSubMenu():

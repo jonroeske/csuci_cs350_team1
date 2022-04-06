@@ -6,7 +6,10 @@ from firstDay.firstDay import checkInCert
 from postAcceptance.postAcceptance import withdrawCamper
 
 import itertools
-import operator
+import random
+
+from faker import Faker
+
 import pickle
 import os
 
@@ -18,18 +21,19 @@ def initializeData():
     global julyCampers
     global augustCampers
 
-    global locations
-    locations = ['allCampers', 'juneCampers', 'julyCampers', 'augustCampers']
 
+    global locations
     global maxCampersTotal
+    global maxCampersInSession
     global maxBunkhouses
     global maxCampersInBunkhouses
-
     global maxTribes
     global maxCampersInTribes
 
+    locations = ['allCampers', 'juneCampers', 'julyCampers', 'augustCampers']
 
-    maxCampersTotal = 72
+    maxCampersTotal = 216
+    maxCampersInSession = 72
     maxBunkhouses = 6
     maxCampersInBunkhouse = 12
     maxTribes = 6
@@ -54,11 +58,11 @@ def initializeData():
 
             if location == 'allCampers':
                 allCampers = []
-                for i in range(maxCampersTotal * 3):
+                for i in range(maxCampersTotal):
                     allCampers.append(None)
 
             else:
-                campers = list(itertools.repeat(None, maxCampersTotal))
+                campers = list(itertools.repeat(None, maxCampersInSession))
                 bunkhouses = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
                 tribes = list(itertools.repeat(list(itertools.repeat(None, maxCampersInTribe)), maxTribes))
 
@@ -77,11 +81,10 @@ def initializeData():
         #except TypeError:
         #    pass
 
-
     print(allCampers)
-    print(juneCampers)
-    print(julyCampers)
-    print(augustCampers)
+    #print(juneCampers)
+    #print(julyCampers)
+    #print(augustCampers)
 
 
 def shutdown():
@@ -267,13 +270,30 @@ def printCamper():
             print('  Application Status: Pending')
         elif status == 1:
             print('  Application Status: Accepted')
+            print('|----------------------------------------------|')
+
+            session = camper.getSession()
+            bunkhouse = camper.getBunkhouse()
+            tribe = camper.getTribe()
+
+            if session:
+                print('  Session: ' + session)
+            if bunkhouse:
+                print('  Bunkhouse: ' + bunkhouse)
+            if tribe:
+                print('  Tribe: ' + tribe)
+
+            print('  Checked In: ' + str(camper.getCheckedIn()))
+            print('  Packet Status: : ' + str(camper.getPacket()))
+
+            packetDate = camper.getPacketSendDate()
+
+            if packetDate:
+                print('  Packet Sent Date: ' + str(packetDate))
+
         elif status == 2:
             print('  Application Status: Rejected')
 
-        session = camper.getSession()
-
-        if session is not None:
-            print('  Session: ' + session)
 
         print('|----------------------------------------------|')
         print('| Press enter to return!                       |')
@@ -282,7 +302,8 @@ def printCamper():
         mainMenu()
 
 
-    except:
+    except Exception as e:
+        print(e)
         mainMenu()
         statusGetFailure()
 
@@ -296,28 +317,14 @@ def printAllCampers():
             return
 
         clearScreen()
+        print('|----------------------------------------------|')
+        print(f'|  Amount: {len(allCampers)}                                 |')
+        print('|  Name(s):                                    |')
+
         for camper in allCampers:
             if camper:
-                print('|----------------------------------------------|')
-                print('  Name:    ' + camper.getName())
-                print('  Age:     ' + str(camper.getAge()))
-                print('  Gender:  ' + camper.getGender())
-                print('  Address: ' + camper.getAddress())
-                print('  Balance: $' + str(camper.getBalance()))
+                print('    ' + camper.getName())
 
-                status = camper.getAppStatus()
-
-                if status == 0:
-                    print('  Application Status: Pending')
-                elif status == 1:
-                    print('  Application Status: Accepted')
-                elif status == 2:
-                    print('  Application Status: Rejected')
-
-                session = camper.getSession()
-
-                if session:
-                    print('  Session: ' + session)
 
         print('|----------------------------------------------|')
         print('| Press enter to return!                       |')
@@ -347,7 +354,7 @@ def viewSessions():
 
                 print(f'    {month}:')
                 try:
-                    for i in range(maxCampersTotal):
+                    for i in range(maxCampersInSession):
                         camper = globals()[location][0][i]
                         print('     ' +camper.getName())
                 except ValueError:
@@ -661,7 +668,7 @@ def withdrawRefundCamper():
     try:
         name = namePrompt()
         camper = searchCamperArr(allCampers, name)
-        withdrawCamper(camper, allCampers, tribes, bunkhouses)
+        #withdrawCamper(camper, allCampers, tribes, bunkhouses)
         camperSubMenu()
         print(' Withdrew ' + str(camper.getName()))
         print('|----------------------------------------------|')
@@ -708,9 +715,8 @@ def certifyCamperReqs():
     try:
         fullname = namePrompt()
         camper = searchCamperArr(allCampers, fullname)
-        camperSubMenu()
+        clearScreen()
         checkInCert(camper)
-        print('|----------------------------------------------|')
     except:
         camperSubMenu()
         statusGetFailure()
@@ -764,6 +770,75 @@ def setEveryApplication():
         pass
     except Exception as e:
         print(e)
+#====================================================================================================================================
 
 
 #====================================================================================================================================
+# DEBUG
+def populateMaxCampers():
+    fake = Faker()
+
+    for i in range(maxCampersTotal):
+        empty = searchEmptySlot(allCampers)
+        if empty:
+
+            print("Camper is None!")
+            newCamper = Camper()
+
+            maleOrFemale = random.randint(0, 1)
+            if maleOrFemale == 0:
+                newCamper.fullName = fake.name_male()
+                newCamper.gender = 'M'
+            elif maleOrFemale == 1:
+                newCamper.fullName = fake.name_female()
+                newCamper.gender = 'F'
+
+            newCamper.age = random.randint(9, 18)
+
+            newCamper.address = fake.street_address()
+
+            newCamper.appStatus = 0
+            newCamper.balance = 1000.00
+            newCamper.packetStatus = False
+            newCamper.checkedIn = False
+            newCamper.acceptStatus = False
+            newCamper.arrivalReqCert = False
+            newCamper.session = None
+            newCamper.tribe = None
+            newCamper.bunkhouse = None
+            newCamper.assignmentRequest = None
+            newCamper.dateSentNotice = None
+            newCamper.medical = None
+            newCamper.legal = None
+            newCamper.emergencyContacts = None
+            newCamper.helmet = None
+            newCamper.boots = None
+            newCamper.sleepingBag = None
+            newCamper.waterBottle = None
+            newCamper.sunscreen = None
+            newCamper.bugSpray = None
+
+            try:
+                allCampers.remove(None)
+                allCampers.append(newCamper)
+            except ValueError:
+                pass
+                # we shouldn't be getting this error, as above the empty check confirms
+                #  there is an empty slot to use
+
+    allCampers.sort(key=lambda x: (x is None, x))
+
+    mainMenu()
+    print('| Max campers created, calm down there God...  |')
+    print('|----------------------------------------------|')
+
+
+def clearAllCampers():
+    allCampers.clear()
+    for i in range(maxCampersInSession * 3):
+        allCampers.append(None)
+
+    mainMenu()
+    print('| Cleared all campers, you monster!            |')
+    print('|----------------------------------------------|')
+#==========================================================================================================================
