@@ -3,46 +3,99 @@ import time
 
 from Objects.camper import *
 
-versionNumber = "Build Mar292022"
+versionNumber = "Build Apr052022"
 
 
 def clearScreen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def refreshScreen():
+def mainMenu():
     clearScreen()
-    print('|----------------Camp Clerk CLI----------------| ')
+    print('|----------------Camp Clerk CLI----------------|')
+    print('| Main Menu                                    |')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
     print('| (2)  Show Version                            |')
     print('|----------------------------------------------|')
+    print('| Campers                                      |')
     print('| (3)  Create New Camper                       |')
-    print('| (4)  View All Campers                        |')
+    print('| (4)  Delete Camper                           |')
+    print('| (5)  Camper Actions                          |')
+    print('| (6)  View Camper                             |')
+    print('| (7)  View All Campers                        |')
     print('|----------------------------------------------|')
-    print('| (5)  View Camper Application Status          |')
-    print('| (6)  Accept Camper Application               |')
-    print('| (7)  Decline/Withdraw Camper Application     |')
+    print('| Sessions                                     |')
+    print('| (8)  View Sessions                           |')
+    print('| (9)  View Bunkhouse                          |')
+    print('| (10) View Tribes                             |')
     print('|----------------------------------------------|')
-    print('| (8)  View Current Camper Balance             |')
-    print('| (9)  Reduce Camper Balance                   |')
-    print('| (10) Raise Camper Balance                    |')
-    print('| (11) Clear Camper Balance                    |')
+    print('| Automation                                   |')
+    print('| (11) Set Every Balance to Zero               |')
+    print('| (12) Auto-Accept All Applications            |')
+    print('| (13) Auto-Assign All Sessions                |')
+    print('| (14) Auto-Assign All Bunkhouses              |')
+    print('| (15) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
-    print('| (12) Show Camper Packet Status               |')
-    print('| (13) Send Camper Packet                      |')
+
+    # ORIGINAL
+    #print('|----------------Camp Clerk CLI----------------|')
+    #print('| (0)  Shutdown                                |')
+    #print('| (1)  Credits                                 |')
+    #print('| (2)  Show Version                            |')
+    #print('|----------------------------------------------|')
+    #print('| (3)  Create New Camper                       |')
+    #print('| (4)  View All Campers                        |')
+    #print('|----------------------------------------------|')
+    #print('| (5)  View Camper Application Status          |')
+    #print('| (6)  Accept Camper Application               |')
+    #print('| (7)  Decline/Withdraw Camper Application     |')
+    #print('|----------------------------------------------|')
+    #print('| (8)  View Current Camper Balance             |')
+    #print('| (9)  Reduce Camper Balance                   |')
+    #print('| (10) Raise Camper Balance                    |')
+    #print('| (11) Clear Camper Balance                    |')
+    #print('|----------------------------------------------|')
+    #print('| (12) Show Camper Packet Status               |')
+    #print('| (13) Send Camper Packet                      |')
+    #print('|----------------------------------------------|')
+    #print('| (14) Assign session                          |')
+    #print('| (15) Assign tribes                           |')
+    #print('| (16) Assign bunkhouses                       |')
+    #print('| (17) Certify camper first day reqs           |')
+    #print('| (18) Camper pair request                     |')
+    #print('| (19) Withdraw camper                         |')
+    #print('|----------------------------------------------|')
+    #print('| (20) Launch Django GUI                       |')
+    #print('|----------------------------------------------|')
+
+
+def camperSubmenu():
+    print('|----------------Camp Clerk CLI----------------|')
+    print('| Financial                                    |')
+    print('| (0)  View Camper Balance                     |')
+    print('| (1)  Raise Camper Balance                    |')
+    print('| (2)  Reduce Camper Balance                   |')
+    print('| (3)  Clear Camper Balance                    |')
     print('|----------------------------------------------|')
-    print('| (14) Dump to file                            |')
-    print('| (15) Load from file                          |')
-    print('| (16) Reset file                              |')
+    print('| Application                                  |')
+    print('| (4)  View Application Status                 |')
+    print('| (5)  Accept Application                      |')
+    print('| (6)  Decline Application                     |')
     print('|----------------------------------------------|')
-    print('| (17) Assign tribes                           |')
-    print('| (18) Assign bunkhouses                       |')
-    print('| (19) Certify camper first day reqs           |')
-    print('| (20) Camper pair request                     |')
-    print('| (21) Withdraw camper                         |')
+    print('| Assignment                                   |')
+    print('| (7)  Assign Session                          |')
+    print('| (8)  Assign Bunkhouse                        |')
+    print('| (9)  Assign Tribe                            |')
+    print('| (10) Process Pair Request                    |')
+    print('| (11) Withdraw Camper                         |')
     print('|----------------------------------------------|')
-    print('| (22) Launch Django GUI                       |')
+    print('| First-Day Materials                          |')
+    print('| (12) Show Packet Status                      |')
+    print('| (13) Send Packet                             |')
+    print('| (14) Certify First-Day Requirements          |')
+    print('|----------------------------------------------|')
+    print('| Press "Enter" to return to the Main Menu     |')
     print('|----------------------------------------------|')
 
 
@@ -145,7 +198,12 @@ def camperCreateSuccess():
 
 
 def camperCreateFailure():
-    print('| ERROR: Camper creation failed!               |')
+    print('| ERROR: Camper creation aborted               |')
+    print('|----------------------------------------------|')
+
+
+def camperAlreadyEnrolled():
+    print('| This camper is enrolled in a session!        |')
     print('|----------------------------------------------|')
 
 
@@ -186,7 +244,7 @@ def statusGetFailure():
 
 def viewCamperBalance(camperArray, name):
     if len(camperArray) <= 0:
-        refreshScreen()
+        mainMenu()
         print('| There are currently no campers!              |')
         print('|----------------------------------------------|')
         return
@@ -198,7 +256,7 @@ def viewCamperBalance(camperArray, name):
     print('| Press "Enter" to return!                     |')
     print('|----------------------------------------------|')
     input()
-    refreshScreen()
+    mainMenu()
     return
 
 
@@ -214,4 +272,4 @@ def notYetImplemented():
     print("| ERROR: Not yet implemented.                  | ")
     print('|----------------------------------------------|')
     time.sleep(2)
-    refreshScreen()
+    mainMenu()

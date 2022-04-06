@@ -2,11 +2,6 @@
 import datetime
 from Objects.camper import Camper
 
-juneCampers = []
-julyCampers = []
-augustCampers = []
-
-
 def submitApplication(fullname, age, gender, address, session):  # create camper obj using fields
     newCamper = Camper(fullname, age, gender, address, session)
 

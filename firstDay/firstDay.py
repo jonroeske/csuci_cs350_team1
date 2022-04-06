@@ -148,7 +148,6 @@ def assignBunkhouses(campers):  # bunkhouses[0-2] 3 female houses, bunkhouses[3-
 def assignTribes(campers):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 gender mix
     campersGenderSorted = sorted(campers, key=operator.attrgetter('gender'))
     tribenum = 0
-    tribes = [[], [], [], [], [], []]
     requests = []
     for camper in campersGenderSorted:  # initial sort
         if camper.assignmentRequest:
@@ -181,3 +180,4 @@ def assignTribes(campers):  # tribes[0-5] 6 tribes, with 12 cap; 50-50 gender mi
                             if not len(tribes[tribe]) == 12:  # if potential tribe for tribemember is not full
                                 tribes[tribe].append(tribemember)
                                 tribemember.setTribe(tribe)
+

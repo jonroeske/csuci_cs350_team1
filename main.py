@@ -6,39 +6,39 @@ from Handlers.guiHandler import *
 from Handlers.camperHandler import *
 from Objects.camper import *
 
-
 def main():
-    refreshScreen()
+    mainMenu()
 
     initializeData()
 
+    # Original
     while 1:
         try:
             varInput = input(">> ")
             match varInput:
                 case '0':
                     # Stops application
+                    shutdown()
                     time.sleep(2)
-                    break
+                    exit()
                 case '1':
                     # Shows app credits
-                    refreshScreen()
+                    mainMenu()
                     showCredits()
                 case '2':
                     # Shows app version
-                    refreshScreen()
+                    mainMenu()
                     showVersion()
                 case '3':
                     # Creates a new camper
                     newCamper = createCamper()
-                    refreshScreen()
                     if newCamper:
                         camperCreateSuccess()
                     else:
                         camperCreateFailure()
                 case '4':
                     # View all campers
-                    printNewCampers()
+                    printAllCampers()
                 case '5':
                     # View camper application status
                     viewCamperApplication()
@@ -67,36 +67,65 @@ def main():
                     # Update camper packet status
                     updateCamperPacketStatus()
                 case '14':
-                    # Dumps campers to pickle file
-                    dumpToPickle()
+                    assignCamperToSession()
                 case '15':
-                    # Loads pickle file
-                    loadFromPickle()
-                case '16':
-                    # Clears pickle file
-                    resetPickle()
-                case '17':
                     # Assign tribes
                     assignTribesToCampers()
-                case '18':
+                case '16':
                     # Assign bunkhouses
                     assignBunkhouseToCampers()
-                case '19':
+                case '17':
                     # Certify camper
                     certifyCamperReqs()
-                case '20':
+                case '18':
                     # Pair request
                     assignPairRequest()
-                case '21':
+                case '19':
                     # Withdraw & refund camper
                     withdrawRefundCamper()
-                case '22':
+                case '20':
                     # Launch Django
                     notYetImplemented()
                 case _:
-                    refreshScreen()
+                    mainMenu()
+        except KeyboardInterrupt:
+            shutdown()
+            time.sleep(2)
+            exit()
+        except SystemExit:
+            time.sleep(2)
+            exit()
         except:
             exit("main() has stopped")
 
+    currentRuntime = 'mainMenu'
+
+
+    #while currentRuntime == 'mainMenu':
+    #    try:
+    #        varInput = input(">> ")
+    #        match varInput:
+    #            case '0':
+    #                shutdown()
+    #                time.sleep(2)
+    #                exit()
+    #            case '1':
+    #                mainMenu()
+    #                showCredits()
+    #            case '2':
+#
+    #            case _:
+    #                mainMenu()
+    #    except KeyboardInterrupt:
+    #        shutdown()
+    #        time.sleep(2)
+    #        exit()
+    #    except SystemExit:
+    #        shutdown()
+    #        time.sleep(2)
+    #        exit()
+    #    except:
+    #        exit("main() has stopped")
+#
 
 main()

@@ -59,6 +59,9 @@ class Camper:
     def getPacketSendDate(self):
         return self.dateSentNotice
 
+    def getSession(self):
+        return self.session
+
     def getTribe(self):
         return self.tribe
 
@@ -83,6 +86,13 @@ class Camper:
     def setBalance(self, balance):
         try:
             self.balance = float(balance)
+            return True
+        except:
+            return False
+
+    def setSession(self, session):
+        try:
+            self.session = session
             return True
         except:
             return False
