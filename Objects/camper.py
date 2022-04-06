@@ -133,7 +133,7 @@ class Camper:
         except:
             return False
 
-    def setRequest(self, camper):
+    def setAssignmentRequest(self, camper):
         try:
             self.assignmentRequest = camper
             return True

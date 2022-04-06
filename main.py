@@ -44,7 +44,7 @@ def main():
                     case '12': # TODO - DONE
                         setEveryApplication()
                     case '13': # TODO
-                        notYetImplemented()
+                        assignCampersToSessions()
                     case '14': # TODO
                         notYetImplemented()
                     case '15': # TODO

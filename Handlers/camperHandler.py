@@ -6,13 +6,10 @@ from firstDay.firstDay import assignBunkhouses
 from firstDay.firstDay import checkInCert
 from postAcceptance.postAcceptance import withdrawCamper
 
-import itertools
-import random
-
+from operator import attrgetter
 from faker import Faker
+import itertools, random, pickle, sys, os
 
-import pickle
-import os
 
 #====================================================================================================================================
 # UTILITY FUNCTIONS
@@ -27,9 +24,9 @@ def initializeData():
     global maxCampersTotal
     global maxCampersInSession
     global maxBunkhouses
-    global maxCampersInBunkhouses
+    global maxCampersInBunkhouse
     global maxTribes
-    global maxCampersInTribes
+    global maxCampersInTribe
 
     locations = ['allCampers', 'juneCampers', 'julyCampers', 'augustCampers']
 
@@ -58,9 +55,7 @@ def initializeData():
             print(location + ' not found! Creating...')
 
             if location == 'allCampers':
-                allCampers = []
-                for i in range(maxCampersTotal):
-                    allCampers.append(None)
+                allCampers = list(itertools.repeat(None, maxCampersTotal))
 
             else:
                 campers = list(itertools.repeat(None, maxCampersInSession))
@@ -73,19 +68,19 @@ def initializeData():
                 #  The third list consists of the six tribes, which consists of a list of campers
                 globals()[location] = [campers, bunkhouses, tribes]
 
-        #try:
-        if location == 'allCampers':
-            globals()[location].sort(key=lambda x: (x is None, x))
-        else:
-            for i in range(3):
-                globals()[location][i].sort(key=lambda x: (x is None, x))
-        #except TypeError:
-        #    pass
+        try:
+            if location == 'allCampers':
+                globals()[location].sort(key=lambda x: (x is None, x))
+            else:
+                for i in range(3):
+                    globals()[location][i].sort(key=lambda x: (x is None, x))
+        except Exception as e:
+            print(e)
 
     print(allCampers)
-    #print(juneCampers)
-    #print(julyCampers)
-    #print(augustCampers)
+    print(juneCampers)
+    print(julyCampers)
+    print(augustCampers)
 
 
 def shutdown():
@@ -124,6 +119,7 @@ def searchCamperLastName(camperArr, camper):
         pass
     return campersWithLastName
 
+
 def searchCamperGender(camperArr, camper):
     campersWithGender = []
 
@@ -135,6 +131,8 @@ def searchCamperGender(camperArr, camper):
                 campersWithGender.append(currCamper)
     except AttributeError:
         pass
+    except TypeError:
+        pass
     return campersWithGender
 
 
@@ -144,6 +142,22 @@ def searchEmptySlot(array):
 
 def searchFilledSlot(array):
     return any(elem is not None for elem in array)
+
+
+def searchAttribute(array, attribute):
+    toReturn = attrgetter(attribute)
+    try:
+        for camper in array:
+            try:
+                return toReturn(camper)
+            except AttributeError:
+                pass
+            except TypeError:
+                pass
+    except Exception is e:
+        print(e)
+    return None
+
 
 
 def isCamperAccepted(camper):
@@ -159,20 +173,31 @@ def isCamperAccepted(camper):
         return True
 
 
-def numberOfGender(array):
+def numberOfGender(array, *singleGender):
     toReturn = [0, 0]
 
     try:
-        for i in array:
-            gender = i.getGender()
-            if(gender == 'M'):
-                toReturn[0] += 1
-            elif(gender == 'F'):
-                toReturn[1] += 1
-
-        return toReturn
-    except Exception as e:
+        for camper in array:
+            try:
+                gender = camper.getGender()
+                if(gender == 'M'):
+                    toReturn[0] += 1
+                elif(gender == 'F'):
+                    toReturn[1] += 1
+            except AttributeError:
+                pass
+            except TypeError:
+                pass
+    except Exception is e:
         print(e)
+    if singleGender:
+        if (singleGender[0] == 'M'):
+            return toReturn[0]
+        elif (singleGender[0] == 'F'):
+            return toReturn[1]
+
+    return toReturn
+
 #====================================================================================================================================
 
 
@@ -356,11 +381,12 @@ def printAllCampers():
 
         clearScreen()
         print('|----------------------------------------------|')
-        print(f'|  Amount: {len(allCampers)}                                 |')
+        print(f'   Amount: {len(allCampers)}                                 |')
 
         genders = numberOfGender(allCampers)
-        print(f'|  Composition: {genders[0]} Male(s), {genders[1]} Female(s)      |')
-        print('|  Name(s):                                    |')
+        print(f'   Composition: {genders[0]} Male(s), {genders[1]} Female(s) ')
+        print(f'   Names:')
+
 
         for camper in allCampers:
             if camper:
@@ -391,17 +417,30 @@ def viewSessions():
         clearScreen()
         print('|----------------------------------------------|')
         print('| Sessions:                                    |')
+
+
         for location in locations[1:]:
             if location == 'allCampers':
                 pass
             else:
                 month = location.split("Camper", maxsplit=1)[0].capitalize()
+                amount = len(globals()[location][0]) - globals()[location][0].count(None)
 
                 print(f'    {month}:')
+                print(f'     Amount: {amount}')
+
+                genders = numberOfGender(globals()[location][0])
+                print(f'     Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
+                print(f'     Names:')
+
                 try:
                     for i in range(maxCampersInSession):
                         camper = globals()[location][0][i]
-                        print('     ' +camper.getName())
+                        if camper:
+                            print('       ' + camper.getName())
+
+                            if camper.getAssignmentRequest() is not None:
+                                print('        Partner: ' + camper.getAssignmentRequest().getName())
                 except ValueError:
                     pass
                 except AttributeError:
@@ -591,7 +630,7 @@ def rejectCamperApplication():
 #  ASSIGNMENT
 def assignCamperToSession():
     try:
-        maxCampers = 64
+        maxCampersInSession
 
         fullname = namePrompt()
         camper = searchCamperFullName(allCampers, fullname)
@@ -622,20 +661,19 @@ def assignCamperToSession():
             except ValueError:
                 pass
                 # if this camper isn't a duplicate, then we want to create it
-
-
-
+            
         while 1:
+
             clearScreen()
 
             print('|----------------------------------------------|')
             print('| What session would you like to assign?       |')
             print('| (0)  June                                    |')
-            print(f'|  Availability: {maxCampers - juneCampers[0].index(None)}' + '                            |')
+            print(f'|  Availability: {maxCampersInSession - juneCampers[0].index(None)}' + '                            |')
             print('| (1)  July                                    |')
-            print(f'|  Availability: {maxCampers - julyCampers[0].index(None)}' + '                            |')
+            print(f'|  Availability: {maxCampersInSession - julyCampers[0].index(None)}' + '                            |')
             print('| (2)  August                                  |')
-            print(f'|  Availability: {maxCampers - augustCampers[0].index(None)}' + '                            |')
+            print(f'|  Availability: {maxCampersInSession - augustCampers[0].index(None)}' + '                            |')
             print('|----------------------------------------------|')
 
             command = input(">> ")
@@ -697,9 +735,40 @@ def assignPairRequest():
         subjectname = namePrompt()
         subjectcamper = searchCamperFullName(allCampers, subjectname)
 
+        if subjectcamper.getAssignmentRequest() is not None:
+                print('| Camper already has request:                  |')
+                print(f'|  {subjectcamper.getAssignmentRequest().getName()}')
+                print('|----------------------------------------------|')
+                print('| Press "Enter" to return!                     |')
+                print('|----------------------------------------------|')
+                input(">> ")
+                camperSubMenu()
+                return
+
         requestname = namePrompt()
         requestcamper = searchCamperFullName(allCampers, requestname)
-        subjectcamper.setRequest(requestcamper)
+
+        if requestcamper.getAssignmentRequest() is not None:
+                print('| Camper already has request:                  |')
+                print(f'|  {requestcamper.getAssignmentRequest().getName()}')
+                print('|----------------------------------------------|')
+                print('| Press "Enter" to return!                     |')
+                print('|----------------------------------------------|')
+                input(">> ")
+                camperSubMenu()
+                return
+
+        if(subjectcamper.getGender() != requestcamper.getGender()):
+            print('| Campers must have the same gender!           |')
+            print('|----------------------------------------------|')
+            print('| Press "Enter" to return!                     |')
+            print('|----------------------------------------------|')
+            input(">> ")
+            camperSubMenu()
+            return
+        
+        subjectcamper.setAssignmentRequest(requestcamper)
+        requestcamper.setAssignmentRequest(subjectcamper)
 
         camperSubMenu()
         print(' Added pair request between ' + str(subjectcamper.getName()) + ' and ' + str(requestcamper.getName()))
@@ -815,16 +884,90 @@ def setEveryApplication():
         pass
     except Exception as e:
         print(e)
+
+
+
+def assignCampersToSessions():
+    availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
+
+    if not any(availability):
+        mainMenu()
+        print('| Sorry, all sessions are full!                |')
+        print('|----------------------------------------------|')
+        return
+
+    copyAllCampers = allCampers.copy()
+    random.shuffle(copyAllCampers)
+
+    maxGenderPerSession = 36
+
+    try:
+        for camper in copyAllCampers:
+            if camper.getSession():
+                continue
+            elif not camper.getAssignmentRequest():
+                continue
+
+            index = random.randint(1, availability.count(True))
+            currentSession = globals()[locations[index]][0]
+            sessionName = locations[index].split("Camper", 1)[0].capitalize()
+            numberOfMalesOrFemales = numberOfGender(currentSession, camper.getGender())
+            partner = camper.getAssignmentRequest()
+
+            if numberOfMalesOrFemales > maxGenderPerSession:
+                continue
+            elif numberOfMalesOrFemales + 2 > maxGenderPerSession:
+                continue
+            elif partner and partner.getSession() is None:
+                globals()[locations[index]][0].remove(None)
+                globals()[locations[index]][0].remove(None)
+
+                globals()[locations[index]][0].insert(index, camper)
+                globals()[locations[index]][0].insert(index, partner)
+
+                camper.setSession(sessionName)
+                partner.setSession(sessionName)
+
+        for location in locations:
+            if location == "allCampers":
+                continue
+            else:
+                for camper in copyAllCampers:
+                    count = globals()[location][0].count(None)
+                    currentSession = globals()[location][0]
+                    numberOfMalesOrFemales = numberOfGender(currentSession, camper.getGender())
+
+                    if camper.getSession():
+                        continue
+                    elif count == 0:
+                        continue
+
+                    if numberOfMalesOrFemales > maxGenderPerSession:
+                        continue
+                    elif numberOfMalesOrFemales + 1 > maxGenderPerSession:
+                        continue
+                    else:
+                        globals()[location][0].remove(None)
+                        globals()[location][0].append(camper)
+                        camper.setSession(location.split("Camper", 1)[0].capitalize())
+
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
 #====================================================================================================================================
 
 
 #====================================================================================================================================
 # DEBUG
 def populateMaxCampers():
+    print('| Creating max campers...                      |')
+    print('|----------------------------------------------|')
+
     random.seed()
     fake = Faker()
 
-    allCampers.sort(key=lambda x: (x is None, x))
+
 
     for i in range(maxCampersTotal):
         empty = searchEmptySlot(allCampers)
@@ -887,28 +1030,48 @@ def populateMaxCampers():
 
                     chanceRequest = random.randint(1, 4)
                     if chanceRequest == 4:
-                        print("Pairing request started!")
+                        #print("Pairing request started!")
                         try:
                             index = random.randint(0, len(matchingCampers) - 1)
 
-                            camper.setRequest(matchingCampers[index])
-                            matchingCampers[index].setRequest(camper)
+                            camper.setAssignmentRequest(matchingCampers[index])
+                            matchingCampers[index].setAssignmentRequest(camper)
 
-                            print(f"Successful pair! {camper.getName()} {matchingCampers[index].getName()}")
+                            #print(f"Successful pair! {camper.getName()} {matchingCampers[index].getName()}")
                         except Exception as e:
                             print(e)
 
         except Exception as e:
             print(e)
+
+    time.sleep(2)
+
     mainMenu()
     print('| Max campers created, calm down there God...  |')
     print('|----------------------------------------------|')
 
 
 def clearAllCampers():
-    allCampers.clear()
-    for i in range(maxCampersInSession * 3):
-        allCampers.append(None)
+    print('| Clearing all campers...                      |')       
+    print('|----------------------------------------------|')       
+
+    try:
+        for location in locations:
+            if location == 'allCampers':
+                globals()[location].clear()
+                globals()[location] = list(itertools.repeat(None, maxCampersTotal))
+            else:
+                globals()[location][0].clear()
+                globals()[location][1].clear()
+                globals()[location][2].clear()
+
+                globals()[location][0] = list(itertools.repeat(None, maxCampersInSession))
+                globals()[location][1] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
+                globals()[location][2] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInTribe)), maxTribes))
+    except Exception as e:
+        print(e)
+
+    time.sleep(2)
 
     mainMenu()
     print('| Cleared all campers, you monster!            |')
