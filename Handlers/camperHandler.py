@@ -24,9 +24,9 @@ def initializeData():
     tribes = []
 
 
-def searchCamperArr(camperArr, camper):
+def searchCamperArr(camperArr, fullname):
     for currCamper in camperArr:
-        if currCamper.__eq__(camper):
+        if currCamper.getName() == fullname:
             return currCamper
     return None
 
@@ -46,6 +46,7 @@ def loadFromPickle():
         print('|----------------------------------------------|')
     except:
         nonFatalError('ERROR: Loading campers from persistent file')
+
 
 def resetPickle():
     refreshScreen()
@@ -256,6 +257,7 @@ def viewCamperBalance():
         refreshScreen()
         statusGetFailure()
 
+
 def viewCamperPacketStatus():
     try:
         fullname = namePrompt()
@@ -272,6 +274,7 @@ def viewCamperPacketStatus():
         refreshScreen()
         statusGetFailure()
 
+
 def updateCamperPacketStatus():
     try:
         fullname = namePrompt()
@@ -287,6 +290,7 @@ def updateCamperPacketStatus():
     except:
         refreshScreen()
         statusGetFailure()
+
 
 def reduceCamperBalance():
     try:
@@ -307,7 +311,7 @@ def reduceCamperBalance():
         print('  New Balance: $' + str(camper.getBalance()))
         print('|----------------------------------------------|')
 
-    except:
+    except
         refreshScreen()
         statusGetFailure()
 
@@ -366,6 +370,7 @@ def assignTribesToCampers():
         refreshScreen()
         statusGetFailure()
 
+
 def assignBunkhouseToCampers():
     try:
         refreshScreen()
@@ -378,6 +383,7 @@ def assignBunkhouseToCampers():
         refreshScreen()
         statusGetFailure()
 
+
 def certifyCamperReqs():
     try:
         fullname = namePrompt()
@@ -388,6 +394,7 @@ def certifyCamperReqs():
     except:
         refreshScreen()
         statusGetFailure()
+
 
 def assignPairRequest():
     try:
@@ -405,6 +412,7 @@ def assignPairRequest():
         refreshScreen()
         statusGetFailure()
 
+
 def withdrawRefundCamper():
     try:
         name = namePrompt()
@@ -416,6 +424,7 @@ def withdrawRefundCamper():
     except:
         refreshScreen()
         statusGetFailure()
+
 
 def isCamperAccepted(camper):
     if camper.getAppStatus() == 0:
