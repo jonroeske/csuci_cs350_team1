@@ -48,7 +48,7 @@ def main():
                     case '14': # TODO - DONE
                         assignCampersToBunkhouses()
                     case '15': # TODO
-                        notYetImplemented()
+                        assignCampersToTribes()
                     case '16': # TODO - DONE
                         populateMaxCampers()
                     case '17': # TODO - DONE
@@ -69,8 +69,8 @@ def main():
                 shutdown()
                 time.sleep(2)
                 exit()
-            except:
-                exit("main() has stopped")
+            except Exception as e:
+                print(e)
 
         while currentRuntime == 'camperSubMenu':
             try:
@@ -119,7 +119,7 @@ def main():
                 shutdown()
                 time.sleep(2)
                 exit()
-            except:
-                exit("main() has stopped")
+            except Exception as e:
+                print(e)
 
 main()
