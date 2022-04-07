@@ -1,3 +1,5 @@
+import numbers
+
 from Handlers.guiHandler import *
 from Objects.camper import Camper
 from Objects.materials import Materials
@@ -8,7 +10,7 @@ from postAcceptance.postAcceptance import withdrawCamper
 
 from operator import attrgetter
 from faker import Faker
-import itertools, random, pickle, sys, os
+import random, pickle, sys, os
 
 
 #====================================================================================================================================
@@ -55,12 +57,12 @@ def initializeData():
             print(location + ' not found! Creating...')
 
             if location == 'allCampers':
-                allCampers = list(itertools.repeat(None, maxCampersTotal))
+                allCampers = [ None for _ in range(maxCampersTotal)]
 
             else:
-                campers = list(itertools.repeat(None, maxCampersInSession))
-                bunkhouses = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
-                tribes = list(itertools.repeat(list(itertools.repeat(None, maxCampersInTribe)), maxTribes))
+                campers = [ None for _ in range(maxCampersInSession)]
+                bunkhouses = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
+                tribes = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
 
                 # This is how we're defining our seasonal campers
                 #  The first list consists of every single camper
@@ -144,20 +146,23 @@ def searchFilledSlot(array):
     return any(elem is not None for elem in array)
 
 
-def searchAttribute(array, attribute):
-    toReturn = attrgetter(attribute)
+def searchAllGender(array, singleGender):
+    toReturn = []
+
     try:
         for camper in array:
             try:
-                return toReturn(camper)
+                gender = camper.getGender()
+                if(gender == singleGender):
+                    toReturn.append(camper)
             except AttributeError:
                 pass
             except TypeError:
                 pass
     except Exception is e:
         print(e)
-    return None
 
+    return toReturn
 
 
 def isCamperAccepted(camper):
@@ -287,6 +292,10 @@ def deleteCamper():
         fullname = namePrompt()
         camper = searchCamperFullName(allCampers, fullname)
 
+        if camper.getAssignmentRequest():
+            partner = camper.getAssignmentRequest()
+            partner.setAssignmentRequest(None)
+
         for location in locations:
             try:
                 if location == 'allCampers':
@@ -321,11 +330,14 @@ def printCamper():
         camper = searchCamperFullName(allCampers, fullname)
 
         print('|----------------------------------------------|')
-        print('  Name:    ' + camper.getName())
-        print('  Age:     ' + str(camper.getAge()))
-        print('  Gender:  ' + camper.getGender())
-        print('  Address: ' + camper.getAddress())
-        print('  Balance: $' + str(camper.getBalance()))
+        print('  Name:     ' + camper.getName())
+        if camper.getAssignmentRequest():
+            print('   Partner: ' + camper.getAssignmentRequest().getName())
+
+        print('  Age:      ' + str(camper.getAge()))
+        print('  Gender:   ' + camper.getGender())
+        print('  Address:  ' + camper.getAddress())
+        print('  Balance:  $' + str(camper.getBalance()))
 
         status = camper.getAppStatus()
 
@@ -342,9 +354,9 @@ def printCamper():
             if session:
                 print('  Session: ' + session)
             if bunkhouse:
-                print('  Bunkhouse: ' + bunkhouse)
+                print('  Bunkhouse: ' + str(bunkhouse))
             if tribe:
-                print('  Tribe: ' + tribe)
+                print('  Tribe: ' + str(tribe))
 
             print('  Checked In: ' + str(camper.getCheckedIn()))
             print('  Packet Status: : ' + str(camper.getPacket()))
@@ -458,11 +470,123 @@ def viewSessions():
 
 
 def viewBunkhouses():
-    print("Cry me a river")
+    try:
+        selection = -1
+        iterator = 1
+
+        while 1:
+            clearScreen()
+            print('|----------------------------------------------|')
+            print('| What session would you like to assign?       |')
+            print('| (0)  June                                    |')
+            print('| (1)  July                                    |')
+            print('| (2)  August                                  |')
+            print('|----------------------------------------------|')
+
+            command = input(">> ")
+
+            if command == '0':
+                selection = 0
+                break
+            elif command == '1':
+                selection = 1
+                break
+            elif command == '2':
+                selection = 2
+                break
+            else:
+                nonFatalError('Incorrect Input!')
+        clearScreen()
+        print('|----------------------------------------------|')
+
+
+        for bunkhouse in globals()[locations[selection+1]][1]:
+            print(f'  Bunkhouse {iterator}:')
+
+
+            amount = sum(x is not None for x in bunkhouse)
+            print(f'   Amount: {amount}')
+            print(f'   Name(s):')
+
+            for camper in bunkhouse:
+                try:
+                    print(f'    {camper.getName()}')
+                    print(f'     Age: {camper.getAge()}')
+
+                    if camper.getAssignmentRequest:
+                        print(f'     Partner: {camper.getAssignmentRequest().getName()}')
+
+                except AttributeError:
+                    pass
+                except Exception as e:
+                    print(e)
+            iterator += 1
+
+        print('|----------------------------------------------|')
+        print('| Press enter to return!                       |')
+        print('|----------------------------------------------|')
+        input()
+        mainMenu()
+
+    except Exception as e:
+        print(e)
+        mainMenu()
+        statusGetFailure()
 
 
 def viewTribes():
-    print("Cry me a river")
+    try:
+        selection = -1
+        iterator = 1
+
+        while 1:
+            clearScreen()
+            print('|----------------------------------------------|')
+            print('| What session would you like to assign?       |')
+            print('| (0)  June                                    |')
+            print('| (1)  July                                    |')
+            print('| (2)  August                                  |')
+            print('|----------------------------------------------|')
+
+            command = input(">> ")
+
+            if command == '0':
+                selection = 0
+                break
+            elif command == '1':
+                selection = 1
+                break
+            elif command == '2':
+                selection = 2
+                break
+            else:
+                nonFatalError('Incorrect Input!')
+        clearScreen()
+        print('|----------------------------------------------|')
+        for bunkhouse in globals()[locations[selection+1]][2]:
+            print(f'  Tribe {iterator}:')
+            print(f'   Amount: {bunkhouse.count(not None)}')
+            print(f'   Name(s):')
+
+            for camper in bunkhouse:
+                try:
+                    print(f'    {camper.getName()}')
+                except AttributeError:
+                    pass
+                except Exception as e:
+                    print(e)
+            iterator += 1
+
+        print('|----------------------------------------------|')
+        print('| Press enter to return!                       |')
+        print('|----------------------------------------------|')
+        input()
+        mainMenu()
+
+    except Exception as e:
+        print(e)
+        mainMenu()
+        statusGetFailure()
 #====================================================================================================================================
 
 
@@ -886,23 +1010,21 @@ def setEveryApplication():
         print(e)
 
 
-
 def assignCampersToSessions():
-    availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
-
-    if not any(availability):
-        mainMenu()
-        print('| Sorry, all sessions are full!                |')
-        print('|----------------------------------------------|')
-        return
-
-    copyAllCampers = allCampers.copy()
-    random.shuffle(copyAllCampers)
-
-    maxGenderPerSession = 36
-
     try:
-        for camper in copyAllCampers:
+
+        for camper in allCampers:
+            if camper:
+                camper.setAppStatus(1)
+
+
+        availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
+
+        maxGenderPerSession = 36
+
+        random.shuffle(allCampers)
+
+        for camper in allCampers:
             if camper.getSession():
                 continue
             elif not camper.getAssignmentRequest():
@@ -922,17 +1044,16 @@ def assignCampersToSessions():
                 globals()[locations[index]][0].remove(None)
                 globals()[locations[index]][0].remove(None)
 
-                globals()[locations[index]][0].insert(index, camper)
-                globals()[locations[index]][0].insert(index, partner)
-
                 camper.setSession(sessionName)
                 partner.setSession(sessionName)
 
+                globals()[locations[index]][0].insert(index, camper)
+                globals()[locations[index]][0].insert(index, partner)
         for location in locations:
             if location == "allCampers":
                 continue
             else:
-                for camper in copyAllCampers:
+                for camper in allCampers:
                     count = globals()[location][0].count(None)
                     currentSession = globals()[location][0]
                     numberOfMalesOrFemales = numberOfGender(currentSession, camper.getGender())
@@ -948,13 +1069,168 @@ def assignCampersToSessions():
                         continue
                     else:
                         globals()[location][0].remove(None)
-                        globals()[location][0].append(camper)
                         camper.setSession(location.split("Camper", 1)[0].capitalize())
+                        globals()[location][0].append(camper)
+
+
 
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
+
+    allCampers.sort(key=lambda x: x.fullName)
+
+    mainMenu()
+    print('| All session filled!                          |')
+    print('|----------------------------------------------|')
+
+
+def assignCampersToBunkhouses():
+    try:
+        for location in locations:
+            if location == "allCampers":
+                continue
+            else:
+                maleCampers = [camper for camper in globals()[location][0] if camper.gender == 'M']
+                femaleCampers = [camper for camper in globals()[location][0] if camper.gender == 'F']
+
+                maleCampers.sort(key=lambda x: x.age)
+                femaleCampers.sort(key=lambda x: x.age)
+
+                genderArray = 'maleCampers'
+
+                for i in range(6):
+                    if i >= 3:
+                        genderArray = 'femaleCampers'
+                    for camper in locals()[genderArray]:
+                        partner = camper.getAssignmentRequest()
+                        if camper.getBunkhouse() is not None:
+                            continue
+                        elif globals()[location][1][i].count(None) == 0:
+                            continue
+
+                        elif partner and partner.getBunkhouse() is not None:
+                            if globals()[location][1][i].count(None) == 1:
+                                continue
+                            elif camper.getAge() < partner.getAge():
+                                continue
+                            elif camper.getAge() > partner.getAge():
+                                camper.setBunkhouse(i)
+                                partner.setBunkhouse(i)
+                                try:
+                                    globals()[location][1][i].remove(None)
+                                    globals()[location][1][i].remove(None)
+                                except ValueError:
+                                    skip
+                                globals()[location][1][i].append(camper)
+                                globals()[location][1][i].append(partner)
+
+                        else:
+                            camper.setBunkhouse(i)
+                            try:
+                                globals()[location][1][i].remove(None)
+                            except ValueError:
+                                skip
+                            globals()[location][1][i].append(camper)
+
+        for location in locations:
+            if location == "allCampers":
+                continue
+            else:
+                for i in range(6):
+                    for j in range(12):
+                        camper = globals()[location][1][i][j]
+
+                        aCIndex = -1
+                        gLIndex = -1
+
+                        try:
+                            aCIndex = allCampers.index(searchCamperFullName(allCampers, camper.getName()))
+                        except ValueError:
+                            pass
+                        except AttributeError:
+                            pass
+                        try:
+                            gLIndex = globals()[location][0].index(searchCamperFullName(globals()[location][0], camper.getName()))
+                        except ValueError:
+                            pass
+                        except AttributeError:
+                            pass
+
+                        if aCIndex != -1:
+                            allCampers.pop(aCIndex)
+                            allCampers.insert(aCIndex, camper)
+                        if gLIndex != -1:
+                            globals()[location][0].pop(gLIndex)
+                            globals()[location][0].insert(gLIndex, camper)
+
+
+
+
+
+
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+
+
+def assignCampersToTribes():
+    try:
+        for location in locations:
+            if location == "allCampers":
+                continue
+            else:
+                maleCampers = [camper for camper in globals()[location][0] if camper.gender == 'M']
+                femaleCampers = [camper for camper in globals()[location][0] if camper.gender == 'F']
+
+                maleCampers.sort(key=lambda x: x.age)
+                femaleCampers.sort(key=lambda x: x.age)
+
+                genderArray = 'maleCampers'
+
+                for i in range(6):
+                    if i >= 3:
+                        genderArray = 'femaleCampers'
+                    for camper in locals()[genderArray]:
+                        partner = camper.getAssignmentRequest()
+                        if camper.getBunkhouse() is not None:
+                            continue
+                        elif globals()[location][1][i].count(None) == 0:
+                            continue
+
+                        elif partner and partner.getBunkhouse() is not None:
+                            if globals()[location][1][i].count(None) == 1:
+                                continue
+                            elif camper.getAge() < partner.getAge():
+                                continue
+                            elif camper.getAge() > partner.getAge():
+                                camper.setBunkhouse(i)
+                                partner.setBunkhouse(i)
+                                try:
+                                    globals()[location][1][i].remove(None)
+                                    globals()[location][1][i].remove(None)
+                                except ValueError:
+                                    skip
+                                globals()[location][1][i].append(camper)
+                                globals()[location][1][i].append(partner)
+
+                        else:
+                            camper.setBunkhouse(i)
+                            try:
+                                globals()[location][1][i].remove(None)
+                            except ValueError:
+                                skip
+                            globals()[location][1][i].append(camper)
+
+
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+
+
 #====================================================================================================================================
 
 
@@ -1058,16 +1334,17 @@ def clearAllCampers():
     try:
         for location in locations:
             if location == 'allCampers':
-                globals()[location].clear()
-                globals()[location] = list(itertools.repeat(None, maxCampersTotal))
+                globals()[location] = []
+                globals()[location] = [ None for _ in range(maxCampersTotal)]
             else:
-                globals()[location][0].clear()
-                globals()[location][1].clear()
-                globals()[location][2].clear()
+                globals()[location] = []
 
-                globals()[location][0] = list(itertools.repeat(None, maxCampersInSession))
-                globals()[location][1] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
-                globals()[location][2] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInTribe)), maxTribes))
+                campers = [ None for _ in range(maxCampersInSession)]
+                bunkhouses = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
+                tribes = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
+
+                globals()[location] = [campers, bunkhouses, tribes]
+
     except Exception as e:
         print(e)
 
@@ -1076,4 +1353,70 @@ def clearAllCampers():
     mainMenu()
     print('| Cleared all campers, you monster!            |')
     print('|----------------------------------------------|')
+
+
+##def clearAllSessions():
+#    print('| Clearing all sessions...                      |')
+#    print('|----------------------------------------------|')
+#
+#    try:
+#        for location in locations:
+#            if location == 'allCampers':
+#                continue
+#            else:
+#                globals()[location][0] = []
+#                globals()[location][0] = list(itertools.repeat(None, maxCampersInSession))
+#
+#    except Exception as e:
+#        print(e)
+#
+#    time.sleep(2)
+#
+#    mainMenu()
+#    print('| Cleared all sessions, do we need them?       |')
+#    print('|----------------------------------------------|')
+
+
+##def clearAllBunkHouses():
+#    print('| Clearing all bunkhouses                      |')
+#    print('|----------------------------------------------|')
+#
+#    try:
+#        for location in locations:
+#            if location == 'allCampers':
+#                continue
+#            else:
+#                globals()[location][1] = []
+#                globals()[location][1] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
+#    except Exception as e:
+#        print(e)
+#
+#    time.sleep(2)
+#
+#    mainMenu()
+#    print('| Cleared all bunkhouses, homelessness is in!  |')
+#    print('|----------------------------------------------|')
+
+
+#def clearAllTribes():
+#   print('| Clearing all bunkhouses                      |')
+#   print('|----------------------------------------------|')
+#
+#   try:
+#       for location in locations:
+#           if location == 'allCampers':
+#               continue
+#           else:
+#               globals()[location][2] = []
+#               globals()[location][2] = list(itertools.repeat(list(itertools.repeat(None, maxCampersInBunkhouse)), maxBunkhouses))
+#   except Exception as e:
+#       print(e)
+#
+#   time.sleep(2)
+#
+#   mainMenu()
+#   print('| Cleared all tribes, we\'re civilized now!     |')
+#   print('|----------------------------------------------|')
+
+
 #==========================================================================================================================

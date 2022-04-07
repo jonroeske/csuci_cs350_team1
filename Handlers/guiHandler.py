@@ -40,6 +40,9 @@ def mainMenu():
     print('| DEBUG                                        |')
     print('| (16) Populate Max Campers                    |')
     print('| (17) Clear All Campers                       |')
+    #print('| (18) Clear All Sessions                      |')
+    #print('| (19) Clear All Bunkhouses                    |')
+    #print('| (20) Clear All Tribes                        |')
     print('|----------------------------------------------|')
 
 

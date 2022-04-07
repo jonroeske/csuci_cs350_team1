@@ -112,6 +112,13 @@ class Camper:
         except:
             return False
 
+    def setBunkhouse(self, bunkhouse):
+        try:
+            self.bunkhouse = bunkhouse
+            return True
+        except:
+            return False
+
     def setSession(self, session):
         try:
             self.session = session

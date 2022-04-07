@@ -35,24 +35,30 @@ def main():
                         printAllCampers()
                     case '8': # TODO - DONE
                         viewSessions()
-                    case '9': # TODO
+                    case '9': # TODO - DONE
                         viewBunkhouses()
-                    case '10': # TODO
+                    case '10': # TODO - DONE
                         viewTribes()
                     case '11': # TODO - DONE
                         setEveryBalance()
                     case '12': # TODO - DONE
                         setEveryApplication()
-                    case '13': # TODO
+                    case '13': # TODO - DONE
                         assignCampersToSessions()
-                    case '14': # TODO
-                        notYetImplemented()
+                    case '14': # TODO - DONE
+                        assignCampersToBunkhouses()
                     case '15': # TODO
                         notYetImplemented()
                     case '16': # TODO - DONE
                         populateMaxCampers()
                     case '17': # TODO - DONE
                         clearAllCampers()
+                    #case '18':
+                    #    clearAllSessions()
+                    #case '19':
+                    #    clearAllBunkHouses()
+                    #case '20':
+                    #    clearAllTribes()
                     case _:
                         mainMenu()
             except KeyboardInterrupt:
@@ -90,7 +96,7 @@ def main():
                         assignCamperToBunkhouse() # CHECK
                     case '9': # TODO
                         assignCamperToTribe() # CHECK
-                    case '10': # TODO
+                    case '10': # TODO - DONE
                         assignPairRequest()
                     case '11': # TODO
                         withdrawCamper()
