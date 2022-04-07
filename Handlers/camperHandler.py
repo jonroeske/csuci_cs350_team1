@@ -79,10 +79,10 @@ def initializeData():
         except Exception as e:
             print(e)
 
-    print(allCampers)
-    print(juneCampers)
-    print(julyCampers)
-    print(augustCampers)
+    #print(allCampers)
+    #print(juneCampers)
+    #print(julyCampers)
+    #print(augustCampers)
 
 
 def shutdown():
@@ -393,7 +393,7 @@ def printAllCampers():
 
         clearScreen()
         print('|----------------------------------------------|')
-        print(f'   Amount: {len(allCampers)}                                 |')
+        print(f'   Amount: {len(allCampers) - allCampers.count(None)}')
 
         genders = numberOfGender(allCampers)
         print(f'   Composition: {genders[0]} Male(s), {genders[1]} Female(s) ')
@@ -960,14 +960,14 @@ def updateCamperPacketStatus():
 
 
 def certifyCamperReqs():
-    try:
         fullname = namePrompt()
         camper = searchCamperFullName(allCampers, fullname)
         clearScreen()
-        checkInCert(camper)
-    except:
-        camperSubMenu()
-        statusGetFailure()
+
+        try:
+            checkInCert(camper)
+        except:
+            pass #lol
 #====================================================================================================================================
 
 
@@ -1011,7 +1011,7 @@ def setEveryApplication():
                     camper.setAppStatus(status)
 
         print('| Every application status changed!            |')
-        print('|  PS: Some excellent quality control there...  |')
+        print('|  PS: Some excellent quality control there...   |')
         print('|----------------------------------------------|')
 
     except AttributeError:
@@ -1311,12 +1311,15 @@ def assignCampersToTribes():
 #====================================================================================================================================
 # DEBUG
 def populateMaxCampers():
+
+    clearAllCampers()
+
+
     print('| Creating max campers...                      |')
     print('|----------------------------------------------|')
 
     random.seed()
     fake = Faker()
-
 
 
     for i in range(maxCampersTotal):

@@ -48,7 +48,8 @@ def main():
                     case '14': # TODO - DONE
                         assignCampersToBunkhouses()
                     case '15': # TODO
-                        assignCampersToTribes()
+                        notYetImplemented()
+                        #assignCampersToTribes()
                     case '16': # TODO - DONE
                         populateMaxCampers()
                     case '17': # TODO - DONE
@@ -92,21 +93,21 @@ def main():
                         rejectCamperApplication()
                     case '7': # TODO - DONE
                         assignCamperToSession()
-                    case '8': # TODO
-                        assignCamperToBunkhouse() # CHECK
+                    case '8': # TODO- TODO
+                        notYetImplemented()
+                        #assignCamperToBunkhouse() # CHECK
                     case '9': # TODO
-                        assignCamperToTribe() # CHECK
+                        notYetImplemented()
+                        #assignCamperToTribe() # CHECK
                     case '10': # TODO - DONE
                         assignPairRequest()
-                    case '11': # TODO
-                        withdrawCamper()
-                    case '12': # TODO - DONE
+                    case '11': # TODO - DONE
                         viewCamperPacketStatus()
-                    case '13': # TODO - DONE
+                    case '12': # TODO - DONE
                         updateCamperPacketStatus()
-                    case '14': # TODO - IN PROGRESS
+                    case '13': # TODO - IN PROGRESS
                         certifyCamperReqs()
-                    case '15': # TODO - DONE
+                    case '14': # TODO - DONE
                         currentRuntime = 'mainMenu'
                         mainMenu()
                     case _:
