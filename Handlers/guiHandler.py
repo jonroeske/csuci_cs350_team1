@@ -3,7 +3,7 @@ import time
 
 from Objects.camper import *
 
-versionNumber = "Build Apr052022"
+versionNumber = "Build May052022"
 
 
 def clearScreen():
@@ -193,8 +193,8 @@ def camperCreateFailure():
     print('|----------------------------------------------|')
 
 
-def camperAlreadyEnrolled():
-    print('| This camper is enrolled in a session!        |')
+def camperAlreadyEnrolled(object):
+    print('  This camper is enrolled in a ' + object + '!')
     print('|----------------------------------------------|')
 
 

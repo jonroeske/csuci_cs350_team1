@@ -89,6 +89,7 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
     input()
     camperSubMenu()
 
+
 def searchCamperArr(camperArr, name):
     try:
         for currCamper in camperArr:

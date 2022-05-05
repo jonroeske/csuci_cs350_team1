@@ -93,12 +93,10 @@ def main():
                         rejectCamperApplication()
                     case '7': # TODO - DONE
                         assignCamperToSession()
-                    case '8': # TODO- TODO
-                        notYetImplemented()
-                        #assignCamperToBunkhouse() # CHECK
+                    case '8': # TODO
+                        assignCamperToBunkhouse() # CHECK
                     case '9': # TODO
-                        notYetImplemented()
-                        #assignCamperToTribe() # CHECK
+                        assignCamperToTribe() # CHECK
                     case '10': # TODO - DONE
                         assignPairRequest()
                     case '11': # TODO - DONE
