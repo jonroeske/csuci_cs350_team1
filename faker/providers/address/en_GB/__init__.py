@@ -133,7 +133,7 @@ class Provider(AddressProvider):
         "burg",
         "burgs",
         "bypass",
-        "camp",
+        "summerCamp",
         "canyon",
         "cape",
         "causeway",

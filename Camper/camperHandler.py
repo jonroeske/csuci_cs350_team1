@@ -1,82 +1,60 @@
 from GUI.guiHandler import *
 from Objects.camper import Camper
 from Objects.materials import Materials
+from Objects.camp import Camp
 from Documents.firstDay import checkInCert
 
 from faker import Faker
 import random, pickle, sys, os
 
+summerCamp = Camp()
+locations = ["allCampers", "juneCampers", "julyCampers", "augustCampers"]
 
 #====================================================================================================================================
 # UTILITY FUNCTIONS
 def initializeData():
-    global allCampers
-    global juneCampers
-    global julyCampers
-    global augustCampers
 
-
-    global locations
-    global maxCampersTotal
-    global maxCampersInSession
-    global maxBunkhouses
-    global maxCampersInBunkhouse
-    global maxTribes
-    global maxCampersInTribe
-
-    locations = ['allCampers', 'juneCampers', 'julyCampers', 'augustCampers']
-
-    maxCampersTotal = 216
-    maxCampersInSession = 72
-    maxBunkhouses = 6
-    maxCampersInBunkhouse = 12
-    maxTribes = 6
-    maxCampersInTribe = 12
+    # Initialize data
+    global summerCamp
+    # Initialize allCampers
+    summerCamp.initializeCamp()
 
     for location in locations:
-        path = './Database/'+location+'.pkl'
-
+        path = './database/'+location+'.pkl'
         if os.path.exists(path):
             with (open(path, 'rb')) as openfile:
                 while True:
                     try:
-                        globals()[location] = list(pickle.load(openfile))
+                        match location:
+                            case "allCampers":
+                                importedList = list(pickle.load(openfile))
+                                summerCamp.setAllCampers(importedList)
+                                break
+                            case "juneCampers":
+                                importedList = list(pickle.load(openfile))
+                                summerCamp.setJuneCampers(importedList)
+                                break
+                            case "julyCampers":
+                                importedList = list(pickle.load(openfile))
+                                summerCamp.setJulyCampers(importedList)
+                                break
+                            case "augustCampers":
+                                importedList = list(pickle.load(openfile))
+                                summerCamp.setAugustCampers(importedList)
+                                break
+
                     except EOFError:
                         print(location + ' loaded successfully!')
                         break
-
         elif not os.path.exists(path):
             fp = open(path, 'x')
             fp.close()
             print(location + ' not found! Creating...')
 
-            if location == 'allCampers':
-                allCampers = [ None for _ in range(maxCampersTotal)]
-
-            else:
-                campers = [ None for _ in range(maxCampersInSession)]
-                bunkhouses = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
-                tribes = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
-
-                # This is how we're defining our seasonal campers
-                #  The first list consists of every single camper
-                #  The second list consists of the six bunkhouses, which consists of a list of campers
-                #  The third list consists of the six tribes, which consists of a list of campers
-                globals()[location] = [campers, bunkhouses, tribes]
-
-        try:
-            if location == 'allCampers':
-                globals()[location].sort(key=lambda x: (x is None, x))
-            else:
-                for i in range(3):
-                    globals()[location][i].sort(key=lambda x: (x is None, x))
-        except Exception as e:
-            print(e)
-
-    #print(allCampers)
-    #print(juneCampers)
-    #print(julyCampers)
-    #print(augustCampers)
+    print(summerCamp.getAllCampers())
+    print(summerCamp.getJuneCampers())
+    print(summerCamp.getJulyCampers())
+    print(summerCamp.getAugustCampers())
 
 
 def shutdown():
@@ -84,12 +62,22 @@ def shutdown():
     print('|----------------------------------------------|')
     for location in locations:
         path = './database/'+location+'.pkl'
-        try:
-            pickle.dump(globals()[location], open(path, 'wb'))
-        except EOFError:
-            break
+        match location:
+            case "allCampers":
+                pickle.dump(summerCamp.getAllCampers(), open(path, 'wb'))
+                break
+            case "juneCampers":
+                pickle.dump(summerCamp.getJuneCampers(), open(path, 'wb'))
+                break
+            case "julyCampers":
+                pickle.dump(summerCamp.getJulyCampers(), open(path, 'wb'))
+                break
+            case "augustCampers":
+                pickle.dump(summerCamp.getAugustCampers(), open(path, 'wb'))
+                break
 
 
+# TODO - DEPRECIATED
 def searchCamperFullName(camperArr, fullname):
     try:
         for currCamper in camperArr:
@@ -100,6 +88,7 @@ def searchCamperFullName(camperArr, fullname):
     return None
 
 
+# TODO - DEPRECIATED
 def searchCamperLastName(camperArr, camper):
     campersWithLastName = []
 
@@ -116,6 +105,7 @@ def searchCamperLastName(camperArr, camper):
     return campersWithLastName
 
 
+# TODO - DEPRECIATED
 def searchCamperGender(camperArr, camper):
     campersWithGender = []
 
@@ -140,6 +130,7 @@ def searchFilledSlot(array):
     return any(elem is not None for elem in array)
 
 
+# TODO - DEPRECIATED
 def searchAllGender(array, singleGender):
     toReturn = []
 
@@ -159,19 +150,7 @@ def searchAllGender(array, singleGender):
     return toReturn
 
 
-def isCamperAccepted(camper):
-    if camper.getAppStatus() == 0:
-        print('| Camper has not been accepted!                |')
-        print('|----------------------------------------------|')
-        return False
-    elif camper.getAppStatus() == 2:
-        print('| Camper has been Rejected!                    |')
-        print('|----------------------------------------------|')
-        return False
-    else:
-        return True
-
-
+# TODO - DEPRECIATED
 def numberOfGender(array, *singleGender):
     toReturn = [0, 0]
 
@@ -261,8 +240,7 @@ def createCamper():
 
             confirmation = camperConfirmation(newCamper)
             if confirmation == 'Y':
-                index = searchEmptySlot(allCampers)
-                allCampers.insert(index, newCamper)
+
                 mainMenu()
                 return True
             elif confirmation == 'N':

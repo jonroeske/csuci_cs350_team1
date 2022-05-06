@@ -1,7 +1,7 @@
 import operator
 
 
-# Clerk logic for handling day one of camp sessions
+# Clerk logic for handling day one of summerCamp sessions
 def checkInCert(camper):  # Verifies required forms for arrival packet
     camper.checkedIn = False
 
@@ -68,19 +68,19 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
     elif not camper.emergencyContacts:
         print('Please provide the campers emergency contacts.')
     elif not camper.helmet:
-        print('Helmets can be rented/purchased from the camp store')
+        print('Helmets can be rented/purchased from the summerCamp store')
     elif not camper.boots:
-        print('Boots can be rented/purchased from the camp store')
+        print('Boots can be rented/purchased from the summerCamp store')
     elif not camper.sleepingBag:
-        print('Sleeping bags can be rented/purchased from the camp store')
+        print('Sleeping bags can be rented/purchased from the summerCamp store')
     elif not camper.waterBottle:
-        print('Water bottles can be purchased from the camp store')
+        print('Water bottles can be purchased from the summerCamp store')
     elif not camper.sunscreen:
-        print('Sunscreen can be purchased from the camp store')
+        print('Sunscreen can be purchased from the summerCamp store')
     elif not camper.bugSpray:
-        print('Bug spray can be purchased from the camp store')
+        print('Bug spray can be purchased from the summerCamp store')
     else:
-        print(camper.fullName + " has all required packet information and equipment for camp!")
+        print(camper.fullName + " has all required packet information and equipment for summerCamp!")
         camper.checkedIn = True
 
     print('|----------------------------------------------|')

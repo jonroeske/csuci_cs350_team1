@@ -1,4 +1,4 @@
-# Clerk logic for handling camp documents
+# Clerk logic for handling summerCamp documents
 import datetime
 from Objects.camper import Camper
 
@@ -15,7 +15,7 @@ def submitApplication(fullname, age, gender, address, session):  # create camper
         augustCampers.append(newCamper)
         return True
     else:
-        print("Error assigning Camper to camp session.")
+        print("Error assigning Camper to summerCamp session.")
         return False
 
 

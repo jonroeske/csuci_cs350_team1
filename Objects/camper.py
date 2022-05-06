@@ -1,4 +1,6 @@
 from datetime import datetime
+from Objects.values import *
+
 class Camper:
     def __int__(self, fullname, age, gender, address):
         # CAMPER DESCRIPTION
@@ -39,6 +41,60 @@ class Camper:
             return (self.fullName > other.fullName)
         else:
             return False
+
+
+    def searchByFullName(self, campers):
+        returnList = []
+
+        for camper in campers:
+            if isinstance(camper, Camper) and not camper.__eq__(self):
+                if camper.getName() == self.fullName:
+                    returnList.append(camper)
+
+        if len(returnList) == 0:
+            return STATUS_CODES["NO_CAMPER"]
+
+        return returnList
+
+    def searchByLastName(self, campers):
+        returnList = []
+
+        for camper in campers:
+            if isinstance(camper, Camper) and not camper.__eq__(self):
+                selfLastName = self.fullName.split(" ")[1]
+                camperLastName = camper.getName().split(" ")[1]
+
+                if camperLastName == selfLastName:
+                    returnList.append(camper)
+
+        if len(returnList) == 0:
+            return STATUS_CODES["NO_CAMPER"]
+
+        return returnList
+
+    def searchByGender(self, campers):
+        returnList = []
+
+        for camper in campers:
+            if isinstance(camper, Camper) and not camper.__eq__(self):
+                if camper.getGender() == self.gender:
+                    returnList.append(camper)
+
+        if len(returnList) == 0:
+            return STATUS_CODES["NO_CAMPER"]
+
+        return returnList
+
+    def countGender(self, campers):
+        count = 0
+
+        for camper in campers:
+            if isinstance(camper, Camper) and not camper.__eq__(self):
+                if camper.getGender() == self.gender:
+                    count += 1
+
+        return count
+
 
     def getName(self):
         return self.fullName
@@ -121,7 +177,7 @@ class Camper:
 
     def setSession(self, session):
         try:
-            self.session = session
+            self.session = int(session)
             return True
         except:
             return False
