@@ -228,6 +228,17 @@ def camperPacketSentFailure():
     print('|----------------------------------------------|')
 
 
+def partnerPrompt(partner):
+    print('| Camper has a partner request:                |')
+    print('|  Partner: ' + partner.getName())
+    print('| Would you like to assign the partner?        |')
+    print('|  "Y" for Yes, "N" for No                     |')
+    print('|----------------------------------------------|')
+
+    confirmation = input(">> ")
+
+    return confirmation
+
 def statusGetFailure():
     print('| ERROR: Failed to get status!                 |')
     print('|----------------------------------------------|')

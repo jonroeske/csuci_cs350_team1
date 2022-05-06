@@ -837,14 +837,7 @@ def assignCamperToSession():
                     break
 
                 while 1:
-
-                    print('| Camper has a partner request:                |')
-                    print('|  Partner: ' + partner.getName())
-                    print('| Would you like to assign the partner?        |')
-                    print('|  "Y" for Yes, "N" for No                     |')
-                    print('|----------------------------------------------|')
-
-                    confirmation = input(">> ")
+                    confirmation = partnerPrompt(partner)
 
                     if confirmation == "Y" or confirmation == "N":
                         break
@@ -957,26 +950,23 @@ def assignCamperToBunkhouse():
 
             bunkhouse = session[maleOrFemaleBunkhouse[command]]
 
-            if camper.getAssignmentRequest() is None and availability[maleOrFemaleBunkhouse[command]]:
+            if camper.getAssignmentRequest() is None and availability[bunkhouse]:
                 bunkhouse[bunkhouse.index(None)] = camper
                 camper.setBunkhouse(maleOrFemaleBunkhouse[command])
                 break
 
             elif camper.getAssignmentRequest():
-                slotsRemaining = sum(x is not None for x in bunkhouse)
+                slotsRemaining = maxCampersInBunkhouse - bunkhouse.index(None)
                 partner = camper.getAssignmentRequest()
 
-                confirmation = ""
+                if partner.getBunkhouse() is not None or partner.getSession() != camper.getSession():
+                    bunkhouse[bunkhouse.index(None)] = camper
+                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
+                    break
+
 
                 while 1:
-
-                    print('| Camper has a partner request:                |')
-                    print('|  Partner: ' + partner.getName())
-                    print('| Would you like to assign the partner?        |')
-                    print('|  "Y" for Yes, "N" for No                     |')
-                    print('|----------------------------------------------|')
-
-                    confirmation = input(">> ")
+                    confirmation = partnerPrompt(partner)
 
                     if confirmation == "Y" or confirmation == "N":
                         break
