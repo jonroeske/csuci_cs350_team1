@@ -4,6 +4,8 @@ from Objects.materials import Materials
 from Objects.camp import Camp
 from Documents.firstDay import checkInCert
 
+from Objects.values import *
+
 from faker import Faker
 import random, pickle, sys, os
 
@@ -13,12 +15,6 @@ locations = ["allCampers", "juneCampers", "julyCampers", "augustCampers"]
 #====================================================================================================================================
 # UTILITY FUNCTIONS
 def initializeData():
-
-    # Initialize data
-    global summerCamp
-    # Initialize allCampers
-    summerCamp.initializeCamp()
-
     for location in locations:
         path = './database/'+location+'.pkl'
         if os.path.exists(path):
@@ -149,32 +145,6 @@ def searchAllGender(array, singleGender):
 
     return toReturn
 
-
-# TODO - DEPRECIATED
-def numberOfGender(array, *singleGender):
-    toReturn = [0, 0]
-
-    try:
-        for camper in array:
-            try:
-                gender = camper.getGender()
-                if(gender == 'M'):
-                    toReturn[0] += 1
-                elif(gender == 'F'):
-                    toReturn[1] += 1
-            except AttributeError:
-                pass
-            except TypeError:
-                pass
-    except Exception is e:
-        print(e)
-    if singleGender:
-        if (singleGender[0] == 'M'):
-            return toReturn[0]
-        elif (singleGender[0] == 'F'):
-            return toReturn[1]
-
-    return toReturn
 #====================================================================================================================================
 
 
@@ -190,7 +160,7 @@ def createCamper():
     newCamper = Camper()
 
     try:
-        newCamper.fullName = namePrompt()
+        newCamper.name = namePrompt()
 
         check = 0
         while check == 0:
@@ -271,11 +241,11 @@ def deleteCamper():
             try:
                 if location == 'allCampers':
                     globals()[location].remove(camper)
-                    #globals()[location].sort(key=attrgetter('fullName'))
+                    #globals()[location].sort(key=attrgetter('name'))
                 else:
                     for i in range(3):
                         globals()[location][i].remove(camper)
-                        #globals()[location][i].sort(key=attrgetter('fullName'))
+                        #globals()[location][i].sort(key=attrgetter('name'))
 
             except ValueError:
                 pass
@@ -356,7 +326,7 @@ def printCamper():
 
 def printAllCampers():
     try:
-        if not searchFilledSlot(allCampers):
+        if not any(elem is not None for elem in summerCamp.getAllCampers()):
             mainMenu()
             print('| There are currently no campers!              |')
             print('|----------------------------------------------|')
@@ -364,15 +334,15 @@ def printAllCampers():
 
         clearScreen()
         print('|----------------------------------------------|')
-        print(f'   Amount: {len(allCampers) - allCampers.count(None)}')
+        print(f'   Amount: {sum(elem is not None for elem in summerCamp.getAllCampers()):}')
 
-        genders = numberOfGender(allCampers)
+        genders = summerCamp.countGender()
         print(f'   Composition: {genders[0]} Male(s), {genders[1]} Female(s) ')
         print(f'   Names:')
 
 
-        for camper in allCampers:
-            if camper:
+        for camper in summerCamp.getAllCampers():
+            if isinstance(camper, Camper):
                 print('    ' + camper.getName())
 
                 if camper.getAssignmentRequest() is not None:
@@ -1333,7 +1303,7 @@ def assignCampersToSessions():
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
 
-    allCampers.sort(key=lambda x: x.fullName)
+    allCampers.sort(key=lambda x: x.name)
 
     mainMenu()
     print('| All session filled!                          |')
@@ -1548,132 +1518,6 @@ def assignCampersToTribes():
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
 
-
-#====================================================================================================================================
-
-
-#====================================================================================================================================
-# DEBUG
-def populateMaxCampers():
-
-    clearAllCampers()
-
-
-    print('| Creating max campers...                      |')
-    print('|----------------------------------------------|')
-
-    random.seed()
-    fake = Faker()
-
-
-    for i in range(maxCampersTotal):
-        empty = searchEmptySlot(allCampers)
-        if empty:
-            newCamper = Camper()
-
-            check = 0
-
-            while check == 0:
-                if i < maxCampersTotal/2:
-                    newCamper.fullName = fake.first_name_male() + ' ' + fake.last_name_male()
-                    newCamper.gender = 'M'
-                elif i >= maxCampersTotal/2:
-                    newCamper.fullName = fake.first_name_female() + ' ' + fake.last_name_female()
-                    newCamper.gender = 'F'
-
-                if searchCamperFullName(allCampers, newCamper.fullName) is None:
-                    check = 1
-
-            newCamper.age = random.randint(9, 18)
-
-            newCamper.address = fake.street_address()
-
-            newCamper.balance = 1000.00
-            newCamper.appStatus = 0
-
-            newCamper.session = None
-            newCamper.bunkhouse = None
-            newCamper.tribe = None
-            newCamper.arrivalReqCert = False
-            newCamper.checkedIn = False
-
-            newCamper.assignmentRequest = None
-            newCamper.packetStatus = False
-            newCamper.dateSentNotice = None
-            newCamper.materials = Materials()
-
-            try:
-                allCampers.remove(None)
-                allCampers.append(newCamper)
-            except ValueError:
-                pass
-                # we shouldn't be getting this error, as above the empty check confirms
-                #  there is an empty slot to use
-
-    allCampers.sort(key=lambda x: (x is None, x))
-
-    for camper in allCampers:
-
-        try:
-            if camper.getAssignmentRequest() is None:
-                # Here we find all campers with the same last name
-                matchingCampers = searchCamperLastName(allCampers, camper)
-
-                # Here we find all campers with the same last name
-                #  We can't pair up two campers of different genders
-                matchingCampers = searchCamperGender(matchingCampers, camper)
-
-                if len(matchingCampers) > 0:
-
-                    chanceRequest = random.randint(1, 4)
-                    if chanceRequest == 4:
-                        #print("Pairing request started!")
-                        try:
-                            index = random.randint(0, len(matchingCampers) - 1)
-
-                            camper.setAssignmentRequest(matchingCampers[index])
-                            matchingCampers[index].setAssignmentRequest(camper)
-
-                            #print(f"Successful pair! {camper.getName()} {matchingCampers[index].getName()}")
-                        except Exception as e:
-                            print(e)
-
-        except Exception as e:
-            print(e)
-
-    time.sleep(2)
-
-    mainMenu()
-    print('| Max campers created, calm down there God...  |')
-    print('|----------------------------------------------|')
-
-
-def clearAllCampers():
-    print('| Clearing all campers...                      |')       
-    print('|----------------------------------------------|')       
-
-    try:
-        for location in locations:
-            if location == 'allCampers':
-                globals()[location] = []
-                globals()[location] = [ None for _ in range(maxCampersTotal)]
-            else:
-                globals()[location] = []
-
-                campers = [ None for _ in range(maxCampersInSession)]
-                bunkhouses = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
-                tribes = [ [ None for _ in range(maxCampersInBunkhouse)] for _ in range(maxBunkhouses)]
-
-                globals()[location] = [campers, bunkhouses, tribes]
-
-    except Exception as e:
-        print(e)
-
-    time.sleep(2)
-
-    mainMenu()
-    print('| Cleared all campers, you monster!            |')
-    print('|----------------------------------------------|')
 
 
 ##def clearAllSessions():

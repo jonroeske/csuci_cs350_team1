@@ -80,7 +80,7 @@ def checkInCert(camper):  # Verifies required forms for arrival packet
     elif not camper.bugSpray:
         print('Bug spray can be purchased from the summerCamp store')
     else:
-        print(camper.fullName + " has all required packet information and equipment for summerCamp!")
+        print(camper.name + " has all required packet information and equipment for summerCamp!")
         camper.checkedIn = True
 
     print('|----------------------------------------------|')

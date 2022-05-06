@@ -1,17 +1,11 @@
 from Objects.camper import *
 from Objects.values import *
 
+from operator import *
+
 class Camp:
 
-    __slots__ = ['allCampers', "juneCampers", "julyCampers", "augustCampers"]
-
-    def __int__(self):
-        self.allCampers = None
-        self.juneCampers = None
-        self.julyCampers = None
-        self.augustCampers = Npne
-
-    def initializeCamp(self):
+    def __init__(self):
         self.allCampers = [None for _ in range(GLOBAL_VALUES["maxCampersTotal"])]
         self.juneCampers = [[None for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
                             [None for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"]) for _ in range(GLOBAL_VALUES["maxBunkhouses"])],
@@ -22,6 +16,63 @@ class Camp:
         self.augustCampers =[[None for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
                             [None for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"]) for _ in range(GLOBAL_VALUES["maxBunkhouses"])],
                             [None for _ in range(GLOBAL_VALUES["maxCampersInTribe"]) for _ in range(GLOBAL_VALUES["maxTribes"])]]
+
+
+    def sortCamp(self):
+        try:
+            self.allCampers.sort(key=lambda x: (x is None, x))
+
+            self.juneCampers[0].sort(key=lambda x: (x is None, x))
+            self.julyCampers[0].sort(key=lambda x: (x is None, x))
+            self.augustCampers[0].sort(key=lambda x: (x is None, x))
+
+            #for i in range(GLOBAL_VALUES["maxBunkhouses"]):
+            #    self.juneCampers[1][i].sort(key=lambda x: (x is None, x))
+            #    self.julyCampers[1][i].sort(key=lambda x: (x is None, x))
+            #    self.augustCampers[1][i].sort(key=lambda x: (x is None, x))
+
+            #for i in range(GLOBAL_VALUES["maxTribes"]):
+            #    self.juneCampers[2][i].sort(key=lambda x: (x is None, x))
+            #    self.julyCampers[2][i].sort(key=lambda x: (x is None, x))
+            #    self.augustCampers[2][i].sort(key=lambda x: (x is None, x))
+
+        except TypeError:
+            pass
+            #This will always throw if there are Nones present, which odds are, you will have, so just pass
+
+    def countGender(self, session = -1, bunkOrTribe = -1, bOTSelection = -1):
+        count = [0, 0]
+
+        campers = []
+
+        match session:
+            case -1:
+                campers = self.allCampers
+            case 0:
+                if bunkOrTribe != -1 and bOTSelection != -1:
+                    campers = self.juneCampers[bunkOrTribe+1][bOTSelection]
+                else:
+                    campers = self.juneCampers[0]
+            case 1:
+                if bunkOrTribe != -1 and bOTSelection != -1:
+                    campers = self.julyCampers[bunkOrTribe + 1][bOTSelection]
+                else:
+                    campers = self.julyCampers[0]
+            case 2:
+                if bunkOrTribe != -1 and bOTSelection != -1:
+                    campers = self.augustCampers[bunkOrTribe + 1][bOTSelection]
+                else:
+                    campers = self.augustCampers[0]
+
+
+        for camper in campers:
+            if isinstance(camper, Camper):
+                if camper.getGender() == "M":
+                    count[0] += 1
+                elif camper.getGender() == "F":
+                    count[1] += 1
+
+        return count
 
 
     def updateCamper(self, camper):
@@ -45,8 +96,8 @@ class Camp:
                     for currentCamper in self.juneCampers[0]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.juneCampers[0].remove(currentCamper)
+                                self.juneCampers[0].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_SESSION"]
@@ -55,8 +106,8 @@ class Camp:
                     for currentCamper in self.julyCampers[0]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.julyCampers[0].remove(currentCamper)
+                                self.julyCampers[0].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_SESSION"]
@@ -65,8 +116,8 @@ class Camp:
                     for currentCamper in self.augustCampers[0]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.augustCampers[0].remove(currentCamper)
+                                self.augustCampers[0].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_SESSION"]
@@ -77,8 +128,8 @@ class Camp:
                     for currentCamper in self.juneCampers[1][bunkhouse]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.juneCampers[1][bunkhouse].remove(currentCamper)
+                                self.juneCampers[1][bunkhouse].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
@@ -87,8 +138,8 @@ class Camp:
                     for currentCamper in self.julyCampers[1][bunkhouse]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.julyCampers[1][bunkhouse].remove(currentCamper)
+                                self.julyCampers[1][bunkhouse].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
@@ -97,8 +148,8 @@ class Camp:
                     for currentCamper in self.augustCampers[1][bunkhouse]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.augustCampers[1][bunkhouse].remove(currentCamper)
+                                self.augustCampers[1][bunkhouse].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
@@ -109,8 +160,8 @@ class Camp:
                     for currentCamper in self.juneCampers[2][tribe]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.juneCampers[2][tribe].remove(currentCamper)
+                                self.juneCampers[2][tribe].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_TRIBE"]
@@ -119,8 +170,8 @@ class Camp:
                     for currentCamper in self.julyCampers[2][tribe]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.julyCampers[2][tribe].remove(currentCamper)
+                                self.julyCampers[2][tribe].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_TRIBE"]
@@ -129,13 +180,31 @@ class Camp:
                     for currentCamper in self.augustCampers[2][tribe]:
                         if currentCamper.getName() == camper.getName():
                             try:
-                                self.allCampers.remove(currentCamper)
-                                self.allCampers.append(camper)
+                                self.augustCampers[2][tribe].remove(currentCamper)
+                                self.augustCampers[2][tribe].append(camper)
                                 break
                             except ValueError:
                                 return STATUS_CODES["NO_CAMPER_TRIBE"]
 
+        self.sortCamp()
+
         return STATUS_CODES["SUCCESS"]
+
+
+    def insertCamper(self, camper):
+        try:
+            self.allCampers.index(camper)
+            return STATUS_CODES["DUPLICATE"]
+        except ValueError:
+            try:
+                self.allCampers.remove(None)
+                self.allCampers.append(camper)
+
+                self.allCampers.sort(key=lambda x: (x is None, x))
+
+                return STATUS_CODES["SUCCESS"]
+            except ValueError:
+                return STATUS_CODES["NO_CAPACITY"]
 
     def insertCamperInSession(self, camper):
         session = camper.getSession()

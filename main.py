@@ -1,6 +1,7 @@
 # CLI System
 
-from Camper.camperHandler import *
+from Handlers.camperHandler import *
+from Handlers.debugCommands import *
 
 def main():
     initializeData()
@@ -70,7 +71,7 @@ def main():
                 time.sleep(2)
                 exit()
             except Exception as e:
-                print(e)
+                print("How about here? " + e)
 
         while currentRuntime == 'camperSubMenu':
             try:

@@ -1,16 +1,17 @@
 from datetime import datetime
+from Objects.materials import *
 from Objects.values import *
 
 class Camper:
-    def __int__(self, fullname, age, gender, address):
+    def __init__(self):
         # CAMPER DESCRIPTION
-        self.fullName = fullname
-        self.age = age
-        self.gender = gender
-        self.address = address
+        self.name = None
+        self.age = None
+        self.gender = None
+        self.address = None
         self.balance = 0.00
         self.appStatus = 0
-        #self.acceptStatus = False  DEPRECIATED
+
         # CAMPER CAMP DETAILS
         self.session = None
         self.bunkhouse = None
@@ -26,29 +27,44 @@ class Camper:
 
     def __eq__(self, other):
         if isinstance(other, Camper):
-            return (self.fullName, self.age, self.gender, self.address) == (other.fullName, other.age, other.gender, other.address)
-        else:
-            return False
+            return (self.name, self.age, self.gender, self.address) \
+                   == (other.getName(), other.getAge(), other.getGender(), other.getAddress())
+
+        return False
 
     def __lt__(self, other):
         if isinstance(other, Camper):
-            return (self.fullName < other.fullName)
+            return (self.name < other.name)
         else:
             return False
 
     def __gt__(self, other):
         if isinstance(other, Camper):
-            return (self.fullName > other.fullName)
+            return (self.name > other.name)
         else:
             return False
 
+    #def initializeCamper(self):
+    #    self.balance = 1000.00
+    #    self.appStatus = 0
+#
+    #    self.session = None
+    #    self.bunkhouse = None
+    #    self.tribe = None
+    #    self.arrivalReqCert = False
+    #    self.checkedIn = False
+#
+    #    self.assignmentRequest = None
+    #    self.packetStatus = False
+    #    self.dateSentNotice = None
+    #    self.materials = Materials()
 
     def searchByFullName(self, campers):
         returnList = []
 
         for camper in campers:
             if isinstance(camper, Camper) and not camper.__eq__(self):
-                if camper.getName() == self.fullName:
+                if camper.getName() == self.name:
                     returnList.append(camper)
 
         if len(returnList) == 0:
@@ -61,7 +77,7 @@ class Camper:
 
         for camper in campers:
             if isinstance(camper, Camper) and not camper.__eq__(self):
-                selfLastName = self.fullName.split(" ")[1]
+                selfLastName = self.name.split(" ")[1]
                 camperLastName = camper.getName().split(" ")[1]
 
                 if camperLastName == selfLastName:
@@ -86,7 +102,7 @@ class Camper:
         return returnList
 
     def countGender(self, campers):
-        count = 0
+        count = [0, 0]
 
         for camper in campers:
             if isinstance(camper, Camper) and not camper.__eq__(self):
@@ -97,7 +113,7 @@ class Camper:
 
 
     def getName(self):
-        return self.fullName
+        return self.name
 
     def getAge(self):
         return self.age
@@ -114,8 +130,6 @@ class Camper:
     def getAppStatus(self):
         return self.appStatus
 
-    #def getAcceptance(self):       DEPRECIATED
-    #    return self.acceptStatus
 
     def getSession(self):
         return self.session
@@ -145,11 +159,21 @@ class Camper:
         return self.materials
 
 
+    def setName(self, name):
+        self.name = name
 
-    def setPacketSend(self):
+    def setAge(self, age):
+        self.age = age
+
+    def setGender(self, gender):
+        self.gender = gender
+
+    def setAddress(self, address):
+        self.address = address
+
+    def setBalance(self, balance):
         try:
-            self.packetStatus = True
-            self.dateSentNotice = datetime.now().replace(microsecond = 0)
+            self.balance = float(balance)
             return True
         except:
             return False
@@ -161,9 +185,10 @@ class Camper:
         except:
             return False
 
-    def setBalance(self, balance):
+
+    def setSession(self, session):
         try:
-            self.balance = float(balance)
+            self.session = int(session)
             return True
         except:
             return False
@@ -175,13 +200,6 @@ class Camper:
         except:
             return False
 
-    def setSession(self, session):
-        try:
-            self.session = int(session)
-            return True
-        except:
-            return False
-
     def setTribe(self, tribe):
         try:
             self.tribe = int(tribe)
@@ -189,12 +207,9 @@ class Camper:
         except:
             return False
 
-    def setBunkhouse(self, bunkhouse):
-        try:
-            self.bunkhouse = int(bunkhouse)
-            return True
-        except:
-            return False
+    #def setArrivalReqCert(self):
+
+    #def setCheckedIn(self):
 
     def setAssignmentRequest(self, camper):
         try:
@@ -202,3 +217,23 @@ class Camper:
             return True
         except:
             return False
+
+    def setPacket(self):
+        try:
+            self.packetStatus = True
+            return True
+        except:
+            return False
+
+    def setPacketSendDate(self):
+        try:
+            self.packetStatus = True
+            self.dateSentNotice = datetime.now().replace(microsecond = 0)
+            return True
+        except:
+            return False
+
+    #def setMaterials(self):
+
+
+
