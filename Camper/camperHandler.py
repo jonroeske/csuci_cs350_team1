@@ -1,14 +1,8 @@
-import numbers
-
-from Handlers.guiHandler import *
+from GUI.guiHandler import *
 from Objects.camper import Camper
 from Objects.materials import Materials
-from firstDay.firstDay import assignTribes
-from firstDay.firstDay import assignBunkhouses
-from firstDay.firstDay import checkInCert
-from postAcceptance.postAcceptance import withdrawCamper
+from Documents.firstDay import checkInCert
 
-from operator import attrgetter
 from faker import Faker
 import random, pickle, sys, os
 
@@ -40,7 +34,7 @@ def initializeData():
     maxCampersInTribe = 12
 
     for location in locations:
-        path = './database/'+location+'.pkl'
+        path = './Database/'+location+'.pkl'
 
         if os.path.exists(path):
             with (open(path, 'rb')) as openfile:

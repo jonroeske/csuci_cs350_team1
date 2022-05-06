@@ -1,5 +1,5 @@
 import datetime
-from Handlers.docHandler import raiseBalance
+from Documents.docHandler import raiseBalance
 
 # Clerk logic for camper post acceptance criteria
 # Cancellation refund

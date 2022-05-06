@@ -1,7 +1,6 @@
 # CLI System
-import sys
 
-from Handlers.camperHandler import *
+from Camper.camperHandler import *
 
 def main():
     initializeData()
