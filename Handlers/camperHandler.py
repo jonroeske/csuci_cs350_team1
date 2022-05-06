@@ -768,6 +768,8 @@ def assignCamperToSession():
 
         availability = [searchEmptySlot(juneCampers[0]), searchEmptySlot(julyCampers[0]), searchEmptySlot(augustCampers[0])]
 
+        sessions = ["June", "July", "August"]
+
         if camper.getAppStatus() != 1:
             camperSubMenu()
             print('| Camper must be accepted!                     |')
@@ -807,20 +809,65 @@ def assignCamperToSession():
             print(f'|  Availability: {maxCampersInSession - augustCampers[0].index(None)}' + '                            |')
             print('|----------------------------------------------|')
 
-            command = input(">> ")
+            command = int(input(">> "))
+            session = None
 
-            if command == '0' and availability[0]:
-                juneCampers[0].insert(juneCampers[0].index(None), camper)
-                camper.setSession("June")
+            match command:
+                case 0:
+                    session = globals()["juneCampers"][0]
+                case 1:
+                    session = globals()["julyCampers"][0]
+                case 2:
+                    session = globals()["augustCampers"][0]
+                case _:
+                    nonFatalError("Incorrect input!")
+
+            if camper.getAssignmentRequest() is None and availability[session]:
+                session[session.index(None)] = camper
+                camper.setSession(sessions[command])
                 break
-            elif command == '1' and availability[1]:
-                julyCampers[0].insert(julyCampers[0].index(None), camper)
-                camper.setSession("July")
-                break
-            elif command == '2' and availability[2]:
-                augustCampers[0].insert(augustCampers[0].index(None), camper)
-                camper.setSession("August")
-                break
+
+            elif camper.getAssignmentRequest():
+                slotsRemaining = maxCampersInSession - session.index(None)
+                partner = camper.getAssignmentRequest()
+
+                if partner.getSession() is not None:
+                    session[session.index(None)] = camper
+                    camper.setSession(sessions[command])
+                    break
+
+                while 1:
+
+                    print('| Camper has a partner request:                |')
+                    print('|  Partner: ' + partner.getName())
+                    print('| Would you like to assign the partner?        |')
+                    print('|  "Y" for Yes, "N" for No                     |')
+                    print('|----------------------------------------------|')
+
+                    confirmation = input(">> ")
+
+                    if confirmation == "Y" or confirmation == "N":
+                        break
+                    else:
+                        nonFatalError("Incorrect Input!")
+
+
+                if slotsRemaining > 1 and confirmation == "Y":
+                    session[session.index(None)] = camper
+                    camper.setSession(sessions[command])
+
+                    session[session.index(None)] = partner
+                    partner.setSession(sessions[command])
+                    break
+
+                elif slotsRemaining <= 1 and confirmation == "Y":
+                    nonFatalError("There is not enough capacity for both campers!")
+
+                elif confirmation == "N":
+                    session[session.index(None)] = camper
+                    camper.setSession(sessions[command])
+                    break
+
             else:
                 nonFatalError('That session is full!')
 
@@ -910,10 +957,48 @@ def assignCamperToBunkhouse():
 
             bunkhouse = session[maleOrFemaleBunkhouse[command]]
 
-            if availability[maleOrFemaleBunkhouse[command]]:
+            if camper.getAssignmentRequest() is None and availability[maleOrFemaleBunkhouse[command]]:
                 bunkhouse[bunkhouse.index(None)] = camper
                 camper.setBunkhouse(maleOrFemaleBunkhouse[command])
                 break
+
+            elif camper.getAssignmentRequest():
+                slotsRemaining = sum(x is not None for x in bunkhouse)
+                partner = camper.getAssignmentRequest()
+
+                confirmation = ""
+
+                while 1:
+
+                    print('| Camper has a partner request:                |')
+                    print('|  Partner: ' + partner.getName())
+                    print('| Would you like to assign the partner?        |')
+                    print('|  "Y" for Yes, "N" for No                     |')
+                    print('|----------------------------------------------|')
+
+                    confirmation = input(">> ")
+
+                    if confirmation == "Y" or confirmation == "N":
+                        break
+                    else:
+                        nonFatalError("Incorrect Input!")
+
+
+                if slotsRemaining > 1 and confirmation == "Y":
+                    bunkhouse[bunkhouse.index(None)] = camper
+                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
+
+                    bunkhouse[bunkhouse.index(None)] = partner
+                    partner.setBunkhouse(maleOrFemaleBunkhouse[command])
+                    break
+
+                elif slotsRemaining <= 1 and confirmation == "Y":
+                    nonFatalError("There is not enough capacity for both campers!")
+
+                elif confirmation == "N":
+                    bunkhouse[bunkhouse.index(None)] = camper
+                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
+                    break
 
             else:
                 nonFatalError('That bunkhouse is full!')
