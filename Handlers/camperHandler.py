@@ -1042,7 +1042,7 @@ def assignCamperToTribe():
 
         elif not any(availability):
             camperSubMenu()
-            print('| Sorry, all bunkhouses are full!              |')
+            print('| Sorry, all tribes are full!                  |')
             print('|----------------------------------------------|')
             return
 
@@ -1085,13 +1085,46 @@ def assignCamperToTribe():
 
             tribe = session[command]
 
-            if availability[command]:
+            if camper.getAssignmentRequest() is None and availability[tribe]:
                 tribe[tribe.index(None)] = camper
-                camper.setTribe(int(command))
+                camper.setTribe(command)
                 break
+
+            elif camper.getAssignmentRequest():
+                slotsRemaining = maxCampersInTribe - tribe.index(None)
+                partner = camper.getAssignmentRequest()
+
+                if partner.getTribe() is not None or partner.getSession() != camper.getSession():
+                    tribe[tribe.index(None)] = camper
+                    camper.setTribe(command)
+                    break
+
+                while 1:
+                    confirmation = partnerPrompt(partner)
+
+                    if confirmation == "Y" or confirmation == "N":
+                        break
+                    else:
+                        nonFatalError("Incorrect Input!")
+
+                if slotsRemaining > 1 and confirmation == "Y":
+                    tribe[tribe.index(None)] = camper
+                    camper.setTribe(command)
+
+                    tribe[tribe.index(None)] = partner
+                    partner.setTribe(command)
+                    break
+
+                elif slotsRemaining <= 1 and confirmation == "Y":
+                    nonFatalError("There is not enough capacity for both campers!")
+
+                elif confirmation == "N":
+                    tribe[tribe.index(None)] = camper
+                    camper.setTribe(command)
+                    break
+
             else:
                 nonFatalError('That tribe is full!')
-
         camperSubMenu()
         print('| Camper successfully added to tribe!          |')
         print('|----------------------------------------------|')
