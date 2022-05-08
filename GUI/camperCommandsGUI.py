@@ -14,6 +14,23 @@ def printCamperGUI(camper, **kwargs):
         print('  Gender:  ' + camper.getGender())
         print('  Address: ' + camper.getAddress())
 
+    elif "attribute" in kwargs and isinstance(kwargs["attribute"], str):
+        print('  Name:    ' + camper.getName())
+
+        match kwargs["attribute"]:
+            case "balance":
+                print('  Balance:   $' + str(camper.getBalance()))
+            case "applicationStatus":
+                match camper.getAppStatus():
+                    case 0:
+                        print('  Application Status: Pending')
+                    case 1:
+                        print('  Application Status: Accepted')
+                    case 2:
+                        print('  Application Status: Rejected')
+            case "packetStatus":
+                pass # TODO - SIMPLIFY CAMPER VARIABLES
+
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
         if camper.getAssignmentRequest():
@@ -55,6 +72,7 @@ def printCamperGUI(camper, **kwargs):
 
         elif status == 2:
             print('  Application Status: Rejected')
+
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
         print('|----------------------------------------------|')

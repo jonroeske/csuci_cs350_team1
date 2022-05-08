@@ -2,10 +2,10 @@ import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
 from Objects.camper import Camper
-from Objects.values import *
 
 from GUI.guiHandler import clearScreen, mainMenu, showPrompt, showMessage
 from GUI.camperCommandsGUI import printCamperGUI
+
 
 # TODO - DEBUGGING
 def viewSessions():
@@ -52,6 +52,7 @@ def viewSessions():
         statusGetFailure()
 
 
+# TODO - DEBUGGING
 def viewBunkhouses():
     try:
         locations = [summerCamp.getJuneBunkhouses(), summerCamp.getJulyBunkhouses(), summerCamp.getAugustBunkhouses()]
@@ -95,6 +96,7 @@ def viewBunkhouses():
         statusGetFailure()
 
 
+# TODO - DEBUGGING
 def viewTribes():
     try:
         locations = [summerCamp.getJuneTribes(), summerCamp.getJulyTribes(), summerCamp.getAugustTribes()]

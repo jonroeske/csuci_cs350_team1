@@ -53,6 +53,7 @@ def createCamper():
 
         if confirmation == 'Y':
             summerCamp.insertCamper(newCamper)
+            summerCamp.sortList(parameter="name")
 
             mainMenu()
             showMessage("Camper successfully created!", bottomBracket=True)

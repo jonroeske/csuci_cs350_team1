@@ -3,6 +3,12 @@
 
 from Handlers.camperHandler import *
 from Handlers.camperCommands import *
+
+from Handlers.financialCommands import *
+
+from GUI.guiHandler import mainMenu, camperSubMenu
+
+
 from Handlers.sessionsCommands import *
 
 from Handlers.debugCommands import *
