@@ -28,7 +28,12 @@ def createCamper():
 
     while True:
         clearScreen()
-        newCamper.age = int(showPrompt("Please insert camper age:", prompt="(9 - 18)", topBracket=True, bottomBracket=True))
+        try:
+            newCamper.age = int(showPrompt("Please insert camper age:", prompt="(9 - 18)", topBracket=True, bottomBracket=True))
+        except ValueError:
+            showMessage("Invalid input!", bottomBracket=True, wait=2)
+            continue
+
         if 9 <= int(newCamper.age) <= 18:
             break
         else:

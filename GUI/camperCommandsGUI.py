@@ -18,8 +18,6 @@ def printCamperGUI(camper, **kwargs):
         print('  Name:    ' + camper.getName())
 
         match kwargs["attribute"]:
-            case "balance":
-                print('  Balance:   $' + str(camper.getBalance()))
             case "applicationStatus":
                 match camper.getAppStatus():
                     case 0:
@@ -28,6 +26,12 @@ def printCamperGUI(camper, **kwargs):
                         print('  Application Status: Accepted')
                     case 2:
                         print('  Application Status: Rejected')
+            case "assignmentRequest":
+                print('  Partner:  ' + camper.getAssignment().getName())
+            case "balance":
+                print('  Balance:   $' + str(camper.getBalance()))
+            case "bunkhouse":
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
             case "packetStatus":
                 pass # TODO - SIMPLIFY CAMPER VARIABLES
             case "session":
@@ -40,20 +44,18 @@ def printCamperGUI(camper, **kwargs):
                         print('  Session:     August')
                     case _:
                         print('  Session:     None')
-            case "bunkhouse":
-                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
             case "tribe":
                 print('  Tribe:   ' + str(camper.getTribe()+1))
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
         if camper.getAssignmentRequest():
-            print('     Partner: ' + camper.getAssignment().getName())
+            print('     Partner:  ' + camper.getAssignment().getName())
 
     elif "detailed" in kwargs and kwargs["detailed"] is True:
         print('  Name:     ' + camper.getName())
         if camper.getAssignmentRequest():
-            print('   Partner: ' + camper.getAssignment().getName())
+            print('   Partner:  ' + camper.getAssignment().getName())
         print('  Age:      ' + str(camper.getAge()))
         print('  Gender:   ' + camper.getGender())
         print('  Address:  ' + camper.getAddress())

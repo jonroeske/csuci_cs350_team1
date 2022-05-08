@@ -277,48 +277,93 @@ def assignCamperToTribe():
 
 
 def assignPairRequest():
-    try:
-        subjectname = namePrompt()
-        subjectcamper = searchCamperFullName(allCampers, subjectname)
+    clearScreen()
+    name = showPrompt("Please insert camper name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
 
-        if subjectcamper.getAssignmentRequest() is not None:
-            print('| Camper already has request:                  |')
-            print(f'|  {subjectcamper.getAssignmentRequest().getName()}')
-            print('|----------------------------------------------|')
-            print('| Press "Enter" to return!                     |')
-            print('|----------------------------------------------|')
-            input(">> ")
-            camperSubMenu()
-            return
+    camper = summerCamp.searchCamper(name)
 
-        requestname = namePrompt()
-        requestcamper = searchCamperFullName(allCampers, requestname)
-
-        if requestcamper.getAssignmentRequest() is not None:
-            print('| Camper already has request:                  |')
-            print(f'|  {requestcamper.getAssignmentRequest().getName()}')
-            print('|----------------------------------------------|')
-            print('| Press "Enter" to return!                     |')
-            print('|----------------------------------------------|')
-            input(">> ")
-            camperSubMenu()
-            return
-
-        if (subjectcamper.getGender() != requestcamper.getGender()):
-            print('| Campers must have the same gender!           |')
-            print('|----------------------------------------------|')
-            print('| Press "Enter" to return!                     |')
-            print('|----------------------------------------------|')
-            input(">> ")
-            camperSubMenu()
-            return
-
-        subjectcamper.setAssignmentRequest(requestcamper)
-        requestcamper.setAssignmentRequest(subjectcamper)
-
+    if camper == STATUS_CODES["NO_CAMPER"]:
         camperSubMenu()
-        print(' Added pair request between ' + str(subjectcamper.getName()) + ' and ' + str(requestcamper.getName()))
-        print('|----------------------------------------------|')
-    except:
+        showMessage("That camper doesn't exists!", bottomBracket=True)
+        return
+    elif camper.getAssignmentRequest() is not False:
+        while True:
+            printCamperGUI(camper, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
+            showMessage('Camper already has a partner!')
+
+            confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
+                                  prompt='"Y" for Yes, "N" for No', bottomBracket=True)
+
+            if confirmation == 'Y':
+                partner = camper.getAssignment()
+
+                camper.setAssignmentRequest(False)
+                camper.setAssignment(None)
+
+                partner.setAssignmentRequest(False)
+                partner.setAssignment(None)
+
+                summerCamp.updateCamper(camper)
+                summerCamp.updateCamper(partner)
+
+                break
+            elif confirmation == 'N':
+                camperSubMenu()
+                showMessage("Action aborted.", bottomBracket=True)
+                return
+            else:
+                showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
+
+    clearScreen()
+    name = showPrompt("Please insert partner name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
+
+    partner = summerCamp.searchCamper(name)
+
+    if partner == STATUS_CODES["NO_CAMPER"]:
         camperSubMenu()
-        statusGetFailure()
+        showMessage("That camper doesn't exists!", bottomBracket=True)
+        return
+    elif partner.getAssignmentRequest() is not False:
+        while True:
+            printCamperGUI(partner, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
+            showMessage('Camper already has a partner!')
+
+            confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
+                                      prompt='"Y" for Yes, "N" for No', bottomBracket=True)
+
+            if confirmation == 'Y':
+                partnersPartner = partner.getAssignment()
+
+                partner.setAssignmentRequest(False)
+                partner.setAssignment(None)
+
+                partnersPartner.setAssignmentRequest(False)
+                partnersPartner.setAssignment(None)
+
+                summerCamp.updateCamper(partner)
+                summerCamp.updateCamper(partnersPartner)
+
+                break
+            elif confirmation == 'N':
+                camperSubMenu()
+                showMessage("Action aborted.", bottomBracket=True)
+                return
+            else:
+                showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
+
+    clearScreen()
+    camper.setAssignmentRequest(True)
+    camper.setAssignment(partner)
+
+    partner.setAssignmentRequest(True)
+    partner.setAssignment(camper)
+
+    summerCamp.updateCamper(camper)
+    summerCamp.updateCamper(partner)
+
+    printCamperGUI(camper, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
+    printCamperGUI(partner, attribute="assignmentRequest", bottomBracket=True)
+
+    showMessage("Partner assignment successful!", bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+    camperSubMenu()
