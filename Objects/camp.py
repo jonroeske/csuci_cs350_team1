@@ -143,8 +143,8 @@ class Camp:
             for location in locations:
                 for i in range(0, GLOBAL_VALUES["maxBunkhouses"]):
                     try:
-                        location[2][i].remove(camper)
-                        location[2][i].append("")
+                        location[1][i].remove(camper)
+                        location[1][i].append("")
                     except ValueError:
                         pass
 

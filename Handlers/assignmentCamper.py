@@ -6,6 +6,7 @@ from Objects.values import STATUS_CODES
 from GUI.guiHandler import camperSubMenu, clearScreen, showPrompt, showMessage
 from GUI.camperCommandsGUI import printCamperGUI
 
+
 def assignCamperToSession():
     clearScreen()
     name = showPrompt("Please insert camper name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
@@ -25,9 +26,10 @@ def assignCamperToSession():
         return
     elif camper.getSession() is not False:
         while True:
-            printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
-            confirmation = showPrompt(["Camper already has a session. Would you like to reassign?", "This will clear Camper's session, bunkhouse, and Tribe!"],
-                                      prompt= '"Y" for Yes, "N" for No', topBracket=True, bottomBracket=True)
+            printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
+            confirmation = showPrompt(["Camper already has a session. Would you like to reassign?",
+                                       "This will clear Camper's session, bunkhouse, and Tribe!"],
+                                      prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
             if confirmation == 'Y':
                 camper.setSession(False)
@@ -43,7 +45,6 @@ def assignCamperToSession():
                 return
             else:
                 showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
-
 
     locations = [summerCamp.getJuneCampers(), summerCamp.getJulyCampers(), summerCamp.getAugustCampers()]
 
@@ -82,130 +83,106 @@ def assignCamperToSession():
 
 
 def assignCamperToBunkhouse():
-    try:
-        fullname = namePrompt()
-        camper = searchCamperFullName(allCampers, fullname)
+    clearScreen()
+    name = showPrompt("Please insert camper name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
 
-        if (camper is None):
-            pass  # TODO - WE NEED TO SET CONDITIONS FOR MISSPELLED NAMES
+    camper = summerCamp.searchCamper(name)
 
-        session = camper.getSession()
+    if camper == STATUS_CODES["NO_CAMPER"]:
+        camperSubMenu()
+        showMessage("That camper doesn't exists!", bottomBracket=True)
+        return
+    elif camper.getAppStatus() != 1:
+        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
+        showMessage('Camper must be accepted!')
 
-        if (session == "June"):
-            session = globals()["juneCampers"][1]
-        elif (session == "July"):
-            session = globals()["julyCampers"][1]
-        elif (session == "August"):
-            session = globals()["augustCampers"][1]
-        elif session is None:
-            camperSubMenu()
-            print('| Camper must be assigned to a session!        |')
-            print('|----------------------------------------------|')
-            return
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getSession() is False:
+        printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
+        showMessage('Camper must be assigned to a session!')
 
-        maleOrFemaleBunkhouse = []
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getBunkhouse() is not False:
+        while True:
+            printCamperGUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
+            confirmation = showPrompt("Camper already has a bunkhouse. Would you like to reassign?",
+                                      prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
-        if (camper.getGender() == 'M'):
-            maleOrFemaleBunkhouse = [0, 1, 2]
-        elif (camper.getGender() == 'F'):
-            maleOrFemaleBunkhouse = [3, 4, 5]
+            if confirmation == 'Y':
+                camper.setBunkhouse(False)
 
-        availability = [searchEmptySlot(session[maleOrFemaleBunkhouse[0]]),
-                        searchEmptySlot(session[maleOrFemaleBunkhouse[1]]),
-                        searchEmptySlot(session[maleOrFemaleBunkhouse[2]])]
+                summerCamp.updateCamper(camper)
 
-        if camper.getAppStatus() != 1:
-            camperSubMenu()
-            print('| Camper must be accepted!                     |')
-            print('|----------------------------------------------|')
-            return
-
-        elif not any(availability):
-            camperSubMenu()
-            print('| Sorry, all bunkhouses are full!              |')
-            print('|----------------------------------------------|')
-            return
-
-        for bunkhouse in session:
-            try:
-                bunkhouse.index(camper)
+                break
+            elif confirmation == 'N':
                 camperSubMenu()
-                camperAlreadyEnrolled("bunkhouse")
+                showMessage("Action aborted.", bottomBracket=True)
                 return
-            except ValueError:
-                pass
-            # if this camper isn't a duplicate, then we want to create it
+            else:
+                showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
 
-        while 1:
+    locations = [summerCamp.getJuneBunkhouses(), summerCamp.getJulyBunkhouses(), summerCamp.getAugustBunkhouses()]
+    session = locations[int(camper.getSession())]
 
-            clearScreen()
+    while True:
+        clearScreen()
 
+        gender = camper.getGender()
+
+        # TODO - COMPREHRENSION CHECK: FIRST THREE BUNKHOUSES ARE MALE, SECOND THREE ARE FEMALE
+        if gender == "M":
             print('|----------------------------------------------|')
-            print('| What bunkhouse would you like to assign?     |')
-            print('| (0)  Bunkhouse ' + str(maleOrFemaleBunkhouse[0] + 1) + '                             |')
-            print(
-                f'|  Availability: {maxCampersInBunkhouse - session[maleOrFemaleBunkhouse[0]].index(None)}' + '                            |')
-            print('| (1)  Bunkhouse ' + str(maleOrFemaleBunkhouse[1] + 1) + '                             |')
-            print(
-                f'|  Availability: {maxCampersInBunkhouse - session[maleOrFemaleBunkhouse[1]].index(None)}' + '                            |')
-            print('| (2)  Bunkhouse ' + str(maleOrFemaleBunkhouse[2] + 1) + '                             |')
-            print(
-                f'|  Availability: {maxCampersInBunkhouse - session[maleOrFemaleBunkhouse[2]].index(None)}' + '                            |')
+            print('| Bunkhouses:                                  |')
+            print('| (0)  Bunkhouse 1                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[0])}')
+            print('| (1)  Bunkhouse 2                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[1])}')
+            print('| (2)  Bunkhouse 3                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[2])}')
+            print('|----------------------------------------------|')
 
-            command = int(input(">> "))
+        elif gender == "F":
+            print('|----------------------------------------------|')
+            print('| Bunkhouses:                                  |')
+            print('| (0)  Bunkhouse 4                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[3])}')
+            print('| (1)  Bunkhouse 5                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[4])}')
+            print('| (2)  Bunkhouse 6                             |')
+            print(f'        Availability: {sum(elem == "" for elem in session[5])}')
+            print('|----------------------------------------------|')
 
-            bunkhouse = session[maleOrFemaleBunkhouse[command]]
+        try:
+            location = int(showPrompt("Which bunkhouse would you like to assign?", bottomBracket=True))
+        except ValueError:
+            showMessage("Invalid input!", bottomBracket=True, wait=2)
+            continue
 
-            if camper.getAssignmentRequest() is None and availability[bunkhouse]:
-                bunkhouse[bunkhouse.index(None)] = camper
-                camper.setBunkhouse(maleOrFemaleBunkhouse[command])
+        if not 0 <= location <= 2:
+            showMessage("That is not a session!", bottomBracket=True, wait=2)
+        else:
+            if gender == "F":
+                location += 3
+
+            if not any(elem == "" for elem in session[location]):
+                showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
+            else:
+                camper.setBunkhouse(location)
                 break
 
-            elif camper.getAssignmentRequest():
-                slotsRemaining = maxCampersInBunkhouse - bunkhouse.index(None)
-                partner = camper.getAssignmentRequest()
+    # TODO - ADD LOGIC FOR PARTNER
 
-                if partner.getBunkhouse() is not None or partner.getSession() != camper.getSession():
-                    bunkhouse[bunkhouse.index(None)] = camper
-                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
-                    break
+    clearScreen()
 
-                while 1:
-                    confirmation = partnerPrompt(partner)
+    summerCamp.updateCamper(camper)
 
-                    if confirmation == "Y" or confirmation == "N":
-                        break
-                    else:
-                        nonFatalError("Incorrect Input!")
-
-                if slotsRemaining > 1 and confirmation == "Y":
-                    bunkhouse[bunkhouse.index(None)] = camper
-                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
-
-                    bunkhouse[bunkhouse.index(None)] = partner
-                    partner.setBunkhouse(maleOrFemaleBunkhouse[command])
-                    break
-
-                elif slotsRemaining <= 1 and confirmation == "Y":
-                    nonFatalError("There is not enough capacity for both campers!")
-
-                elif confirmation == "N":
-                    bunkhouse[bunkhouse.index(None)] = camper
-                    camper.setBunkhouse(maleOrFemaleBunkhouse[command])
-                    break
-
-            else:
-                nonFatalError('That bunkhouse is full!')
-
-        camperSubMenu()
-        print('| Camper successfully added to bunkhouse!      |')
-        print('|----------------------------------------------|')
-
-
-    except Exception as e:
-        print(e)
-        # mainMenu()
-        # statusGetFailure()
+    printCamperGUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+    camperSubMenu()
 
 
 def assignCamperToTribe():

@@ -40,7 +40,8 @@ def printCamperGUI(camper, **kwargs):
                         print('  Session:     August')
                     case _:
                         print('  Session:     None')
-
+            case "bunkhouse":
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
