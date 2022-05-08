@@ -58,21 +58,20 @@ class Camp:
         if not "session" in kwargs:
             return self.allCampers
 
-
         match kwargs["session"]:
             case 0:
                 if "bunkOrTribe" in kwargs and "bunkOrTribeindex" in kwargs:
-                    return self.juneCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"] ]
+                    return self.juneCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"]]
                 else:
                     return self.juneCampers[0]
             case 1:
                 if "bunkOrTribe" in kwargs and "bunkOrTribeindex" in kwargs:
-                    return self.julyCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"] ]
+                    return self.julyCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"]]
                 else:
                     return self.julyCampers[0]
             case 2:
                 if "bunkOrTribe" in kwargs and "bunkOrTribeindex" in kwargs:
-                    return self.augustCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"] ]
+                    return self.augustCampers[kwargs["bunkOrTribe"] + 1][kwargs["bunkOrTribeIndex"]]
                 else:
                     return self.augustCampers[0]
 
@@ -99,298 +98,250 @@ class Camp:
             if currentCamper.getName() == camper.getName():
                 try:
                     self.allCampers.remove(currentCamper)
-                    if not "delete" in kwargs:
-                        self.allCampers.append(camper)
-                    break
                 except ValueError:
-                    return STATUS_CODES["NO_CAMPER"]
+                    self.allCampers.remove("")
+
+                if "remove" in kwargs and kwargs["remove"] is True:
+                    self.allCampers.append("")
+
+                elif "remove" not in kwargs:
+                    self.allCampers.append(camper)
+                break
+
+        locations = [self.juneCampers, self.julyCampers, self.augustCampers]
 
         session = camper.getSession()
         bunkhouse = camper.getBunkhouse()
         tribe = camper.getTribe()
 
-        if session != "":
-            match session:
-                case 0:
-                    for currentCamper in self.juneCampers[0]:
-                        if isinstance(currentCamper, str):
-                            continue
+        if session is not False:
+            try:
+                locations[session][0].remove(camper)
+            except ValueError:
+                locations[session][0].remove("")
+            locations[session][0].append(camper)
 
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.juneCampers[0].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.juneCampers[0].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_SESSION"]
+        elif session is False:
+            for location in locations:
+                try:
+                    location[0].remove(camper)
+                    location[0].append("")
+                except ValueError:
+                    pass
 
-                case 1:
-                    for currentCamper in self.julyCampers[0]:
-                        if isinstance(currentCamper, str):
-                            continue
+            
+        if bunkhouse is not False and session is not False:
+            try:
+                locations[session][1][bunkhouse].remove(camper)
+            except ValueError:
+                locations[session][1][bunkhouse].remove("")
 
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.julyCampers[0].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.julyCampers[0].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_SESSION"]
+            locations[session][1][bunkhouse].append(camper)
 
-                case 2:
-                    for currentCamper in self.augustCampers[0]:
-                        if isinstance(currentCamper, str):
-                            continue
+        elif bunkhouse is False or session is False:
+            camper.setBunkhouse(False)
+            for location in locations:
+                for i in range(0, GLOBAL_VALUES["maxBunkhouses"]):
+                    try:
+                        location[2][i].remove(camper)
+                        location[2][i].append("")
+                    except ValueError:
+                        pass
 
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.augustCampers[0].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.augustCampers[0].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_SESSION"]
 
-        if bunkhouse != "":
-            match session:
-                case 0:
-                    for currentCamper in self.juneCampers[1][bunkhouse]:
-                        if isinstance(currentCamper, str):
-                            continue
+        if tribe is not False and session is not False:
+            try:
+                locations[session][2][tribe].remove(camper)
+            except ValueError:
+                locations[session][2][tribe].remove("")
 
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.juneCampers[1][bunkhouse].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.juneCampers[1][bunkhouse].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
+            locations[session][2][tribe].append(camper)
 
-                case 1:
-                    for currentCamper in self.julyCampers[1][bunkhouse]:
-                        if isinstance(currentCamper, str):
-                            continue
+        elif tribe is False or session is False:
+            camper.setTribe(False)
+            for location in locations:
+                for i in range(0, GLOBAL_VALUES["maxTribes"]):
+                    try:
+                        location[2][i].remove(camper)
+                        location[2][i].append("")
+                    except ValueError:
+                        pass
 
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.julyCampers[1][bunkhouse].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.julyCampers[1][bunkhouse].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
-
-                case 2:
-                    for currentCamper in self.augustCampers[1][bunkhouse]:
-                        if isinstance(currentCamper, str):
-                            continue
-
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.augustCampers[1][bunkhouse].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.augustCampers[1][bunkhouse].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_BUNKHOUSE"]
-
-        if tribe != "":
-            match session:
-                case 0:
-                    for currentCamper in self.juneCampers[2][tribe]:
-                        if isinstance(currentCamper, str):
-                            continue
-
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.juneCampers[2][tribe].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.juneCampers[2][tribe].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_TRIBE"]
-
-                case 1:
-                    for currentCamper in self.julyCampers[2][tribe]:
-                        if isinstance(currentCamper, str):
-                            continue
-
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.julyCampers[2][tribe].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.julyCampers[2][tribe].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_TRIBE"]
-
-                case 2:
-                    for currentCamper in self.augustCampers[2][tribe]:
-                        if isinstance(currentCamper, str):
-                            continue
-
-                        if currentCamper.getName() == camper.getName():
-                            try:
-                                self.augustCampers[2][tribe].remove(currentCamper)
-                                if not "delete" in kwargs:
-                                    self.augustCampers[2][tribe].append(camper)
-                                break
-                            except ValueError:
-                                return STATUS_CODES["NO_CAMPER_TRIBE"]
 
         return STATUS_CODES["SUCCESS"]
 
     def insertCamper(self, camper):
         try:
-            self.allCampers.index(camper)
-            return STATUS_CODES["DUPLICATE"]
+            self.allCampers.remove("")
+            self.allCampers.append(camper)
         except ValueError:
+            return STATUS_CODES["NO_CAPACITY"]
+
+
+        locations = [self.juneCampers, self.julyCampers, self.augustCampers]
+
+        session = camper.getSession()
+        bunkhouse = camper.getBunkhouse()
+        tribe = camper.getTribe()
+
+        if session is not False:
             try:
-                self.allCampers.remove("")
-                self.allCampers.append(camper)
-
-                self.allCampers.sort(key=lambda x: (x == "", x))
-
-                return STATUS_CODES["SUCCESS"]
+                self.locations[session][0].remove("")
+                self.locations[session][0].append(camper)
             except ValueError:
                 return STATUS_CODES["NO_CAPACITY"]
 
-    def insertCamperInSession(self, camper):
-        session = camper.getSession()
+        if bunkhouse is not False and session is not False:
+            try:
+                self.locations[session][1][bunkhouse].remove("")
+                self.locations[session][1][bunkhouse].append(camper)
+            except ValueError:
+                return STATUS_CODES["NO_CAPACITY"]
 
-        if session is None:
-            return STATUS_CODES["NO_SESSION"]
 
-        match session:
-            case 0:
-                try:
-                    self.juneCampers[0].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.juneCampers[0].remove("")
-                        self.juneCampers[0].append(camper)
 
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 1:
-                try:
-                    self.julyCampers[0].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.julyCampers[0].remove("")
-                        self.julyCampers[0].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 2:
-                try:
-                    self.augustCampers[0].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.augustCampers[0].remove("")
-                        self.augustCampers[0].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
+        if tribe is not False and session is not False:
+            try:
+                self.locations[session][2][tribe].remove("")
+                self.locations[session][2][tribe].append(camper)
+            except ValueError:
+                return STATUS_CODES["NO_CAPACITY"]
 
-    def insertCamperInBunkhouse(self, camper):
-        session = camper.getSession()
+        return STATUS_CODES["SUCCESS"]
 
-        if session is None:
-            return STATUS_CODES["NO_SESSION"]
+    #def insertCamperInSession(self, camper):
+    #    session = camper.getSession()
+#
+    #    if session is None:
+    #        return STATUS_CODES["NO_SESSION"]
+#
+    #    match session:
+    #        case 0:
+    #            try:
+    #                self.juneCampers[0].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.juneCampers[0].remove("")
+    #                    self.juneCampers[0].append(camper)
+#
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 1:
+    #            try:
+    #                self.julyCampers[0].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.julyCampers[0].remove("")
+    #                    self.julyCampers[0].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 2:
+    #            try:
+    #                self.augustCampers[0].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.augustCampers[0].remove("")
+    #                    self.augustCampers[0].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
 
-        bunkhouse = camper.getBunkhouse()
+    #def insertCamperInBunkhouse(self, camper):
+    #    session = camper.getSession()
+#
+    #    if session is None:
+    #        return STATUS_CODES["NO_SESSION"]
+#
+    #    bunkhouse = camper.getBunkhouse()
+#
+    #    if bunkhouse is None:
+    #        return STATUS_CODES["NO_BUNKHOUSE"]
+#
+    #    match session:
+    #        case 0:
+    #            try:
+    #                self.juneCampers[1][bunkhouse].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.juneCampers[1][bunkhouse].remove("")
+    #                    self.juneCampers[1][bunkhouse].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 1:
+    #            try:
+    #                self.julyCampers[1][bunkhouse].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.julyCampers[1][bunkhouse].remove("")
+    #                    self.julyCampers[1][bunkhouse].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 2:
+    #            try:
+    #                self.augustCampers[1][bunkhouse].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.augustCampers[1][bunkhouse].remove("")
+    #                    self.augustCampers[1][bunkhouse].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
 
-        if bunkhouse is None:
-            return STATUS_CODES["NO_BUNKHOUSE"]
-
-        match session:
-            case 0:
-                try:
-                    self.juneCampers[1][bunkhouse].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.juneCampers[1][bunkhouse].remove("")
-                        self.juneCampers[1][bunkhouse].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 1:
-                try:
-                    self.julyCampers[1][bunkhouse].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.julyCampers[1][bunkhouse].remove("")
-                        self.julyCampers[1][bunkhouse].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 2:
-                try:
-                    self.augustCampers[1][bunkhouse].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.augustCampers[1][bunkhouse].remove("")
-                        self.augustCampers[1][bunkhouse].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-
-    def insertCamperInTribe(self, camper):
-        session = camper.getSession()
-
-        if session is None:
-            return STATUS_CODES["NO_SESSION"]
-
-        tribe = camper.getTribe()
-
-        if tribe is None:
-            return STATUS_CODES["NO_TRIBE"]
-
-        match session:
-            case 0:
-                try:
-                    self.juneCampers[2][tribe].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.juneCampers[2][tribe].remove("")
-                        self.juneCampers[2][tribe].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 1:
-                try:
-                    self.julyCampers[2][tribe].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.julyCampers[2][tribe].remove("")
-                        self.julyCampers[2][tribe].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
-            case 2:
-                try:
-                    self.augustCampers[2][tribe].index(camper)
-                    return STATUS_CODES["DUPLICATE"]
-                except ValueError:
-                    try:
-                        self.augustCampers[2][tribe].remove("")
-                        self.augustCampers[2][tribe].append(camper)
-                        return STATUS_CODES["SUCCESS"]
-                    except ValueError:
-                        return STATUS_CODES["NO_CAPACITY"]
+    #def insertCamperInTribe(self, camper):
+    #    session = camper.getSession()
+#
+    #    if session is None:
+    #        return STATUS_CODES["NO_SESSION"]
+#
+    #    tribe = camper.getTribe()
+#
+    #    if tribe is None:
+    #        return STATUS_CODES["NO_TRIBE"]
+#
+    #    match session:
+    #        case 0:
+    #            try:
+    #                self.juneCampers[2][tribe].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.juneCampers[2][tribe].remove("")
+    #                    self.juneCampers[2][tribe].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 1:
+    #            try:
+    #                self.julyCampers[2][tribe].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.julyCampers[2][tribe].remove("")
+    #                    self.julyCampers[2][tribe].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
+    #        case 2:
+    #            try:
+    #                self.augustCampers[2][tribe].index(camper)
+    #                return STATUS_CODES["DUPLICATE"]
+    #            except ValueError:
+    #                try:
+    #                    self.augustCampers[2][tribe].remove("")
+    #                    self.augustCampers[2][tribe].append(camper)
+    #                    return STATUS_CODES["SUCCESS"]
+    #                except ValueError:
+    #                    return STATUS_CODES["NO_CAPACITY"]
 
     def getAllCampers(self):
         return self.allCampers

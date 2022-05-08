@@ -95,7 +95,13 @@ def deleteCamper():
         confirmation = showPrompt("Are you sure you want to delete this camper?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
         if confirmation == 'Y':
-            summerCamp.updateCamper(camper, delete=True)
+            # TODO - ADD PARTNER LOGIC
+
+            camper.setSession(False)
+            camper.setBunkhouse(False)
+            camper.setTribe(False)
+
+            summerCamp.updateCamper(camper, remove=True)
             mainMenu()
             showMessage("Camper deletion successful", bottomBracket=True)
             return

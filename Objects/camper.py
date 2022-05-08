@@ -163,7 +163,7 @@ class Camper:
 
     def setBalance(self, balance):
         try:
-            self.balance = float(balance)
+            self.balance = round(float(balance), 2)
             return True
         except:
             return False
@@ -178,7 +178,7 @@ class Camper:
 
     def setSession(self, session):
         try:
-            self.session = int(session)
+            self.session = session
             return True
         except:
             return False
@@ -192,7 +192,7 @@ class Camper:
 
     def setTribe(self, tribe):
         try:
-            self.tribe = int(tribe)
+            self.tribe = tribe
             return True
         except:
             return False

@@ -6,6 +6,7 @@ from Handlers.camperCommands import *
 
 from Handlers.financialCommands import *
 from Handlers.applicationCommands import *
+from Handlers.assignmentCamper import *
 
 from GUI.guiHandler import mainMenu, camperSubMenu
 

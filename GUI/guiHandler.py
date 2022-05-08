@@ -90,26 +90,17 @@ def showVersion():
     print('|----------------------------------------------|')
 
 
-def applicationStatusPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Which status would you like to set to?       |')
-    print('| (0)  Pending                                 |')
-    print('| (1)  Accepted                                |')
-    print('| (2)  Rejected                                |')
-    print('|----------------------------------------------|')
-    status = str(input(">> "))
-
-    return status
-
-
 def showMessage(message, **kwargs):
     if "topBracket" in kwargs and kwargs["topBracket"] is True:
         print('|----------------------------------------------|')
 
-    print("  INFO: " + message)
+    if isinstance(message, list):
+        for line in message:
+            if isinstance(line, str):
+                print("  INFO: " + line)
+
+    else:
+        print("  INFO: " + message)
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
         print('|----------------------------------------------|')
@@ -122,7 +113,12 @@ def showPrompt(message, **kwargs):
     if "topBracket" in kwargs and kwargs["topBracket"] is True:
         print('|----------------------------------------------|')
 
-    print("  CONFIRM: " + message)
+    if isinstance(message, list):
+        for line in message:
+            if isinstance(line, str):
+                print("  CONFIRM: " + line)
+    else:
+        print("  CONFIRM: " + message)
 
     if "prompt" in kwargs and isinstance(kwargs["prompt"], str):
         print('   ' + kwargs["prompt"])

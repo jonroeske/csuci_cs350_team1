@@ -15,29 +15,29 @@ def viewSessions():
         print('| Sessions:                                    |')
 
 
-        print(f'    June:')
-        print(f'     Amount: {sum(elem != "" for elem in summerCamp.getJuneCampers())}')
+        print(f'   June:')
+        print(f'    Amount: {sum(elem != "" for elem in summerCamp.getJuneCampers())}')
         genders = summerCamp.countGender(session=0)
-        print(f'     Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
+        print(f'    Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
 
         for camper in summerCamp.getJuneCampers():
             if isinstance(camper, Camper):
                 printCamperGUI(camper, simple=True)
 
-        print(f'    July:')
-        print(f'     Amount: {sum(elem != "" for elem in summerCamp.getJulyCampers())}')
+        print(f'   July:')
+        print(f'    Amount: {sum(elem != "" for elem in summerCamp.getJulyCampers())}')
         genders = summerCamp.countGender(session=1)
-        print(f'     Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
+        print(f'    Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
 
         for camper in summerCamp.getJulyCampers():
             if isinstance(camper, Camper):
                 if isinstance(camper, Camper):
                     printCamperGUI(camper, simple=True)
 
-        print(f'    July:')
-        print(f'     Amount: {sum(elem != "" for elem in summerCamp.getAugustCampers())}')
+        print(f'   July:')
+        print(f'    Amount: {sum(elem != "" for elem in summerCamp.getAugustCampers())}')
         genders = summerCamp.countGender(session=2)
-        print(f'     Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
+        print(f'    Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
 
         for camper in summerCamp.getAugustCampers():
             if isinstance(camper, Camper):

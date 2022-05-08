@@ -30,6 +30,17 @@ def printCamperGUI(camper, **kwargs):
                         print('  Application Status: Rejected')
             case "packetStatus":
                 pass # TODO - SIMPLIFY CAMPER VARIABLES
+            case "session":
+                match camper.getSession():
+                    case 0:
+                        print('  Session:     June')
+                    case 1:
+                        print('  Session:     July')
+                    case 2:
+                        print('  Session:     August')
+                    case _:
+                        print('  Session:     None')
+
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
@@ -43,6 +54,7 @@ def printCamperGUI(camper, **kwargs):
         print('  Age:      ' + str(camper.getAge()))
         print('  Gender:   ' + camper.getGender())
         print('  Address:  ' + camper.getAddress())
+        print('  Balance:  $' + str(camper.getBalance()))
 
         status = camper.getAppStatus()
         if status == 0:
@@ -56,7 +68,14 @@ def printCamperGUI(camper, **kwargs):
             tribe = camper.getTribe()
 
             if session is not False:
-                print('  Session: ' + session)
+                match session:
+                    case 0:
+                        print('  Session: June')
+                    case 1:
+                        print('  Session: July')
+                    case 2:
+                        print('  Session: August')
+
             if bunkhouse is not False:
                 print('  Bunkhouse: ' + str(bunkhouse))
             if tribe is not False:

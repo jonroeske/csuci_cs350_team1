@@ -1,14 +1,10 @@
-import random
-
 import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
+
 from Handlers.camperCommands import printAllCampers
-from GUI.guiHandler import mainMenu, applicationStatusPrompt
 
-from Objects.values import *
+from Objects.values import GLOBAL_VALUES
 from Objects.camper import Camper
-
-from operator import attrgetter
 
 from random import randint, shuffle
 
