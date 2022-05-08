@@ -64,7 +64,7 @@ def raiseCamperBalance():
     showMessage("New balance:",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="balance")
 
-    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     camperSubMenu()
 
 
@@ -107,7 +107,7 @@ def reduceCamperBalance():
     showMessage("New balance:",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="balance")
 
-    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     camperSubMenu()
 
 
@@ -147,5 +147,5 @@ def clearCamperBalance():
     showMessage("New balance:",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="balance")
 
-    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     camperSubMenu()

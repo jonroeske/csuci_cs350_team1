@@ -90,18 +90,6 @@ def showVersion():
     print('|----------------------------------------------|')
 
 
-def amountPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please enter amount:                         |')
-    print('|----------------------------------------------|')
-    amount = str(input(">> "))
-
-    return amount
-
-
 def applicationStatusPrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -147,41 +135,6 @@ def showPrompt(message, **kwargs):
     return confirm
 
 
-def camperAlreadyEnrolled(object):
-    print('  This camper is enrolled in a ' + object + '!')
-    print('|----------------------------------------------|')
-
-
-def camperApplicationUpdateSuccess():
-    print('| Camper app status successfully updated!      |')
-    print('|----------------------------------------------|')
-
-
-def camperApplicationUpdateFailure():
-    print('| ERROR: Camper app update failed!             |')
-    print('|----------------------------------------------|')
-
-
-def camperBalanceUpdateSuccess():
-    print('| Camper balance successfully updated!         |')
-    print('|----------------------------------------------|')
-
-
-def camperBalanceUpdateFailure():
-    print('| ERROR: Camper balance update failed!         |')
-    print('|----------------------------------------------|')
-
-
-def camperPacketSentSuccess():
-    print('| Camper packet has been sent!                 |')
-    print('|----------------------------------------------|')
-
-
-def camperPacketSentFailure():
-    print('| ERROR: Camper packet failed to send!         |')
-    print('|----------------------------------------------|')
-
-
 def partnerPrompt(partner):
     print('| Camper has a partner request:                |')
     print('|  Partner: ' + partner.getName())
@@ -192,11 +145,6 @@ def partnerPrompt(partner):
     confirmation = input(">> ")
 
     return confirmation
-
-def statusGetFailure():
-    print('| ERROR: Failed to get status!                 |')
-    print('|----------------------------------------------|')
-
 
 def viewCamperBalance(camperArray, name):
     if len(camperArray) <= 0:
@@ -214,10 +162,3 @@ def viewCamperBalance(camperArray, name):
     input()
     mainMenu()
     return
-
-
-def notYetImplemented():
-    print("| ERROR: Not yet implemented.                  | ")
-    print('|----------------------------------------------|')
-    time.sleep(2)
-    mainMenu()

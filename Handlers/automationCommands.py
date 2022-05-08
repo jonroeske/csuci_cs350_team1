@@ -3,9 +3,6 @@ import random
 import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 from Handlers.camperCommands import printAllCampers
-
-from GUI.guiHandler import amountPrompt
-
 from GUI.guiHandler import mainMenu, applicationStatusPrompt
 
 from Objects.values import *
