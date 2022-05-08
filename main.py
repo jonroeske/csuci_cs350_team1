@@ -1,7 +1,12 @@
 # CLI System
 
+
 from Handlers.camperHandler import *
+from Handlers.camperCommands import *
+from Handlers.sessionsCommands import *
+
 from Handlers.debugCommands import *
+from Handlers.automationCommands import *
 
 def main():
     initializeData()
@@ -61,6 +66,10 @@ def main():
                     #case '20':
                     #    clearAllTribes()
                     case _:
+                        print(summerCamp.getAllCampers())
+                        print(summerCamp.getJune())
+                        print(summerCamp.getJuly())
+                        print(summerCamp.getAugust())
                         mainMenu()
             except KeyboardInterrupt:
                 shutdown()

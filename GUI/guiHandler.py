@@ -1,5 +1,4 @@
-import os
-import time
+import os, time
 
 from Objects.camper import *
 
@@ -91,56 +90,6 @@ def showVersion():
     print('|----------------------------------------------|')
 
 
-def namePrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper name: (First + Last)    |')
-    print('|  EXAMPLE: "John Doe"                         |')
-    print('|----------------------------------------------|')
-    fullname = str(input(">> "))
-
-    return fullname
-
-
-def agePrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper age:                    |')
-    print('|----------------------------------------------|')
-    age = input(">> ")
-
-    return age
-
-
-def genderPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper gender:                 |')
-    print('|  NOTE: "M" or "F" only, sue us later         |')
-    print('|----------------------------------------------|')
-    gender = str(input(">> "))
-
-    return gender
-
-
-def addressPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper home address:           |')
-    print('|----------------------------------------------|')
-    address = str(input(">> "))
-
-    return address
-
-
 def amountPrompt():
     clearScreen()
     print('|----------------------------------------------|')
@@ -168,29 +117,34 @@ def applicationStatusPrompt():
     return status
 
 
-def camperConfirmation(newCamper):
-    print('|----------------------------------------------|')
-    print('| Is this information correct?                 |')
-    print('|  "Y" for Yes, "N" for No                     |')
-    print('|----------------------------------------------|')
-    print('  Name:    ' + newCamper.getName())
-    print('  Age:     ' + str(newCamper.getAge()))
-    print('  Gender:  ' + newCamper.getGender())
-    print('  Address: ' + newCamper.getAddress())
-    print('|----------------------------------------------|')
+def showMessage(message, **kwargs):
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
+
+    print("  INFO: " + message)
+
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
+
+    if "wait" in kwargs and isinstance(kwargs["wait"], int):
+        time.sleep(kwargs["wait"])
+
+
+def showPrompt(message, **kwargs):
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
+
+    print("  CONFIRM: " + message)
+
+    if "prompt" in kwargs and isinstance(kwargs["prompt"], str):
+        print('   ' + kwargs["prompt"])
+
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
+
     confirm = input(">> ")
 
     return confirm
-
-
-def camperCreateSuccess():
-    print('| Camper successfully created!                 |')
-    print('|----------------------------------------------|')
-
-
-def camperCreateFailure():
-    print('| ERROR: Camper creation aborted               |')
-    print('|----------------------------------------------|')
 
 
 def camperAlreadyEnrolled(object):
@@ -260,14 +214,6 @@ def viewCamperBalance(camperArray, name):
     input()
     mainMenu()
     return
-
-
-def nonFatalError(message):
-    print("  ERROR: " + message)
-    print('|----------------------------------------------|')
-    print("| Retrying...                                  | ")
-    print('|----------------------------------------------|')
-    time.sleep(2)
 
 
 def notYetImplemented():

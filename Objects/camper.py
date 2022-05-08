@@ -5,59 +5,46 @@ from Objects.values import *
 class Camper:
     def __init__(self):
         # CAMPER DESCRIPTION
-        self.name = None
-        self.age = None
-        self.gender = None
-        self.address = None
-        self.balance = 0.00
+        self.name = ""
+        self.age = ""
+        self.gender = ""
+        self.address = ""
+        self.balance = 1000.00
         self.appStatus = 0
 
         # CAMPER CAMP DETAILS
-        self.session = None
-        self.bunkhouse = None
-        self.tribe = None
+        self.session = False
+        self.bunkhouse = False
+        self.tribe = False
         self.arrivalReqCert = False
         self.checkedIn = False
 
         # CAMPER SUPPLIES + REQUEST
-        self.assignmentRequest = None
+        self.assignmentRequest = False
+        self.assignment = None
         self.packetStatus = False
-        self.dateSentNotice = None
-        self.materials = None
+        self.dateSentNotice = False
+        self.materials = False
 
     def __eq__(self, other):
         if isinstance(other, Camper):
-            return (self.name, self.age, self.gender, self.address) \
-                   == (other.getName(), other.getAge(), other.getGender(), other.getAddress())
+            return (self.name, self.age, self.gender) \
+                   == (other.getName(), other.getAge(), other.getGender())
 
         return False
 
     def __lt__(self, other):
         if isinstance(other, Camper):
-            return (self.name < other.name)
+            return self.name < other.name
+
         else:
             return False
 
     def __gt__(self, other):
         if isinstance(other, Camper):
-            return (self.name > other.name)
+            return self.name > other.name
         else:
             return False
-
-    #def initializeCamper(self):
-    #    self.balance = 1000.00
-    #    self.appStatus = 0
-#
-    #    self.session = None
-    #    self.bunkhouse = None
-    #    self.tribe = None
-    #    self.arrivalReqCert = False
-    #    self.checkedIn = False
-#
-    #    self.assignmentRequest = None
-    #    self.packetStatus = False
-    #    self.dateSentNotice = None
-    #    self.materials = Materials()
 
     def searchByFullName(self, campers):
         returnList = []
@@ -149,6 +136,9 @@ class Camper:
     def getAssignmentRequest(self):
         return self.assignmentRequest
 
+    def getAssignment(self):
+        return self.assignment
+
     def getPacket(self):
         return self.packetStatus
 
@@ -211,9 +201,16 @@ class Camper:
 
     #def setCheckedIn(self):
 
-    def setAssignmentRequest(self, camper):
+    def setAssignmentRequest(self, request):
         try:
-            self.assignmentRequest = camper
+            self.assignmentRequest = request
+            return True
+        except:
+            return False
+
+    def setAssignment(self, camper):
+        try:
+            self.assignment = camper
             return True
         except:
             return False

@@ -10,6 +10,8 @@ from Objects.camper import Camper
 from faker import Faker
 from Objects.values import *
 
+from operator import attrgetter
+
 import time, random
 
 def populateMaxCampers():
@@ -20,12 +22,14 @@ def populateMaxCampers():
     random.seed()
     fake = Faker()
 
-    for camper in Handlers.camperHandler.summerCamp.getAllCampers():
-        if camper is None:
+    global summerCamp
+
+    for camper in summerCamp.getAllCampers():
+        if camper == "":
             newCamper = Camper()
 
             while True:
-                genders = Handlers.camperHandler.summerCamp.countGender()
+                genders = summerCamp.countGender()
 
                 if genders[0] <= genders[1]:
                     newCamper.setName(fake.first_name_male() + ' ' + fake.last_name_male())
@@ -43,20 +47,19 @@ def populateMaxCampers():
                     break
 
             try:
-                Handlers.camperHandler.summerCamp.insertCamper(newCamper)
+                summerCamp.insertCamper(newCamper)
             except Exception as e:
                 pass
                 # we shouldn't be getting this error, as above the empty check confirms
                 #  there is an empty slot to use
 
-    campers = Handlers.camperHandler.summerCamp.getAllCampers()
 
-    for camper in campers:
+    for camper in summerCamp.getAllCampers():
 
         try:
-            if camper.getAssignmentRequest() is None:
+            if camper.getAssignmentRequest() is False:
                 # Here we find all campers with the same last name
-                matchingCampers = camper.searchByLastName(campers)
+                matchingCampers = camper.searchByLastName(summerCamp.getAllCampers())
 
                 if matchingCampers != STATUS_CODES["NO_CAMPER"]:
 
@@ -73,18 +76,21 @@ def populateMaxCampers():
 
                                 partner = matchingCampers[index]
 
-                                camper.setAssignmentRequest(partner)
-                                partner.setAssignmentRequest(camper)
+                                camper.setAssignmentRequest(True)
+                                partner.setAssignmentRequest(True)
 
-                                Handlers.camperHandler.summerCamp.updateCamper(camper)
-                                Handlers.camperHandler.summerCamp.updateCamper(partner)
+                                camper.setAssignment(partner)
+                                partner.setAssignment(camper)
+
+                                summerCamp.updateCamper(camper)
+                                summerCamp.updateCamper(partner)
                             except Exception as e:
                                 print(e)
 
         except Exception as e:
             print(e)
 
-    Handlers.camperHandler.summerCamp.sortCamp()
+    summerCamp.getAllCampers().sort(key=attrgetter("name"))
 
     time.sleep(1)
 
@@ -97,11 +103,8 @@ def clearAllCampers():
     print('| Clearing all campers...                      |')
     print('|----------------------------------------------|')
 
-    try:
-        Handlers.camperHandler.summerCamp = Camp()
-
-    except Exception as e:
-        print(e)
+    global summerCamp
+    summerCamp.__init__()
 
     time.sleep(1)
 
