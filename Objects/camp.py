@@ -99,7 +99,10 @@ class Camp:
                 try:
                     self.allCampers.remove(currentCamper)
                 except ValueError:
-                    self.allCampers.remove("")
+                    try:
+                        self.allCampers.remove("")
+                    except ValueError:
+                        return STATUS_CODES["NO_CAPACITY"]
 
                 if "remove" in kwargs and kwargs["remove"] is True:
                     self.allCampers.append("")
@@ -118,7 +121,11 @@ class Camp:
             try:
                 locations[session][0].remove(camper)
             except ValueError:
-                locations[session][0].remove("")
+                try:
+                    locations[session][0].remove("")
+                except ValueError:
+                    return STATUS_CODES["NO_CAPACITY"]
+
             locations[session][0].append(camper)
 
         elif session is False:
@@ -134,7 +141,10 @@ class Camp:
             try:
                 locations[session][1][bunkhouse].remove(camper)
             except ValueError:
-                locations[session][1][bunkhouse].remove("")
+                try:
+                    locations[session][1][bunkhouse].remove("")
+                except ValueError:
+                    return STATUS_CODES["NO_CAPACITY"]
 
             locations[session][1][bunkhouse].append(camper)
 
@@ -153,7 +163,10 @@ class Camp:
             try:
                 locations[session][2][tribe].remove(camper)
             except ValueError:
-                locations[session][2][tribe].remove("")
+                try:
+                    locations[session][2][tribe].remove("")
+                except ValueError:
+                    return STATUS_CODES["NO_CAPACITY"]
 
             locations[session][2][tribe].append(camper)
 

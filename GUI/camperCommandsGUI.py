@@ -42,6 +42,8 @@ def printCamperGUI(camper, **kwargs):
                         print('  Session:     None')
             case "bunkhouse":
                 print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
+            case "tribe":
+                print('  Tribe:   ' + str(camper.getTribe()+1))
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
