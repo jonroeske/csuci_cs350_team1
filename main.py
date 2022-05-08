@@ -1,71 +1,73 @@
 # CLI System
-
-
+# TODO - DELETE THIS WHEN POSSIBLE
 from Handlers.camperHandler import *
-from Handlers.camperCommands import *
-
-from Handlers.financialCommands import *
-from Handlers.applicationCommands import *
-from Handlers.assignmentCamper import *
-
-from GUI.guiHandler import mainMenu, camperSubMenu
 
 
-from Handlers.sessionsCommands import *
+from Handlers.MainMenu.camperCommands import *
+from Handlers.MainMenu.sessionsCommands import *
+from Handlers.MainMenu.automationCommands import *
+from Handlers.MainMenu.debugCommands import *
 
-from Handlers.debugCommands import *
-from Handlers.automationCommands import *
+
+from Handlers.CamperSubMenu.financialCommands import *
+from Handlers.CamperSubMenu.applicationCommands import *
+from Handlers.CamperSubMenu.assignmentCommands import *
+
+
+from Handlers.guiHandler import mainMenu, camperSubMenu
+
 
 def main():
     initializeData()
     currentRuntime = 'mainMenu'
 
     mainMenu()
-    while 1:
-
+    while True:
         while currentRuntime == 'mainMenu':
             try:
                 varInput = input(">> ")
                 match varInput:
-                    case '0': # TODO - DONE
+                    case '0':
                         exit()
-                    case '1': # TODO - DONE
+                    case '1':
                         mainMenu()
                         showCredits()
-                    case '2': # TODO - DONE
+                    case '2':
                         mainMenu()
                         showVersion()
-                    case '3': # TODO - DONE
-                        createCamper()
-                    case '4': # TODO - DONE
-                        deleteCamper()
-                    case '5': # TODO - DONE
+                    case '3':
                         currentRuntime = 'camperSubMenu'
                         camperSubMenu()
-                    case '6': # TODO - DONE
+                    case '4':
+                        createCamper()
+                    case '5':
+                        deleteCamper()
+                    case '6':
                         printCamper()
-                    case '7': # TODO - DONE
+                    case '7':
                         printAllCampers()
-                    case '8': # TODO - DONE
+                    case '8':
                         viewSessions()
-                    case '9': # TODO - DONE
+                    case '9':
                         viewBunkhouses()
-                    case '10': # TODO - DONE
+                    case '10':
                         viewTribes()
-                    case '11': # TODO - DONE
+                    case '11':
                         setEveryBalance()
-                    case '12': # TODO - DONE
+                    case '12':
                         setEveryApplication()
-                    case '13': # TODO - DONE
-                        assignCampersToSessions()
-                    case '14': # TODO - DONE
-                        assignCampersToBunkhouses()
-                    case '15': # TODO
-                        notYetImplemented()
+                    case '13':
+                        #assignCampersToSessions()
+                        pass
+                    case '14':
+                        #assignCampersToBunkhouses()
+                        pass
+                    case '15':
                         #assignCampersToTribes()
-                    case '16': # TODO - DONE
+                        pass
+                    case '16':
                         populateMaxCampers()
-                    case '17': # TODO - DONE
+                    case '17':
                         clearAllCampers()
                     #case '18':
                     #    clearAllSessions()
@@ -94,35 +96,35 @@ def main():
             try:
                 varInput = input(">> ")
                 match varInput:
-                    case '0': # TODO - DONE
+                    case '0':
                         viewCamperBalance()
-                    case '1': # TODO - DONE
+                    case '1':
                         raiseCamperBalance()
-                    case '2': # TODO - DONE
+                    case '2':
                         reduceCamperBalance()
-                    case '3': # TODO - DONE
+                    case '3':
                         clearCamperBalance()
-                    case '4': # TODO - DONE
+                    case '4':
                         viewCamperApplication()
-                    case '5': # TODO - DONE
+                    case '5':
                         acceptCamperApplication()
-                    case '6':# TODO - DONE
+                    case '6':
                         rejectCamperApplication()
-                    case '7': # TODO - DONE
+                    case '7':
                         assignCamperToSession()
-                    case '8': # TODO
+                    case '8':
                         assignCamperToBunkhouse() # CHECK
-                    case '9': # TODO
+                    case '9':
                         assignCamperToTribe() # CHECK
-                    case '10': # TODO - DONE
+                    case '10':
                         assignPairRequest()
-                    case '11': # TODO - DONE
+                    case '11':
                         viewCamperPacketStatus()
-                    case '12': # TODO - DONE
+                    case '12':
                         updateCamperPacketStatus()
-                    case '13': # TODO - IN PROGRESS
+                    case '13':
                         certifyCamperReqs()
-                    case '14': # TODO - DONE
+                    case '14':
                         currentRuntime = 'mainMenu'
                         mainMenu()
                     case _:

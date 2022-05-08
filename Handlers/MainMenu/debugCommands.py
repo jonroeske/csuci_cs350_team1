@@ -1,16 +1,14 @@
 import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
-from GUI.guiHandler import mainMenu
+from Handlers.guiHandler import mainMenu
 
 from Objects.camp import Camp
 from Objects.camper import Camper
 
 # When we get Docker working, remove this!
 from faker import Faker
-from Objects.values import *
-
-from operator import attrgetter
+from Objects.values import STATUS_CODES
 
 import time, random
 
@@ -90,7 +88,7 @@ def populateMaxCampers():
         except Exception as e:
             print(e)
 
-    summerCamp.getAllCampers().sort(key=attrgetter("name"))
+    summerCamp.getAllCampers().sort()
 
     time.sleep(1)
 

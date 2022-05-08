@@ -1,11 +1,6 @@
-import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
-from Objects.camper import Camper
-
-from GUI.guiHandler import clearScreen, mainMenu, showPrompt, showMessage
-from GUI.camperCommandsGUI import printCamperGUI
-
+from Handlers.guiHandler import *
 
 # TODO - DEBUGGING
 def viewSessions():

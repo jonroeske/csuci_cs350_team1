@@ -1,13 +1,9 @@
-from GUI.guiHandler import *
+from Handlers.guiHandler import *
 from Objects.camper import Camper
-from Objects.materials import Materials
 from Objects.camp import Camp
 from Documents.firstDay import checkInCert
 
-from Objects.values import *
-
-from faker import Faker
-import random, pickle, sys, os
+import pickle, os
 
 summerCamp = Camp()
 locations = ["allCampers", "juneCampers", "julyCampers", "augustCampers"]

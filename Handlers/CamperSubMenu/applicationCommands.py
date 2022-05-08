@@ -1,10 +1,6 @@
-import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
-from Objects.values import STATUS_CODES
-
-from GUI.guiHandler import camperSubMenu, clearScreen, showPrompt, showMessage
-from GUI.camperCommandsGUI import printCamperGUI
+from Handlers.guiHandler import *
 
 # TODO - REFORMATTED
 def viewCamperApplication():

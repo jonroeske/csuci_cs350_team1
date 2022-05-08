@@ -1,11 +1,7 @@
-import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
-from Objects.camper import Camper
-from Objects.values import *
+from Handlers.guiHandler import *
 
-from GUI.guiHandler import clearScreen, mainMenu, showPrompt, showMessage
-from GUI.camperCommandsGUI import printCamperGUI
 
 def createCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):

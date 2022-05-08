@@ -1,12 +1,7 @@
 import os, time
-
 from Objects.camper import *
 
-versionNumber = "Build May052022"
-
-
-def clearScreen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+versionNumber = "Build May082022"
 
 
 def mainMenu():
@@ -18,9 +13,9 @@ def mainMenu():
     print('| (2)  Show Version                            |')
     print('|----------------------------------------------|')
     print('| Campers                                      |')
-    print('| (3)  Create New Camper                       |')
-    print('| (4)  Delete Camper                           |')
-    print('| (5)  Camper Actions                          |')
+    print('| (3)  Camper Actions                          |')
+    print('| (4)  Create New Camper                       |')
+    print('| (5)  Delete Camper                           |')
     print('| (6)  View Camper                             |')
     print('| (7)  View All Campers                        |')
     print('|----------------------------------------------|')
@@ -32,12 +27,12 @@ def mainMenu():
     print('| Automation                                   |')
     print('| (11) Set Every Balance                       |')
     print('| (12) Set All Applications                    |')
-    print('| (13) Auto-Assign All Sessions                |')
-    print('| (14) Auto-Assign All Bunkhouses              |')
-    print('| (15) Auto-Assign All Tribes                  |')
+    #print('| (13) Auto-Assign All Sessions                |')
+    #print('| (14) Auto-Assign All Bunkhouses              |')
+    #print('| (15) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
     print('| DEBUG                                        |')
-    print('| (16) Reset and Create All Campers            |')
+    print('| (16) Populate Maximum Campers                |')
     print('| (17) Reset All Campers                       |')
     #print('| (18) Clear All Sessions                      |')
     #print('| (19) Clear All Bunkhouses                    |')
@@ -75,6 +70,7 @@ def camperSubMenu():
 
 
 def showCredits():
+    mainMenu()
     print('| COMP-350 Team One                            |')
     print('| Created by:                                  |')
     print('|  Zachary Drake                               |')
@@ -86,8 +82,13 @@ def showCredits():
 
 
 def showVersion():
+    mainMenu()
     print('| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')
+
+
+def clearScreen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def showMessage(message, **kwargs):
@@ -131,30 +132,104 @@ def showPrompt(message, **kwargs):
     return confirm
 
 
-def partnerPrompt(partner):
-    print('| Camper has a partner request:                |')
-    print('|  Partner: ' + partner.getName())
-    print('| Would you like to assign the partner?        |')
-    print('|  "Y" for Yes, "N" for No                     |')
-    print('|----------------------------------------------|')
-
-    confirmation = input(">> ")
-
-    return confirmation
-
-def viewCamperBalance(camperArray, name):
-    if len(camperArray) <= 0:
-        mainMenu()
-        print('| There are currently no campers!              |')
-        print('|----------------------------------------------|')
+def printCamperGUI(camper, **kwargs):
+    if not isinstance(camper, Camper):
         return
-    clearScreen()
-    for Camper in camperArray:
-        if Camper.getName() == name:
-            print('  Balance: ' + str(Camper.getBalance()))
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return!                     |')
-    print('|----------------------------------------------|')
-    input()
-    mainMenu()
-    return
+
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
+
+
+    if "camperCreation" in kwargs and kwargs["camperCreation"] is True:
+        print('  Name:    ' + camper.getName())
+        print('  Age:     ' + str(camper.getAge()))
+        print('  Gender:  ' + camper.getGender())
+        print('  Address: ' + camper.getAddress())
+
+    elif "attribute" in kwargs and isinstance(kwargs["attribute"], str):
+        print('  Name:    ' + camper.getName())
+
+        match kwargs["attribute"]:
+            case "applicationStatus":
+                match camper.getAppStatus():
+                    case 0:
+                        print('  Application Status: Pending')
+                    case 1:
+                        print('  Application Status: Accepted')
+                    case 2:
+                        print('  Application Status: Rejected')
+            case "assignmentRequest":
+                print('  Partner:  ' + camper.getAssignment().getName())
+            case "balance":
+                print('  Balance:   $' + str(camper.getBalance()))
+            case "bunkhouse":
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
+            case "packetStatus":
+                pass # TODO - SIMPLIFY CAMPER VARIABLES
+            case "session":
+                match camper.getSession():
+                    case 0:
+                        print('  Session:     June')
+                    case 1:
+                        print('  Session:     July')
+                    case 2:
+                        print('  Session:     August')
+                    case _:
+                        print('  Session:     None')
+            case "tribe":
+                print('  Tribe:   ' + str(camper.getTribe()+1))
+
+    elif "simple" in kwargs and kwargs["simple"] is True:
+        print('    Name:     ' + camper.getName())
+        if camper.getAssignmentRequest():
+            print('     Partner:  ' + camper.getAssignment().getName())
+
+    elif "detailed" in kwargs and kwargs["detailed"] is True:
+        print('  Name:     ' + camper.getName())
+        if camper.getAssignmentRequest():
+            print('   Partner:  ' + camper.getAssignment().getName())
+        print('  Age:      ' + str(camper.getAge()))
+        print('  Gender:   ' + camper.getGender())
+        print('  Address:  ' + camper.getAddress())
+        print('  Balance:  $' + str(camper.getBalance()))
+
+        status = camper.getAppStatus()
+        if status == 0:
+            print('  Application Status: Pending')
+        elif status == 1:
+            print('  Application Status: Accepted')
+            print('|----------------------------------------------|')
+
+            session = camper.getSession()
+            bunkhouse = camper.getBunkhouse()
+            tribe = camper.getTribe()
+
+            if session is not False:
+                match session:
+                    case 0:
+                        print('  Session: June')
+                    case 1:
+                        print('  Session: July')
+                    case 2:
+                        print('  Session: August')
+
+            if bunkhouse is not False:
+                print('  Bunkhouse: ' + str(bunkhouse))
+            if tribe is not False:
+                print('  Tribe: ' + str(tribe))
+
+            print('  Checked In: ' + str(camper.getCheckedIn()))
+            print('  Packet Status: : ' + str(camper.getPacket()))
+
+            packetDate = camper.getPacketSendDate()
+
+            if packetDate:
+                print('  Packet Sent Date: ' + str(packetDate))
+
+        elif status == 2:
+            print('  Application Status: Rejected')
+
+
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
+

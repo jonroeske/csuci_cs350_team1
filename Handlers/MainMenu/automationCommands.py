@@ -1,13 +1,10 @@
 import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
-from Handlers.camperCommands import printAllCampers
-
 from Objects.values import GLOBAL_VALUES
 from Objects.camper import Camper
 
 from random import randint, shuffle
-
 
 def setEveryBalance():
     global summerCamp
