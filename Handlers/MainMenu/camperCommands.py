@@ -2,7 +2,7 @@ from Handlers.camperHandler import summerCamp
 
 from Handlers.guiHandler import *
 
-
+# TODO - REFORMATTED
 def createCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):
         mainMenu()

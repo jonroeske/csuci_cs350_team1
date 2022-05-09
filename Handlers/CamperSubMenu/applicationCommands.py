@@ -2,6 +2,8 @@ from Handlers.camperHandler import summerCamp
 
 from Handlers.guiHandler import *
 
+# TODO - IF RESET AFTER ASSIGNMENT TO BUNKS, UPDATE CAMPER ON EVERYTHING
+
 # TODO - REFORMATTED
 def viewCamperApplication():
     clearScreen()
@@ -98,6 +100,45 @@ def rejectCamperApplication():
     camper.setAppStatus(2)
 
     showMessage("Camper has been rejected!",topBracket=True, bottomBracket=True)
+    printCamperGUI(camper, attribute="applicationStatus")
+
+    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+    camperSubMenu()
+
+
+# TODO - REFORMATTED
+def resetCamperApplication():
+    clearScreen()
+    name = showPrompt("Please insert camper name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
+
+    camper = summerCamp.searchCamper(name)
+
+    if camper == STATUS_CODES["NO_CAMPER"]:
+        camperSubMenu()
+        showMessage("That camper doesn't exists!", bottomBracket=True)
+        return
+
+    while True:
+        clearScreen()
+
+        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
+
+        confirmation = showPrompt("Are you sure you would like to reset this camper's status?", prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
+
+        if confirmation == 'Y':
+            break
+        elif confirmation == 'N':
+            camperSubMenu()
+            showMessage("Action aborted.", bottomBracket=True)
+            return
+        else:
+            showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
+
+    clearScreen()
+
+    camper.setAppStatus(0)
+
+    showMessage("Camper's status has been reset!",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="applicationStatus")
 
     showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 STATUS_CODES = {
     "SUCCESS": 0,
     "NO_CAMPER": 1,
@@ -21,6 +23,23 @@ GLOBAL_VALUES = {
     "maxTribes": 6,
     "maxCampersInTribe": 12
 }
+
+TODAYS_DATE = ""
+
+def resetDate():
+    global TODAYS_DATE
+    TODAYS_DATE = str(datetime.strftime(datetime.today(), "%m/%d/%Y"))
+
+def changeDate(date):
+    try:
+        date = date.split("/")
+        global TODAYS_DATE
+
+        TODAYS_DATE = str(datetime.strftime(datetime(int(date[2]), int(date[0]), int(date[1])), "%m/%d/%Y"))
+    except (ValueError, IndexError):
+        return STATUS_CODES["ARGUMENT_ERROR"]
+
+    return STATUS_CODES["SUCCESS"]
 
 def sortByName(camper):
     if camper == "":

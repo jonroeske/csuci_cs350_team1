@@ -9,7 +9,7 @@ from Handlers.MainMenu.automationCommands import *
 from Handlers.MainMenu.debugCommands import *
 
 
-from Handlers.CamperSubMenu.financialCommands import *
+from Handlers.CamperSubMenu.balanceCommands import *
 from Handlers.CamperSubMenu.applicationCommands import *
 from Handlers.CamperSubMenu.assignmentCommands import *
 
@@ -19,6 +19,7 @@ from Handlers.guiHandler import mainMenu, camperSubMenu
 
 def main():
     initializeData()
+    resetDate()
     currentRuntime = 'mainMenu'
 
     mainMenu()
@@ -47,24 +48,22 @@ def main():
                     case '7':
                         printAllCampers()
                     case '8':
-                        viewSessions()
+                        #processRefunds()
+                        pass
                     case '9':
-                        viewBunkhouses()
+                        viewSessions()
                     case '10':
-                        viewTribes()
+                        viewBunkhouses()
                     case '11':
-                        setEveryBalance()
+                        viewTribes()
                     case '12':
-                        setEveryApplication()
+                        setEveryBalance()
                     case '13':
-                        #assignCampersToSessions()
-                        pass
+                        setEveryApplication()
                     case '14':
-                        #assignCampersToBunkhouses()
-                        pass
+                        changeTodaysDate()
                     case '15':
-                        #assignCampersToTribes()
-                        pass
+                        resetTodaysDate()
                     case '16':
                         populateMaxCampers()
                     case '17':
@@ -111,20 +110,22 @@ def main():
                     case '6':
                         rejectCamperApplication()
                     case '7':
-                        assignCamperToSession()
+                        resetCamperApplication()
                     case '8':
-                        assignCamperToBunkhouse() # CHECK
+                        pass
                     case '9':
-                        assignCamperToTribe() # CHECK
+                        pass
                     case '10':
-                        assignPairRequest()
+                        pass
                     case '11':
-                        viewCamperPacketStatus()
+                        assignCamperToSession()
                     case '12':
-                        updateCamperPacketStatus()
+                        assignCamperToBunkhouse() # CHECK
                     case '13':
-                        certifyCamperReqs()
+                        assignCamperToTribe() # CHECK
                     case '14':
+                        assignPairRequest()
+                    case '15':
                         currentRuntime = 'mainMenu'
                         mainMenu()
                     case _:

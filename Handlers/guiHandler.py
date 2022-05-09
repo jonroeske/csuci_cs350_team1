@@ -1,12 +1,16 @@
 import os, time
+
+import Objects.values
 from Objects.camper import *
+
 
 versionNumber = "Build May082022"
 
-
 def mainMenu():
     clearScreen()
-    print('|----------------Camp Clerk CLI----------------|')
+    print('|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + Objects.values.TODAYS_DATE + '                     |')
+    print('|----------------------------------------------|')
     print('| Main Menu                                    |')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
@@ -19,31 +23,38 @@ def mainMenu():
     print('| (6)  View Camper                             |')
     print('| (7)  View All Campers                        |')
     print('|----------------------------------------------|')
+    print('| Finances                                     |')
+    print('| (8)  Process Refund                          |')
+    print('|----------------------------------------------|')
     print('| Sessions                                     |')
-    print('| (8)  View Sessions                           |')
-    print('| (9)  View Bunkhouse                          |')
-    print('| (10) View Tribes                             |')
+    print('| (9)  View Sessions                           |')
+    print('| (10) View Bunkhouse                          |')
+    print('| (11) View Tribes                             |')
     print('|----------------------------------------------|')
     print('| Automation                                   |')
-    print('| (11) Set Every Balance                       |')
-    print('| (12) Set All Applications                    |')
+    print('| (12) Set Every Balance                       |')
+    print('| (13) Set All Applications                    |')
     #print('| (13) Auto-Assign All Sessions                |')
     #print('| (14) Auto-Assign All Bunkhouses              |')
     #print('| (15) Auto-Assign All Tribes                  |')
+
+
     print('|----------------------------------------------|')
     print('| DEBUG                                        |')
+    print('| (14) Change Today\'s Date                     |')
+    print('| (15) Reset Today\'s Date                      |')
     print('| (16) Populate Maximum Campers                |')
     print('| (17) Reset All Campers                       |')
-    #print('| (18) Clear All Sessions                      |')
-    #print('| (19) Clear All Bunkhouses                    |')
-    #print('| (20) Clear All Tribes                        |')
+    print('| (18) Reset All Sessions                      |')
+    print('| (19) Reset All Bunkhouses                    |')
+    print('| (20) Reset All Tribes                        |')
     print('|----------------------------------------------|')
 
 
 def camperSubMenu():
     clearScreen()
     print('|----------------Camp Clerk CLI----------------|')
-    print('| Financial                                    |')
+    print('| Balance                                      |')
     print('| (0)  View Camper Balance                     |')
     print('| (1)  Raise Camper Balance                    |')
     print('| (2)  Reduce Camper Balance                   |')
@@ -53,19 +64,20 @@ def camperSubMenu():
     print('| (4)  View Application Status                 |')
     print('| (5)  Accept Application                      |')
     print('| (6)  Decline Application                     |')
+    print('| (7)  Reset Application                       |')
+    print('|----------------------------------------------|')
+    print('| First-Day Requirements                       |')
+    print('| (8) Show Packet Status                       |')
+    print('| (9) Send Packet                              |')
+    print('| (10) Certify First-Day Requirements          |')
     print('|----------------------------------------------|')
     print('| Assignment                                   |')
-    print('| (7)  Assign Session                          |')
-    print('| (8)  Assign Bunkhouse                        |')
-    print('| (9)  Assign Tribe                            |')
-    print('| (10) Process Pair Request                    |')
+    print('| (11)  Assign Session                         |')
+    print('| (12)  Assign Bunkhouse                       |')
+    print('| (13)  Assign Tribe                           |')
+    print('| (14) Process Pair Request                    |')
     print('|----------------------------------------------|')
-    print('| First-Day Materials                          |')
-    print('| (11) Show Packet Status                      |')
-    print('| (12) Send Packet                             |')
-    print('| (13) Certify First-Day Requirements          |')
-    print('|----------------------------------------------|')
-    print('| (14) Return to Main Menu                     |')
+    print('| (15) Return to Main Menu                     |')
     print('|----------------------------------------------|')
 
 
@@ -100,7 +112,7 @@ def showMessage(message, **kwargs):
             if isinstance(line, str):
                 print("  INFO: " + line)
 
-    else:
+    elif isinstance(message, str):
         print("  INFO: " + message)
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
@@ -121,8 +133,13 @@ def showPrompt(message, **kwargs):
     else:
         print("  CONFIRM: " + message)
 
-    if "prompt" in kwargs and isinstance(kwargs["prompt"], str):
-        print('   ' + kwargs["prompt"])
+    if "prompt" in kwargs:
+        if isinstance(kwargs["prompt"], list):
+            for line in kwargs["prompt"]:
+                if isinstance(line, str):
+                    print('   ' + line)
+        elif isinstance(kwargs["prompt"], str):
+            print('   ' + kwargs["prompt"])
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
         print('|----------------------------------------------|')
