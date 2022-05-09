@@ -9,6 +9,8 @@ from Handlers.CamperSubMenu.firstDayCommands import *
 
 from Handlers.DebugSubMenu.automationCommands import *
 from Handlers.DebugSubMenu.debugCommands import *
+from Handlers.DebugSubMenu.populationCommands import *
+from Handlers.DebugSubMenu.timeCommands import *
 
 from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu
 from Handlers.camperHandler import *
@@ -155,10 +157,8 @@ def main():
                         assignPairRequest()
                     case '10':
                         currentRuntime = 'mainMenu'
-                        clearScreen()
                         mainMenu()
                     case _:
-                        clearScreen()
                         camperSubMenu()
 
             except (KeyboardInterrupt, SystemExit):
