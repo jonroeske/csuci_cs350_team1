@@ -29,120 +29,106 @@ def changeTodaysDate():
         elif result == STATUS_CODES["SUCCESS"]:
             break
 
-    mainMenu()
+    clearScreen()
+    debugSubMenu()
     showMessage("Date change successful!", bottomBracket=True)
 
 
 def resetTodaysDate():
     resetDate()
-    mainMenu()
+
+    debugSubMenu()
     showMessage("Date reset successful!", bottomBracket=True)
 
 
 def populateMaxCampers():
 
-    print('| Creating max campers...                      |')
-    print('|----------------------------------------------|')
+    showMessage("Populating maximum amount of campers...", bottomBracket=True, wait=1)
+
 
     random.seed()
     fake = Faker()
 
     global summerCamp
 
-    for camper in summerCamp.getAllCampers():
-        if camper == "":
-            newCamper = Camper()
 
-            while True:
-                genders = summerCamp.countGender()
+    while True:
+        if not any(elem == "" for elem in summerCamp.getAllCampers()):
+            break
 
-                if genders[0] <= genders[1]:
-                    newCamper.setName(fake.first_name_male() + ' ' + fake.last_name_male())
-                    newCamper.setGender('M')
+        for camper in summerCamp.getAllCampers():
+            if isinstance(camper, str):
+                newCamper = Camper()
+                while True:
+                    genders = summerCamp.countGender()
+                    if genders[0] <= genders[1]:
+                        newCamper.setName(fake.first_name_male() + ' ' + fake.last_name_male())
+                        newCamper.setGender('M')
 
-                elif genders[0] > genders[1]:
-                    newCamper.setName(fake.first_name_female() + ' ' + fake.last_name_female())
-                    newCamper.setGender('F')
+                    elif genders[0] > genders[1]:
+                        newCamper.setName(fake.first_name_female() + ' ' + fake.last_name_female())
+                        newCamper.setGender('F')
 
-                newCamper.setAge(random.randint(9, 18))
+                    newCamper.setAge(random.randint(9, 18))
+                    newCamper.setAddress(fake.street_address())
 
-                newCamper.setAddress(fake.street_address())
+                    if newCamper.searchByFullName(summerCamp.getAllCampers()) == STATUS_CODES["NO_CAMPER"]:
+                        break
 
-                if newCamper.searchByFullName(summerCamp.getAllCampers()) == STATUS_CODES["NO_CAMPER"]:
-                    break
-
-            try:
                 summerCamp.insertCamper(newCamper)
-            except Exception as e:
-                pass
-                # we shouldn't be getting this error, as above the empty check confirms
-                #  there is an empty slot to use
+
 
 
     for camper in summerCamp.getAllCampers():
+        if camper.getHasPartner() is False:
+            # Here we find all campers with the same last name
+            matchingCampers = camper.searchByLastName(summerCamp.getAllCampers())
 
-        try:
-            if camper.getHasPartner() is False:
-                # Here we find all campers with the same last name
-                matchingCampers = camper.searchByLastName(summerCamp.getAllCampers())
+            if matchingCampers != STATUS_CODES["NO_CAMPER"]:
+
+                # Here we find all campers with the same last name and gender
+                #  We can't pair up two campers of different genders
+                matchingCampers = camper.searchByGender(matchingCampers)
 
                 if matchingCampers != STATUS_CODES["NO_CAMPER"]:
 
-                    # Here we find all campers with the same last name and gender
-                    #  We can't pair up two campers of different genders
-                    matchingCampers = camper.searchByGender(matchingCampers)
+                    chanceRequest = random.randint(1, 4)
+                    if chanceRequest == 4:
+                        index = random.randint(0, len(matchingCampers) - 1)
 
-                    if matchingCampers != STATUS_CODES["NO_CAMPER"]:
+                        partner = matchingCampers[index]
 
-                        chanceRequest = random.randint(1, 4)
-                        if chanceRequest == 4:
-                            try:
-                                index = random.randint(0, len(matchingCampers) - 1)
+                        camper.setHasPartner(True)
+                        partner.setHasPartner(True)
 
-                                partner = matchingCampers[index]
+                        camper.setPartner(partner)
+                        partner.setPartner(camper)
 
-                                camper.setHasPartner(True)
-                                partner.setHasPartner(True)
+                        summerCamp.updateCamper(camper)
+                        summerCamp.updateCamper(partner)
 
-                                camper.setPartner(partner)
-                                partner.setPartner(camper)
+    clearScreen()
+    debugSubMenu()
 
-                                summerCamp.updateCamper(camper)
-                                summerCamp.updateCamper(partner)
-                            except Exception as e:
-                                print(e)
+    showMessage("Maximum amount of campers populated!", bottomBracket=True)
 
-        except Exception as e:
-            print(e)
-
-    summerCamp.getAllCampers().sort()
-
-    time.sleep(1)
-
-    mainMenu()
-    print('| Max campers created, calm down there God...  |')
-    print('|----------------------------------------------|')
 
 
 def resetAllCampers():
-    print('| Clearing all campers...                      |')
-    print('|----------------------------------------------|')
+    showMessage("Resetting all campers...", bottomBracket=True, wait=1)
 
     global summerCamp
     summerCamp.__init__()
 
-    time.sleep(1)
+    clearScreen()
+    debugSubMenu()
 
-    mainMenu()
-    print('| Cleared all campers, you monster!            |')
-    print('|----------------------------------------------|')
+    showMessage("All campers reset!", bottomBracket=True)
+
 
 
 def resetSessions():
-    print('| Resetting all sessions...                    |')
-    print('|----------------------------------------------|')
-
-    time.sleep(1)
+    showMessage("Resetting all sessions...", bottomBracket=True, wait=1)
 
     locations = [summerCamp.getJune(), summerCamp.getJuly(), summerCamp.getAugust()]
 
@@ -167,6 +153,10 @@ def resetSessions():
                              range(GLOBAL_VALUES["maxBunkhouses"])],
                             [["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in
                              range(GLOBAL_VALUES["maxTribes"])]])
+    clearScreen()
+    debugSubMenu()
+
+    showMessage("All sessions reset!", bottomBracket=True)
 
 
 def databaseView():

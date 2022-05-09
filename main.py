@@ -93,7 +93,6 @@ def main():
                         showVersion()
                     case '3':
                         currentRuntime = 'camperSubMenu'
-                        clearScreen()
                         camperSubMenu()
                     case '4':
                         signUpCamper()
@@ -117,10 +116,8 @@ def main():
                         viewTribes()
                     case '14':
                         currentRuntime = "debugSubMenu"
-                        clearScreen()
                         debugSubMenu()
                     case _:
-                        clearScreen()
                         mainMenu()
 
             except (KeyboardInterrupt, SystemExit):
@@ -184,7 +181,7 @@ def main():
                     case '0':
                         changeTodaysDate()
                     case '1':
-                        resetDate()
+                        resetTodaysDate()
                     case '2':
                         populateMaxCampers()
                     case '3':
@@ -206,20 +203,17 @@ def main():
                         if debugDatabase is False:
                             debugDatabase = True
 
-                            clearScreen()
                             debugSubMenu()
                             showMessage("Database view toggled: True", bottomBracket=True)
 
                         elif debugDatabase is True:
                             debugDatabase = False
 
-                            clearScreen()
                             debugSubMenu()
 
                             showMessage("Database view toggled: False", bottomBracket=True)
                     case '10':
                         currentRuntime = 'mainMenu'
-                        clearScreen()
                         mainMenu()
                     #case '9':
                     #    #autoAssignSessions()
@@ -234,7 +228,6 @@ def main():
                     #    currentRuntime = 'mainMenu'
                     #    mainMenu()
                     case _:
-                        clearScreen()
                         debugSubMenu()
             except (KeyboardInterrupt, SystemExit):
                 shutdown()

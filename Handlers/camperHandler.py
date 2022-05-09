@@ -41,12 +41,10 @@ def initializeData():
         elif not os.path.exists(path):
             fp = open(path, 'x')
             fp.close()
-            print(location + ' not found! Creating...')
 
 
 def shutdown():
-    print('| Shutting Down...                             |')
-    print('|----------------------------------------------|')
+    showMessage("Shutting down...", bottomBracket=True, wait=1)
 
     global summerCamp
 

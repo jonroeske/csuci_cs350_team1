@@ -211,8 +211,6 @@ class Camp:
             except ValueError:
                 return STATUS_CODES["NO_CAPACITY"]
 
-
-
         if tribe is not False and session is not False:
             try:
                 self.locations[session][2][tribe].remove("")

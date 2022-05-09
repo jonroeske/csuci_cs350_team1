@@ -3,10 +3,10 @@ import os, time
 import Objects.values
 from Objects.camper import *
 
-
 versionNumber = "Build May082022"
 
 def mainMenu():
+    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Main Menu-------------------|')
@@ -38,6 +38,7 @@ def mainMenu():
 
 
 def camperSubMenu():
+    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|-----------------Camper Menu------------------|')
@@ -63,6 +64,7 @@ def camperSubMenu():
 
 
 def debugSubMenu():
+    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Debug Menu------------------|')

@@ -6,8 +6,7 @@ from Handlers.guiHandler import *
 def signUpCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):
         mainMenu()
-        print('| No more slots available!                     |')
-        print('|----------------------------------------------|')
+        showMessage("There are no more slots available!", bottomBracket=True)
         return
 
     newCamper = Camper()
