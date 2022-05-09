@@ -117,9 +117,13 @@ def processRefund():
                              "Paid:   $" + str(1000 - balance),
                              "Refund: $" + str(refund)], topBracket=True,bottomBracket=True)
 
-            else:
+            elif weekDifference >= 6:
                 showMessage(["Due to requesting a refund after six weeks after acceptance notice,",
-                             " You are not eligible for a refund at this time."], topBracket=True, bottomBracket=True)
+                             " You are not eligible for a refund at this time."
+                             " If attempting to withdraw a camper, you are able to do so now."], topBracket=True, bottomBracket=True)
+                camper.setBalance(1000.00)
+                summerCamp.updateCamper(camper)
+
                 showPrompt("Press 'Enter' to Return!", bottomBracket=True)
                 mainMenu()
                 return

@@ -11,13 +11,7 @@ def assignCamperToSession():
         camperSubMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
-    elif camper.getAppStatus() != 1:
-        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
-        showMessage('Camper must be accepted!')
 
-        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
-        camperSubMenu()
-        return
     elif camper.getSession() is not False:
         while True:
             printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
@@ -63,8 +57,6 @@ def assignCamperToSession():
                 showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
             else:
                 break
-
-    # TODO - ADD LOGIC FOR PARTNER
 
     clearScreen()
 
@@ -127,7 +119,6 @@ def assignCamperToBunkhouse():
 
         gender = camper.getGender()
 
-        # TODO - COMPREHRENSION CHECK: FIRST THREE BUNKHOUSES ARE MALE, SECOND THREE ARE FEMALE
         if gender == "M":
             print('|----------------------------------------------|')
             print('| Bunkhouses:                                  |')
@@ -168,7 +159,6 @@ def assignCamperToBunkhouse():
                 camper.setBunkhouse(location)
                 break
 
-    # TODO - ADD LOGIC FOR PARTNER
 
     clearScreen()
 
@@ -258,8 +248,6 @@ def assignCamperToTribe():
             else:
                 camper.setTribe(location)
                 break
-
-    # TODO - ADD LOGIC FOR PARTNER
 
     clearScreen()
 

@@ -47,20 +47,19 @@ def camperSubMenu():
     print('| (0)  View Application Status                 |')
     print('| (1)  Accept Application                      |')
     print('| (2)  Reject Application                      |')
-    print('| (3)  Reset Application                       |')
     print('|----------------------------------------------|')
     print('| First-Day Requirements                       |')
-    print('| (4)  View Acceptance Notice Status           |')
-    print('| (5)  Fill Out Forms                          |')
-    print('| (6)  Check In Camper                         |')
+    print('| (3)  View Acceptance Notice Status           |')
+    print('| (4)  Fill Out Forms                          |')
+    print('| (5)  Check In Camper                         |')
     print('|----------------------------------------------|')
     print('| Assignment                                   |')
-    print('| (7)  Assign Session                          |')
-    print('| (8)  Assign Bunkhouse                        |')
-    print('| (9)  Assign Tribe                            |')
-    print('| (10) Process Pair Request                    |')
+    print('| (6)  Assign Session                          |')
+    print('| (7)  Assign Bunkhouse                        |')
+    print('| (8)  Assign Tribe                            |')
+    print('| (9)  Process Pair Request                    |')
     print('|----------------------------------------------|')
-    print('| (11) Return to Main Menu                     |')
+    print('| (10) Return to Main Menu                     |')
     print('|----------------------------------------------|')
 
 
@@ -203,14 +202,22 @@ def printCamperGUI(camper, **kwargs):
                     print('  Date Sent:  N/A')
             case "session":
                 match camper.getSession():
+                    case False:
+                        print('  Session:     None')
                     case 0:
                         print('  Session:     June')
                     case 1:
                         print('  Session:     July')
                     case 2:
                         print('  Session:     August')
-                    case _:
-                        print('  Session:     None')
+            case "sessionDate":
+                match camper.getSession():
+                    case 0:
+                        print('  June Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+                    case 1:
+                        print('  July Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+                    case 2:
+                        print('  August Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
             case "tribe":
                 print('  Tribe:   ' + str(camper.getTribe()+1))
 

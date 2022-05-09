@@ -56,17 +56,15 @@ from Handlers.camperHandler import *
 # POPULATION
 #  POPULATE CAMP    - FULLY WORKING
 #  RESET CAMP       - FULLY WORKING
-#  RESET SESSIONS   - TODO CREATE
-#  RESET BUNKS      - TODO CREATE
-#  RESET TRIBES     - TODO CREATE
+#  RESET SESSIONS   - TODO NEEDS TESTING
+#  RESET BUNKS      - TODO NEEDS TESTING
+#  RESET TRIBES     - TODO NEEDS TESTING
 # AUTOMATION
 #  SET ALL BALANCE  - FULLY WORKING
 #  SET ALL APP      - FULLY WORKING
 #  AUTO SESSIONS    - FULLY WORKING
 #  AUTO BUNKS       - FULLY WORKING
 #  AUTO TRIBES      - FULLY WORKING
-
-
 
 def main():
     initializeData()
@@ -140,24 +138,22 @@ def main():
                     case '2':
                         rejectCamperApplication()
                     case '3':
-                        resetCamperApplication()
-                    case '4':
                         viewAcceptanceNoticeStatus()
-                    case '5':
+                    case '4':
                         #fillOutForms()
                         pass
-                    case '6':
+                    case '5':
                         #checkInCamper()
                         pass
-                    case '7':
+                    case '6':
                         assignCamperToSession()
-                    case '8':
+                    case '7':
                         assignCamperToBunkhouse() # CHECK
-                    case '9':
+                    case '8':
                         assignCamperToTribe() # CHECK
-                    case '10':
+                    case '9':
                         assignPairRequest()
-                    case '11':
+                    case '10':
                         currentRuntime = 'mainMenu'
                         clearScreen()
                         mainMenu()
@@ -187,14 +183,11 @@ def main():
                     case '3':
                         resetAllCampers()
                     case '4':
-                        #resetAllSessions()
-                        pass
+                        resetSessions()
                     case '5':
-                        #resetAllBunkhouses()
-                        pass
+                        resetBunkhouses()
                     case '6':
-                        #resetAllTribes()
-                        pass
+                        resetTribes()
                     case '7':
                         setEveryBalance()
                     case '8':

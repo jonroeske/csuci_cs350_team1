@@ -2,7 +2,6 @@ from Handlers.camperHandler import summerCamp
 
 from Handlers.guiHandler import *
 
-# TODO - REFORMATTED
 def signUpCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):
         mainMenu()
@@ -76,7 +75,7 @@ def signUpCamper():
     createCamper()
 
 
-# TODO - REFORMATTED
+# TODO - RETROFIT AND TEST
 def withdrawCamper():
     clearScreen()
     name = showPrompt("Please insert camper name:", prompt= "(First + Last)", topBracket=True, bottomBracket=True)
@@ -88,14 +87,28 @@ def withdrawCamper():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
 
+    elif camper.getBalance() < 1000.00:
+        showMessage(["Camper has an outstanding balance! Request a refund to continue.",
+                    "Balance:   $" + str(camper.getBalance())], topBracket=True,
+                    bottomBracket=True)
+
+        showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+        mainMenu()
+        return
+
     while True:
         clearScreen()
         printCamperGUI(camper, detailed=True, topBracket=True, bottomBracket=True)
 
-        confirmation = showPrompt("Are you sure you want to delete this camper?",
+        confirmation = showPrompt("Are you sure you want to withdraw this camper?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
         if confirmation == 'Y':
-            # TODO - ADD PARTNER LOGIC
+            if camper.getHasPartner() is True:
+                partner = camper.getPartner()
+                partner.setHasPartner(False)
+                partner.setPartner(None)
+
+                summerCamp.updateCamper(partner)
 
             camper.setSession(False)
             camper.setBunkhouse(False)
@@ -103,17 +116,16 @@ def withdrawCamper():
 
             summerCamp.updateCamper(camper, remove=True)
             mainMenu()
-            showMessage("Camper deletion successful", bottomBracket=True)
+            showMessage("Camper withdraw successful", bottomBracket=True)
             return
         elif confirmation == 'N':
             mainMenu()
-            showMessage("Camper deletion aborted", bottomBracket=True)
+            showMessage("Camper withdraw aborted", bottomBracket=True)
             return
         else:
             showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
 
 
-# TODO - REFORMATTED
 def printCamper():
     if not any(elem != "" for elem in summerCamp.getAllCampers()):
         mainMenu()
@@ -133,7 +145,6 @@ def printCamper():
         mainMenu()
 
 
-# TODO - REFORMATTED
 def printAllCampers():
     if not any(elem != "" for elem in summerCamp.getAllCampers()):
        mainMenu()

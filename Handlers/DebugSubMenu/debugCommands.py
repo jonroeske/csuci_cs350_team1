@@ -130,11 +130,12 @@ def resetSessions():
 
     locations = [summerCamp.getJune(), summerCamp.getJuly(), summerCamp.getAugust()]
 
-    for locations in locations:
-        for camper in locations[0]:
-            camper.setSession(False)
-            camper.setBunkhouse(False)
-            camper.setTribe(False)
+    for location in locations:
+        for camper in location[0]:
+            if isinstance(camper, Camper):
+                camper.setSession(False)
+                camper.setBunkhouse(False)
+                camper.setTribe(False)
 
     summerCamp.setJune([["" for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
                             [["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in
@@ -155,6 +156,48 @@ def resetSessions():
     debugSubMenu()
 
     showMessage("All sessions reset!", bottomBracket=True)
+
+
+def resetBunkhouses():
+    showMessage("Resetting all bunkhouses...", bottomBracket=True, wait=1)
+
+    locations = [summerCamp.getJuneBunkhouses(), summerCamp.getJulyBunkhouses(), summerCamp.getAugustBunkhouses()]
+
+    for location in locations:
+        for bunkhouse in location:
+            for camper in bunkhouse:
+                if isinstance(camper, Camper):
+                    camper.setBunkhouse(False)
+
+    summerCamp.setJuneBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
+    summerCamp.setJulyBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
+    summerCamp.setAugustBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
+
+    clearScreen()
+    debugSubMenu()
+
+    showMessage("All bunkhouses reset!", bottomBracket=True)
+
+
+def resetTribes():
+    showMessage("Resetting all tribes...", bottomBracket=True, wait=1)
+
+    locations = [summerCamp.getJuneTribes(), summerCamp.getJulyTribes(), summerCamp.getAugustTribes()]
+
+    for location in locations:
+        for tribe in location:
+            for camper in tribe:
+                if isinstance(camper, Camper):
+                    camper.setTribe(False)
+
+    summerCamp.setJuneTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
+    summerCamp.setJulyTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
+    summerCamp.setAugustTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
+
+    clearScreen()
+    debugSubMenu()
+
+    showMessage("All tribes reset!", bottomBracket=True)
 
 
 def databaseView():
@@ -188,4 +231,12 @@ def databaseView():
     print(summerCamp.getAugustBunkhouses())
     print(" AUGUST TRIBES:")
     print(summerCamp.getAugustTribes())
+    print('|----------------------------------------------|')
+    print("TEMPORARY CAMPERS LIST:")
+    print(" JUNE CAMPERS:")
+    print(summerCamp.getTempJuneCampers())
+    print(" JULY BUNKHOUSES:")
+    print(summerCamp.getTempJulyCampers())
+    print(" AUGUST TRIBES:")
+    print(summerCamp.getTempAugustCampers())
     print('|----------------------------------------------|')
