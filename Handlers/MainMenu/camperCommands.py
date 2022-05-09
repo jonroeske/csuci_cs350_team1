@@ -3,7 +3,7 @@ from Handlers.camperHandler import summerCamp
 from Handlers.guiHandler import *
 
 # TODO - REFORMATTED
-def createCamper():
+def signUpCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):
         mainMenu()
         print('| No more slots available!                     |')
@@ -78,7 +78,7 @@ def createCamper():
 
 
 # TODO - REFORMATTED
-def deleteCamper():
+def withdrawCamper():
     clearScreen()
     name = showPrompt("Please insert camper name:", prompt= "(First + Last)", topBracket=True, bottomBracket=True)
 

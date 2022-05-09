@@ -1,4 +1,3 @@
-import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
 from Handlers.guiHandler import *
@@ -55,7 +54,7 @@ def populateMaxCampers():
     for camper in summerCamp.getAllCampers():
 
         try:
-            if camper.getAssignmentRequest() is False:
+            if camper.getHasPartner() is False:
                 # Here we find all campers with the same last name
                 matchingCampers = camper.searchByLastName(summerCamp.getAllCampers())
 
@@ -74,11 +73,11 @@ def populateMaxCampers():
 
                                 partner = matchingCampers[index]
 
-                                camper.setAssignmentRequest(True)
-                                partner.setAssignmentRequest(True)
+                                camper.setHasPartner(True)
+                                partner.setHasPartner(True)
 
-                                camper.setAssignment(partner)
-                                partner.setAssignment(camper)
+                                camper.setPartner(partner)
+                                partner.setPartner(camper)
 
                                 summerCamp.updateCamper(camper)
                                 summerCamp.updateCamper(partner)
@@ -97,7 +96,7 @@ def populateMaxCampers():
     print('|----------------------------------------------|')
 
 
-def clearAllCampers():
+def resetAllCampers():
     print('| Clearing all campers...                      |')
     print('|----------------------------------------------|')
 
@@ -115,7 +114,12 @@ def changeTodaysDate():
     while True:
         clearScreen()
         date = showPrompt("What would you like to set today's date to?",
-                          prompt=["(Month)/(Day)/(Year)", "Example: 12/25/1998"], topBracket=True, bottomBracket=True)
+                          prompt=["(Month)/(Day)/(Year)", "Example: 12/25/1998", "Press 'Enter' to Return!"], topBracket=True, bottomBracket=True)
+
+        if date == "":
+            mainMenu()
+            return
+
 
         result = changeDate(date)
 
@@ -126,6 +130,7 @@ def changeTodaysDate():
 
     mainMenu()
     showMessage("Date change successful!", bottomBracket=True)
+
 
 def resetTodaysDate():
     resetDate()

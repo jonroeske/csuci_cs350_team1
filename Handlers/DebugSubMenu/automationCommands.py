@@ -1,4 +1,3 @@
-import Handlers.camperHandler
 from Handlers.camperHandler import summerCamp
 
 from Objects.values import GLOBAL_VALUES
@@ -57,21 +56,21 @@ def setEveryApplication():
         print(e)
 
 
-#def assignCampersToSessions():
+#def autoAssignSessions():
 #    try:
-#        summerCamp.sortList(parameter="assignmentRequest")
+#        summerCamp.sortList(parameter="hasPartner")
 #
 #        temporaryList = summerCamp.getAllCampers().copy()
 #
 #        for camper in summerCamp.getAllCampers():
-#            if not isinstance(camper, Camper) or camper.getAssignmentRequest() is False:
+#            if not isinstance(camper, Camper) or camper.getHasPartner() is False:
 #                continue
 #
 #            camper.setAppStatus(1)
 #            camper.setBalance(0)
 #
 #            index = randint(0, 2)
-#            partner = camper.getAssignment()
+#            partner = camper.getPartner()
 #
 #            camper.setSession(index)
 #            partner.setSession(index)
@@ -155,7 +154,7 @@ def setEveryApplication():
 #                    if i >= 3:
 #                        genderArray = 'femaleCampers'
 #                    for camper in locals()[genderArray]:
-#                        partner = camper.getAssignmentRequest()
+#                        partner = camper.getHasPartner()
 #                        if camper.getBunkhouse() is not None:
 #                            continue
 #                        elif globals()[location][1][i].count(None) == 0:
@@ -241,7 +240,7 @@ def setEveryApplication():
 #                for i in range(6):
 #                    for camper in globals()[location][0]:
 #                        numberOfMalesOrFemales = numberOfGender(globals()[location][2][i], camper.getGender())
-#                        partner = camper.getAssignment()
+#                        partner = camper.getPartner()
 #
 #                        if camper.getTribe() is not None:
 #                            continue

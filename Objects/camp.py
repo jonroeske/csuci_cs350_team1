@@ -49,7 +49,7 @@ class Camp:
                     campers.sort(key=sortByAge)
                 case "name":
                     campers.sort(key=sortByName)
-                case "assignmentRequest":
+                case "hasPartner":
                     campers.sort(reverse=True, key=sortByAssignmentRequest)
         except Exception as e:
             print(e)

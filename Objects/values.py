@@ -24,22 +24,29 @@ GLOBAL_VALUES = {
     "maxCampersInTribe": 12
 }
 
-TODAYS_DATE = ""
+TODAYS_DATE = datetime.today()
+
+JUNE_SESSION_DATE = datetime(2022, 6, 6)
+
+JULY_SESSION_DATE = datetime(2022, 7, 4)
+
+AUGUST_SESSION_DATE = datetime(2022, 8, 8)
 
 def resetDate():
     global TODAYS_DATE
-    TODAYS_DATE = str(datetime.strftime(datetime.today(), "%m/%d/%Y"))
+    TODAYS_DATE = datetime.today()
 
 def changeDate(date):
     try:
         date = date.split("/")
         global TODAYS_DATE
 
-        TODAYS_DATE = str(datetime.strftime(datetime(int(date[2]), int(date[0]), int(date[1])), "%m/%d/%Y"))
+        TODAYS_DATE = datetime(int(date[2]), int(date[0]), int(date[1]))
     except (ValueError, IndexError):
         return STATUS_CODES["ARGUMENT_ERROR"]
 
     return STATUS_CODES["SUCCESS"]
+
 
 def sortByName(camper):
     if camper == "":
@@ -47,15 +54,17 @@ def sortByName(camper):
     else:
         return camper.name
 
+
 def sortByAge(camper):
     if camper == "":
         return ""
     else:
         return camper.age
 
+
 def sortByAssignmentRequest(camper):
     if camper == "":
         return ""
     else:
-        return camper.assignmentRequest
+        return camper.hasPartner
 

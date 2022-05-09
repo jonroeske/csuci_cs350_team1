@@ -39,7 +39,8 @@ def acceptCamperApplication():
 
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
 
-        confirmation = showPrompt("Are you sure you would like to accept this camper?", prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
+        confirmation = showPrompt(["Are you sure you would like to accept this camper?",
+                                  "This will automatically send an acceptance notice to the camper today!"], prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':
             break
@@ -51,17 +52,14 @@ def acceptCamperApplication():
             showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
 
     clearScreen()
+    camper.setAppStatus(1)
+    camper.setAppNoticeIsSent(True)
+    camper.setDateAppNoticeSent(datetime.today())
 
-    if camper.getBalance() > 0:
-        printCamperGUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
-        showMessage('Camper balance must be 0!')
+    summerCamp.updateCamper(camper)
 
-
-    else:
-        camper.setAppStatus(1)
-
-        showMessage("Camper has been accepted!",topBracket=True, bottomBracket=True)
-        printCamperGUI(camper, attribute="applicationStatus")
+    showMessage("Camper has been accepted!",topBracket=True, bottomBracket=True)
+    printCamperGUI(camper, attribute="applicationStatus")
 
     showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     camperSubMenu()
@@ -84,7 +82,9 @@ def rejectCamperApplication():
 
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
 
-        confirmation = showPrompt("Are you sure you would like to reject this camper?", prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
+        confirmation = showPrompt(["Are you sure you would like to reject this camper?"
+                                    "If assigned, this will clear Camper's session, bunkhouse, and Tribe!"],
+                                  prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':
             break
@@ -98,6 +98,14 @@ def rejectCamperApplication():
     clearScreen()
 
     camper.setAppStatus(2)
+    camper.setAppNoticeIsSent(False)
+    camper.setDateAppNoticeSent(None)
+
+    camper.setSession(False)
+    camper.setBunkhouse(False)
+    camper.setTribe(False)
+
+    summerCamp.updateCamper(camper)
 
     showMessage("Camper has been rejected!",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="applicationStatus")
@@ -123,7 +131,8 @@ def resetCamperApplication():
 
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
 
-        confirmation = showPrompt("Are you sure you would like to reset this camper's status?", prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
+        confirmation = showPrompt(["Are you sure you would like to reject this camper?"
+                                    "If assigned, this will clear Camper's session, bunkhouse, and Tribe!"], prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':
             break
@@ -137,6 +146,15 @@ def resetCamperApplication():
     clearScreen()
 
     camper.setAppStatus(0)
+    camper.setAppNoticeIsSent(False)
+    camper.setDateAppNoticeSent(None)
+
+    camper.setSession(False)
+    camper.setBunkhouse(False)
+    camper.setTribe(False)
+
+    summerCamp.updateCamper(camper)
+
 
     showMessage("Camper's status has been reset!",topBracket=True, bottomBracket=True)
     printCamperGUI(camper, attribute="applicationStatus")

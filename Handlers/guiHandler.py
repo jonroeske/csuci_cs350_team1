@@ -9,78 +9,86 @@ versionNumber = "Build May082022"
 def mainMenu():
     clearScreen()
     print('|---------------Gila Breath Camp---------------|')
-    print('| Today\'s Date: ' + Objects.values.TODAYS_DATE + '                     |')
-    print('|----------------------------------------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|------------------Main Menu-------------------|')
     print('| Main Menu                                    |')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
-    print('| (2)  Show Version                            |')
+    print('| (2)  Version                                 |')
     print('|----------------------------------------------|')
     print('| Campers                                      |')
     print('| (3)  Camper Actions                          |')
-    print('| (4)  Create New Camper                       |')
-    print('| (5)  Delete Camper                           |')
+    print('| (4)  Sign Up Camper                          |')
+    print('| (5)  Withdraw Camper                         |')
     print('| (6)  View Camper                             |')
     print('| (7)  View All Campers                        |')
     print('|----------------------------------------------|')
     print('| Finances                                     |')
-    print('| (8)  Process Refund                          |')
+    print('| (8)  View Balance                            |')
+    print('| (9)  Process Payment                         |')
+    print('| (10) Process Refund                          |')
     print('|----------------------------------------------|')
     print('| Sessions                                     |')
-    print('| (9)  View Sessions                           |')
-    print('| (10) View Bunkhouse                          |')
-    print('| (11) View Tribes                             |')
+    print('| (11) View Sessions                           |')
+    print('| (12) View Bunkhouse                          |')
+    print('| (13) View Tribes                             |')
     print('|----------------------------------------------|')
-    print('| Automation                                   |')
-    print('| (12) Set Every Balance                       |')
-    print('| (13) Set All Applications                    |')
-    #print('| (13) Auto-Assign All Sessions                |')
-    #print('| (14) Auto-Assign All Bunkhouses              |')
-    #print('| (15) Auto-Assign All Tribes                  |')
-
-
-    print('|----------------------------------------------|')
-    print('| DEBUG                                        |')
-    print('| (14) Change Today\'s Date                     |')
-    print('| (15) Reset Today\'s Date                      |')
-    print('| (16) Populate Maximum Campers                |')
-    print('| (17) Reset All Campers                       |')
-    print('| (18) Reset All Sessions                      |')
-    print('| (19) Reset All Bunkhouses                    |')
-    print('| (20) Reset All Tribes                        |')
+    print('| Debug                                        |')
+    print('| (14) Debug Menu                              |')
     print('|----------------------------------------------|')
 
 
 def camperSubMenu():
     clearScreen()
-    print('|----------------Camp Clerk CLI----------------|')
-    print('| Balance                                      |')
-    print('| (0)  View Camper Balance                     |')
-    print('| (1)  Raise Camper Balance                    |')
-    print('| (2)  Reduce Camper Balance                   |')
-    print('| (3)  Clear Camper Balance                    |')
-    print('|----------------------------------------------|')
+    print('|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|-----------------Camper Menu------------------|')
     print('| Application                                  |')
-    print('| (4)  View Application Status                 |')
-    print('| (5)  Accept Application                      |')
-    print('| (6)  Decline Application                     |')
-    print('| (7)  Reset Application                       |')
+    print('| (0)  View Application Status                 |')
+    print('| (1)  Accept Application                      |')
+    print('| (2)  Reject Application                      |')
+    print('| (3)  Reset Application                       |')
     print('|----------------------------------------------|')
     print('| First-Day Requirements                       |')
-    print('| (8) Show Packet Status                       |')
-    print('| (9) Send Packet                              |')
-    print('| (10) Certify First-Day Requirements          |')
+    print('| (4)  View Acceptance Notice Status           |')
+    print('| (5)  Fill Out Forms                          |')
+    print('| (6)  Check In Camper                         |')
     print('|----------------------------------------------|')
     print('| Assignment                                   |')
-    print('| (11)  Assign Session                         |')
-    print('| (12)  Assign Bunkhouse                       |')
-    print('| (13)  Assign Tribe                           |')
-    print('| (14) Process Pair Request                    |')
+    print('| (7)  Assign Session                          |')
+    print('| (8)  Assign Bunkhouse                        |')
+    print('| (9)  Assign Tribe                            |')
+    print('| (10) Process Pair Request                    |')
     print('|----------------------------------------------|')
-    print('| (15) Return to Main Menu                     |')
+    print('| (11) Return to Main Menu                     |')
     print('|----------------------------------------------|')
 
 
+def debugSubMenu():
+    clearScreen()
+    print('|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|------------------Debug Menu------------------|')
+    print('| Time                                         |')
+    print('| (0) Change Today\'s Date                     |')
+    print('| (1) Reset Today\'s Date                      |')
+    print('|----------------------------------------------|')
+    print('| Population                                   |')
+    print('| (2) Populate Maximum Campers                 |')
+    print('| (3) Reset All Campers                        |')
+    print('| (4) Reset All Sessions                       |')
+    print('| (5) Reset All Bunkhouses                     |')
+    print('| (6) Reset All Tribes                         |')
+    print('|----------------------------------------------|')
+    print('| Automation                                   |')
+    print('| (7) Set Every Balance                        |')
+    print('| (8) Set Every Applications                   |')
+    #print('| (9) Auto-Assign All Sessions                |')
+    #print('| (10) Auto-Assign All Bunkhouses              |')
+    #print('| (11) Auto-Assign All Tribes                  |')
+    print('|----------------------------------------------|')
+    print('| (9) Return to Main Menu                      |')
+    print('|----------------------------------------------|')
 def showCredits():
     mainMenu()
     print('| COMP-350 Team One                            |')
@@ -175,14 +183,17 @@ def printCamperGUI(camper, **kwargs):
                         print('  Application Status: Accepted')
                     case 2:
                         print('  Application Status: Rejected')
-            case "assignmentRequest":
-                print('  Partner:  ' + camper.getAssignment().getName())
+            case "hasPartner":
+                print('  Partner:  ' + camper.getPartner().getName())
             case "balance":
-                print('  Balance:   $' + str(camper.getBalance()))
+                print('  Balance: $' + str(camper.getBalance()))
             case "bunkhouse":
                 print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
-            case "packetStatus":
-                pass # TODO - SIMPLIFY CAMPER VARIABLES
+            case "appNotice":
+                if camper.getAppNoticeIsSent() is True:
+                    print('  Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
+                elif camper.getDateAppNoticeSent() is False:
+                    print('  Date Sent:  N/A')
             case "session":
                 match camper.getSession():
                     case 0:
@@ -198,13 +209,13 @@ def printCamperGUI(camper, **kwargs):
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
-        if camper.getAssignmentRequest():
-            print('     Partner:  ' + camper.getAssignment().getName())
+        if camper.getHasPartner():
+            print('     Partner:  ' + camper.getPartner().getName())
 
     elif "detailed" in kwargs and kwargs["detailed"] is True:
         print('  Name:     ' + camper.getName())
-        if camper.getAssignmentRequest():
-            print('   Partner:  ' + camper.getAssignment().getName())
+        if camper.getHasPartner():
+            print('   Partner:  ' + camper.getPartner().getName())
         print('  Age:      ' + str(camper.getAge()))
         print('  Gender:   ' + camper.getGender())
         print('  Address:  ' + camper.getAddress())
@@ -215,7 +226,12 @@ def printCamperGUI(camper, **kwargs):
             print('  Application Status: Pending')
         elif status == 1:
             print('  Application Status: Accepted')
+            if camper.getAppNoticeIsSent() is True:
+                print('   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
             print('|----------------------------------------------|')
+
+            print('  Forms Filled: ' + str(camper.getMaterials() is not None))
+            print('  Checked In:   ' + str(camper.getCheckedIn()))
 
             session = camper.getSession()
             bunkhouse = camper.getBunkhouse()
@@ -235,13 +251,6 @@ def printCamperGUI(camper, **kwargs):
             if tribe is not False:
                 print('  Tribe: ' + str(tribe))
 
-            print('  Checked In: ' + str(camper.getCheckedIn()))
-            print('  Packet Status: : ' + str(camper.getPacket()))
-
-            packetDate = camper.getPacketSendDate()
-
-            if packetDate:
-                print('  Packet Sent Date: ' + str(packetDate))
 
         elif status == 2:
             print('  Application Status: Rejected')

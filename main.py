@@ -1,20 +1,71 @@
 # CLI System
-# TODO - DELETE THIS WHEN POSSIBLE
-from Handlers.camperHandler import *
-
-
 from Handlers.MainMenu.camperCommands import *
 from Handlers.MainMenu.sessionsCommands import *
-from Handlers.MainMenu.automationCommands import *
-from Handlers.MainMenu.debugCommands import *
+from Handlers.MainMenu.financialCommands import *
 
-
-from Handlers.CamperSubMenu.balanceCommands import *
 from Handlers.CamperSubMenu.applicationCommands import *
 from Handlers.CamperSubMenu.assignmentCommands import *
+from Handlers.CamperSubMenu.firstDayCommands import *
 
+from Handlers.DebugSubMenu.automationCommands import *
+from Handlers.DebugSubMenu.debugCommands import *
 
-from Handlers.guiHandler import mainMenu, camperSubMenu
+from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu
+from Handlers.camperHandler import *
+
+# TODO LIST, MAIN MENU:
+# MAIN MENU
+#  SHUTDOWN         - FULLY WORKING
+#  CREDITS          - FULLY WORKING
+#  VERSION          - FULLY WORKING
+# CAMPERS
+#  CAMPER ACTIONS   - FULLY WORKING
+#  SIGN UP CAMPER   - FULLY WORKING
+#  WITHDRAW CAMPER  - TODO NEEDS TESTING
+#  VIEW CAMPER      - FULLY WORKING
+#  VIEW ALL CAMPERS - FULLY WORKING
+# FINANCES
+#  VIEW BALANCE     - FULLY WORKING
+#  PROCESS PAYMENT  - FULLY WORKING
+#  PROCESS REFUND   - TODO NEEDS TESTING
+# SESSIONS
+#  VIEW SESSIONS    - FULLY WORKING
+#  VIEW BUNKHOUSES  - FULLY WORKING
+#  VIEW TRIBES      - FULLY WORKING
+
+# TODO LIST, CAMPER SUB MENU:
+# APPLICATION
+#  VIEW APP STATUS  - FULLY WORKING
+#  ACCEPT APP       - FULLY WORKING
+#  REJECT APP       - FULLY WORKING
+#  RESET APP        - FULLY WORKING
+# FIRST DAY
+#  VIEW NOTICE      - FULLY WORKING
+#  FILL OUT FORMS   - TODO CREATE
+#  CHECK IN CAMPER  - TODO CREATE
+# ASSIGNMENT
+#  ASSIGN SESSIONS  - FULLY WORKING
+#  ASSIGN BUNKS     - FULLY WORKING
+#  ASSIGN TRIBES    - FULLY WORKING
+#  PROCESS PAIR     - FULLY WORKING
+
+# TODO LIST, DEBUG SUB MENU:
+# TIME
+#  CHANGE DATE      - FULLY WORKING
+#  RESET DATE       - FULLY WORKING
+# POPULATION
+#  POPULATE CAMP    - FULLY WORKING
+#  RESET CAMP       - FULLY WORKING
+#  RESET SESSIONS   - TODO CREATE
+#  RESET BUNKS      - TODO CREATE
+#  RESET TRIBES     - TODO CREATE
+# AUTOMATION
+#  SET ALL BALANCE  - FULLY WORKING
+#  SET ALL APP      - FULLY WORKING
+#  AUTO SESSIONS    - FULLY WORKING
+#  AUTO BUNKS       - FULLY WORKING
+#  AUTO TRIBES      - FULLY WORKING
+
 
 
 def main():
@@ -40,105 +91,126 @@ def main():
                         currentRuntime = 'camperSubMenu'
                         camperSubMenu()
                     case '4':
-                        createCamper()
+                        signUpCamper()
                     case '5':
-                        deleteCamper()
+                        withdrawCamper()
                     case '6':
                         printCamper()
                     case '7':
                         printAllCampers()
                     case '8':
-                        #processRefunds()
-                        pass
+                        viewBalance()
                     case '9':
-                        viewSessions()
+                        processPayment()
                     case '10':
-                        viewBunkhouses()
+                        processRefund()
                     case '11':
-                        viewTribes()
+                        viewSessions()
                     case '12':
-                        setEveryBalance()
+                        viewBunkhouses()
                     case '13':
-                        setEveryApplication()
+                        viewTribes()
                     case '14':
-                        changeTodaysDate()
-                    case '15':
-                        resetTodaysDate()
-                    case '16':
-                        populateMaxCampers()
-                    case '17':
-                        clearAllCampers()
-                    #case '18':
-                    #    clearAllSessions()
-                    #case '19':
-                    #    clearAllBunkHouses()
-                    #case '20':
-                    #    clearAllTribes()
+                        currentRuntime = "debugSubMenu"
+                        debugSubMenu()
                     case _:
                         print(summerCamp.getAllCampers())
                         print(summerCamp.getJune())
                         print(summerCamp.getJuly())
                         print(summerCamp.getAugust())
                         mainMenu()
-            except KeyboardInterrupt:
+
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
-            except SystemExit:
-                shutdown()
-                time.sleep(2)
-                exit()
-            except Exception as e:
-                print("How about here? " + e)
+
 
         while currentRuntime == 'camperSubMenu':
             try:
                 varInput = input(">> ")
                 match varInput:
                     case '0':
-                        viewCamperBalance()
-                    case '1':
-                        raiseCamperBalance()
-                    case '2':
-                        reduceCamperBalance()
-                    case '3':
-                        clearCamperBalance()
-                    case '4':
                         viewCamperApplication()
-                    case '5':
+                    case '1':
                         acceptCamperApplication()
-                    case '6':
+                    case '2':
                         rejectCamperApplication()
-                    case '7':
+                    case '3':
                         resetCamperApplication()
-                    case '8':
+                    case '4':
+                        viewAcceptanceNoticeStatus()
+                    case '5':
+                        #fillOutForms()
                         pass
-                    case '9':
+                    case '6':
+                        #checkInCamper()
                         pass
-                    case '10':
-                        pass
-                    case '11':
+                    case '7':
                         assignCamperToSession()
-                    case '12':
+                    case '8':
                         assignCamperToBunkhouse() # CHECK
-                    case '13':
+                    case '9':
                         assignCamperToTribe() # CHECK
-                    case '14':
+                    case '10':
                         assignPairRequest()
-                    case '15':
+                    case '11':
                         currentRuntime = 'mainMenu'
                         mainMenu()
                     case _:
                         camperSubMenu()
-            except KeyboardInterrupt:
+
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
-            except SystemExit:
+
+
+        while currentRuntime == 'debugSubMenu':
+            try:
+                varInput = input(">> ")
+                match varInput:
+                    case '0':
+                        changeTodaysDate()
+                    case '1':
+                        resetDate()
+                    case '2':
+                        populateMaxCampers()
+                    case '3':
+                        resetAllCampers()
+                    case '4':
+                        #resetAllSessions()
+                        pass
+                    case '5':
+                        #resetAllBunkhouses()
+                        pass
+                    case '6':
+                        #resetAllTribes()
+                        pass
+                    case '7':
+                        setEveryBalance()
+                    case '8':
+                        setEveryApplication() # CHECK
+                    case '9':
+                        currentRuntime = 'mainMenu'
+                        mainMenu()
+                    #case '9':
+                    #    #autoAssignSessions()
+                    #    pass
+                    #case '10':
+                    #    #autoAssignBunkhouses()
+                    #    pass
+                    #case '11':
+                    #    #autoAssignTribes()
+                    #    pass
+                    #case '12':
+                    #    currentRuntime = 'mainMenu'
+                    #    mainMenu()
+                    case _:
+                        debugSubMenu()
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
-            except Exception as e:
-                print(e)
 
 main()

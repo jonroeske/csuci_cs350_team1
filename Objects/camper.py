@@ -12,19 +12,20 @@ class Camper:
         self.balance = 1000.00
         self.appStatus = 0
 
+        # CAMPER PARTNER REQUEST
+        self.hasPartner = False
+        self.partner = None
+
         # CAMPER CAMP DETAILS
         self.session = False
         self.bunkhouse = False
         self.tribe = False
-        self.arrivalReqCert = False
-        self.checkedIn = False
 
         # CAMPER SUPPLIES + REQUEST
-        self.assignmentRequest = False
-        self.assignment = None
-        self.packetStatus = False
-        self.dateSentNotice = False
-        self.materials = False
+        self.checkedIn = False
+        self.appNoticeIsSent = False
+        self.dateAppNoticeSent = None
+        self.materials = None
 
     def __eq__(self, other):
         if isinstance(other, Camper):
@@ -118,6 +119,13 @@ class Camper:
         return self.appStatus
 
 
+    def getHasPartner(self):
+        return self.hasPartner
+
+    def getPartner(self):
+        return self.partner
+
+
     def getSession(self):
         return self.session
 
@@ -127,23 +135,15 @@ class Camper:
     def getTribe(self):
         return self.tribe
 
-    def getArrivalReqCert(self):
-        return self.arrivalReqCert
 
     def getCheckedIn(self):
         return self.checkedIn
 
-    def getAssignmentRequest(self):
-        return self.assignmentRequest
+    def getAppNoticeIsSent(self):
+        return self.appNoticeIsSent
 
-    def getAssignment(self):
-        return self.assignment
-
-    def getPacket(self):
-        return self.packetStatus
-
-    def getPacketSendDate(self):
-        return self.dateSentNotice
+    def getDateAppNoticeSent(self):
+        return self.dateAppNoticeSent
 
     def getMaterials(self):
         return self.materials
@@ -176,6 +176,21 @@ class Camper:
             return False
 
 
+    def setHasPartner(self, boolean):
+        try:
+            self.hasPartner = boolean
+            return True
+        except:
+            return False
+
+    def setPartner(self, camper):
+        try:
+            self.partner = camper
+            return True
+        except:
+            return False
+
+
     def setSession(self, session):
         try:
             self.session = session
@@ -197,40 +212,33 @@ class Camper:
         except:
             return False
 
-    #def setArrivalReqCert(self):
 
-    #def setCheckedIn(self):
-
-    def setAssignmentRequest(self, request):
+    def setCheckedIn(self, boolean):
         try:
-            self.assignmentRequest = request
+            self.checkedIn = boolean
             return True
         except:
             return False
 
-    def setAssignment(self, camper):
+    def setAppNoticeIsSent(self, boolean):
         try:
-            self.assignment = camper
+            self.appNoticeIsSent = boolean
             return True
         except:
             return False
 
-    def setPacket(self):
+    def setDateAppNoticeSent(self, date):
         try:
-            self.packetStatus = True
+            self.dateAppNoticeSent = date
             return True
         except:
             return False
 
-    def setPacketSendDate(self):
+    def setMaterials(self, materialsObject):
         try:
-            self.packetStatus = True
-            self.dateSentNotice = datetime.now().replace(microsecond = 0)
+            self.materials = materialsObject
             return True
         except:
             return False
-
-    #def setMaterials(self):
-
 
 

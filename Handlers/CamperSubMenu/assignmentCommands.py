@@ -1,5 +1,4 @@
 from Handlers.camperHandler import summerCamp
-
 from Handlers.guiHandler import *
 
 def assignCamperToSession():
@@ -281,22 +280,22 @@ def assignPairRequest():
         camperSubMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
-    elif camper.getAssignmentRequest() is not False:
+    elif camper.getHasPartner() is not False:
         while True:
-            printCamperGUI(camper, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
+            printCamperGUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
             showMessage('Camper already has a partner!')
 
             confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
                                   prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
             if confirmation == 'Y':
-                partner = camper.getAssignment()
+                partner = camper.getPartner()
 
-                camper.setAssignmentRequest(False)
-                camper.setAssignment(None)
+                camper.setHasPartner(False)
+                camper.setPartner(None)
 
-                partner.setAssignmentRequest(False)
-                partner.setAssignment(None)
+                partner.setHasPartner(False)
+                partner.setPartner(None)
 
                 summerCamp.updateCamper(camper)
                 summerCamp.updateCamper(partner)
@@ -318,22 +317,22 @@ def assignPairRequest():
         camperSubMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
-    elif partner.getAssignmentRequest() is not False:
+    elif partner.getHasPartner() is not False:
         while True:
-            printCamperGUI(partner, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
+            printCamperGUI(partner, attribute="hasPartner", topBracket=True, bottomBracket=True)
             showMessage('Camper already has a partner!')
 
             confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
             if confirmation == 'Y':
-                partnersPartner = partner.getAssignment()
+                partnersPartner = partner.getPartner()
 
-                partner.setAssignmentRequest(False)
-                partner.setAssignment(None)
+                partner.setHasPartner(False)
+                partner.setPartner(None)
 
-                partnersPartner.setAssignmentRequest(False)
-                partnersPartner.setAssignment(None)
+                partnersPartner.setHasPartner(False)
+                partnersPartner.setPartner(None)
 
                 summerCamp.updateCamper(partner)
                 summerCamp.updateCamper(partnersPartner)
@@ -347,18 +346,18 @@ def assignPairRequest():
                 showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
 
     clearScreen()
-    camper.setAssignmentRequest(True)
-    camper.setAssignment(partner)
+    camper.setHasPartner(True)
+    camper.setPartner(partner)
 
-    partner.setAssignmentRequest(True)
-    partner.setAssignment(camper)
+    partner.setHasPartner(True)
+    partner.setPartner(camper)
 
     summerCamp.updateCamper(camper)
     summerCamp.updateCamper(partner)
 
-    printCamperGUI(camper, attribute="assignmentRequest", topBracket=True, bottomBracket=True)
-    printCamperGUI(partner, attribute="assignmentRequest", bottomBracket=True)
+    printCamperGUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
+    printCamperGUI(partner, attribute="hasPartner", bottomBracket=True)
 
-    showMessage("Partner assignment successful!", bottomBracket=True)
+    showMessage("Partner partner successful!", bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     camperSubMenu()
