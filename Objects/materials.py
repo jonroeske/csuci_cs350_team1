@@ -1,11 +1,16 @@
 class Materials:
     def __init__(self):
+        # FORMS
         self.medical = False
         self.legal = False
         self.emergencyContacts = False
+
+        # EQUIPMENT
         self.helmet = False
         self.boots = False
         self.sleepingBag = False
+
+        # SUPPLIES
         self.waterBottle = False
         self.sunscreen = False
         self.bugSpray = False
@@ -20,6 +25,7 @@ class Materials:
     def getEmergencyContacts(self):
         return self.emergencyContactss
 
+
     def getHelmet(self):
         return self.helmet
 
@@ -29,10 +35,11 @@ class Materials:
     def getSleepingBag(self):
         return self.sleepingBag
 
+
     def getWaterBottle(self):
         return self.waterBottle
 
-    def getSuncreen(self):
+    def getSunscreen(self):
         return self.sunscreen
 
     def getBugSpray(self):
@@ -48,6 +55,7 @@ class Materials:
     def setEmergencyContacts(self, emergencyContactss):
         self.emergencyContactss = emergencyContactss
 
+
     def setHelmet(self, helmet):
         self.helmet = helmet
 
@@ -57,10 +65,11 @@ class Materials:
     def setSleepingBag(self, sleepingBag):
         self.sleepingBag = sleepingBag
 
+
     def setWaterBottle(self, waterBottle):
         self.waterBottle = waterBottle
 
-    def setSuncreen(self, sunscreen):
+    def setSunscreen(self, sunscreen):
         self.sunscreen = sunscreen
 
     def setBugSpray(self, bugSpray):

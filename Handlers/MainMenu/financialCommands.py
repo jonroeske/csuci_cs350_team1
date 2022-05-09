@@ -96,7 +96,14 @@ def processRefund():
         elif camper.getAppNoticeIsSent() is True and balance < 1000:
             weekDifference = abs((camper.getDateAppNoticeSent() - TODAYS_DATE).days/7)
 
-            if weekDifference < 3:
+            if abs((camper.getDateAppNoticeSent() - TODAYS_DATE).days < 1):
+                refund = balance
+                showMessage(["Due to requesting a refund on the same day as Sign-Up,",
+                                 " You are eligible for a FULL refund!",
+                                 "Paid:   $" + str(1000 - balance),
+                                 "Refund: $" + str(refund)], topBracket=True, bottomBracket=True)
+
+            elif weekDifference < 3:
                 refund = (1000-balance) - ((1000-balance) * 0.1)
                 showMessage(["Due to requesting a refund less than three weeks after acceptance notice,",
                              " You will be receiving 90% of original payment. ",

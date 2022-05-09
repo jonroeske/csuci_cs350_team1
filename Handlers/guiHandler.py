@@ -1,7 +1,7 @@
 import os, time
 
 import Objects.values
-from colorama import Fore, Back, Style
+from Libraries.colorama import Fore, Back, Style
 from Objects.camper import *
 
 versionNumber = "Build May082022"
@@ -40,7 +40,7 @@ def mainMenu():
 
 def camperSubMenu():
     clearScreen()
-    print('|---------------Gila Breath Camp---------------|')
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|-----------------Camper Menu------------------|')
     print('| Application                                  |')
@@ -66,7 +66,7 @@ def camperSubMenu():
 
 def debugSubMenu():
     clearScreen()
-    print('|---------------Gila Breath Camp---------------|')
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Debug Menu------------------|')
     print('| Time                                         |')
@@ -92,6 +92,8 @@ def debugSubMenu():
     print('|----------------------------------------------|')
     print('| (10) Return to Main Menu                     |')
     print('|----------------------------------------------|')
+
+    
 def showCredits():
     clearScreen()
     mainMenu()

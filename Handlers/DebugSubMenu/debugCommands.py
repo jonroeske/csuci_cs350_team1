@@ -7,7 +7,7 @@ from Objects.camper import Camper
 from Objects.values import STATUS_CODES, changeDate, resetDate
 
 # When we get Docker working, remove this!
-from faker import Faker
+from Libraries.faker.proxy import Faker
 
 import time, random
 
@@ -113,7 +113,6 @@ def populateMaxCampers():
     showMessage("Maximum amount of campers populated!", bottomBracket=True)
 
 
-
 def resetAllCampers():
     showMessage("Resetting all campers...", bottomBracket=True, wait=1)
 
@@ -124,7 +123,6 @@ def resetAllCampers():
     debugSubMenu()
 
     showMessage("All campers reset!", bottomBracket=True)
-
 
 
 def resetSessions():
