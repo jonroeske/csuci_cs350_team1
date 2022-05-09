@@ -22,7 +22,6 @@
     <option name="namespacePackageFolders">
       <list>
         <option value="$MODULE_DIR$/Libraries/colorama" />
-        <option value="$MODULE_DIR$/Libraries/faker" />
       </list>
     </option>
   </component>

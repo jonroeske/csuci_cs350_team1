@@ -1,15 +1,11 @@
 from Objects.values import STATUS_CODES, changeDate, resetDate
+from Handlers.guiHandler import debugSubMenu, clearScreen, showMessage, showPrompt
 
 def changeTodaysDate():
     while True:
         clearScreen()
         date = showPrompt("What would you like to set today's date to?",
                           prompt=["(Month)/(Day)/(Year)", "Example: 12/25/1998", "Press 'Enter' to Return!"], topBracket=True, bottomBracket=True)
-
-        if date == "":
-            mainMenu()
-            return
-
 
         result = changeDate(date)
 

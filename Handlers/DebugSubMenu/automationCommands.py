@@ -5,57 +5,6 @@ from Objects.camper import Camper
 
 from random import randint, shuffle
 
-def setEveryBalance():
-    global summerCamp
-
-    try:
-        amount = amountPrompt()
-        mainMenu()
-        if not any(elem != "" for elem in summerCamp.getAllCampers()):
-            print('| There are currently no campers!              |')
-            print('|----------------------------------------------|')
-            return
-
-        for camper in summerCamp.getAllCampers():
-            if camper:
-                camper.setBalance(amount)
-
-        print('| Every balance cleared!                       |')
-        print('|  PS: HR would like a word with you!          |')
-        print('|----------------------------------------------|')
-
-    except AttributeError:
-        pass
-    except Exception as e:
-        print(e)
-
-
-def setEveryApplication():
-    global summerCamp
-
-    try:
-        status = applicationStatusPrompt()
-        mainMenu()
-        if not any(elem != "" for elem in summerCamp.getAllCampers()):
-            print('| There are currently no campers!              |')
-            print('|----------------------------------------------|')
-            return
-
-        for camper in summerCamp.getAllCampers():
-            if camper:
-                if camper.getBalance() == 0:
-                    camper.setAppStatus(status)
-
-        print('| Every application status changed!            |')
-        print('|  PS: Some excellent quality control there...   |')
-        print('|----------------------------------------------|')
-
-    except AttributeError:
-        pass
-    except Exception as e:
-        print(e)
-
-
 #def autoAssignSessions():
 #    try:
 #        summerCamp.sortList(parameter="hasPartner")

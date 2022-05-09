@@ -1,7 +1,8 @@
 from Handlers.camperHandler import summerCamp
+from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu, clearScreen
 
-def databaseView():
-    print()
+def databaseView(runtime):
+    clearScreen()
     print('|----------------------------------------------|')
     print("ALL CAMPERS LIST:")
     print(summerCamp.getAllCampers())
@@ -38,3 +39,12 @@ def databaseView():
     print(" AUGUST TRIBES:")
     print(summerCamp.getTempAugustCampers())
     print('|----------------------------------------------|')
+    print()
+
+    match runtime:
+        case 'mainMenu':
+            mainMenu(clearScreen=False)
+        case 'camperSubMenu':
+            camperSubMenu(clearScreen=False)
+        case 'debugSubMenu':
+            debugSubMenu(clearScreen=False)

@@ -6,8 +6,10 @@ from Objects.camper import *
 
 versionNumber = "Build May082022"
 
-def mainMenu():
-    clearScreen()
+def mainMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
+
     print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Main Menu-------------------|')
@@ -38,8 +40,10 @@ def mainMenu():
     print('|----------------------------------------------|')
 
 
-def camperSubMenu():
-    clearScreen()
+def camperSubMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
+
     print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|-----------------Camper Menu------------------|')
@@ -63,8 +67,10 @@ def camperSubMenu():
     print('|----------------------------------------------|')
 
 
-def debugSubMenu():
-    clearScreen()
+def debugSubMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
+
     print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Debug Menu------------------|')
@@ -78,18 +84,16 @@ def debugSubMenu():
     print('| (4) Reset All Sessions                       |')
     print('| (5) Reset All Bunkhouses                     |')
     print('| (6) Reset All Tribes                         |')
-    print('|----------------------------------------------|')
-    print('| Automation                                   |')
-    print('| (7) Set Every Balance                        |')
-    print('| (8) Set Every Applications                   |')
+    #print('|----------------------------------------------|')
+    #print('| Automation                                   |')
     #print('| (9) Auto-Assign All Sessions                |')
     #print('| (10) Auto-Assign All Bunkhouses              |')
-    #print('| (11) Auto-Assign All Tribes                  |')
+    ##print('| (11) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
     print('| Debugging                                    |')
-    print('| (9) Toggle Database View in Menu             |')
+    print('| (7) Toggle Database View in Menu             |')
     print('|----------------------------------------------|')
-    print('| (10) Return to Main Menu                     |')
+    print('| (8) Return to Main Menu                      |')
     print('|----------------------------------------------|')
 
     

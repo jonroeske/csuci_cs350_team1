@@ -62,11 +62,9 @@ from Handlers.camperHandler import *
 #  RESET BUNKS      - TODO NEEDS TESTING
 #  RESET TRIBES     - TODO NEEDS TESTING
 # AUTOMATION
-#  SET ALL BALANCE  - FULLY WORKING
-#  SET ALL APP      - FULLY WORKING
-#  AUTO SESSIONS    - FULLY WORKING
-#  AUTO BUNKS       - FULLY WORKING
-#  AUTO TRIBES      - FULLY WORKING
+#  AUTO SESSIONS    - NOT WORKING IN THE SLIGHTEST :(
+#  AUTO BUNKS       - NOT WORKING IN THE SLIGHTEST :(
+#  AUTO TRIBES      - NOT WORKING IN THE SLIGHTEST :(
 
 def main():
     initializeData()
@@ -79,9 +77,6 @@ def main():
 
     while True:
         while currentRuntime == 'mainMenu':
-            if debugDatabase is True:
-                databaseView()
-
             try:
                 varInput = input(">> ")
                 match varInput:
@@ -93,7 +88,10 @@ def main():
                         showVersion()
                     case '3':
                         currentRuntime = 'camperSubMenu'
-                        camperSubMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            camperSubMenu()
                     case '4':
                         signUpCamper()
                     case '5':
@@ -116,20 +114,24 @@ def main():
                         viewTribes()
                     case '14':
                         currentRuntime = "debugSubMenu"
-                        debugSubMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            debugSubMenu()
                     case _:
-                        mainMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            mainMenu()
 
-            except (KeyboardInterrupt, SystemExit):
+            except (KeyboardInterrupt, SystemExit) as e:
+                print(e)
                 shutdown()
                 time.sleep(2)
                 exit()
 
 
         while currentRuntime == 'camperSubMenu':
-            if debugDatabase is True:
-                databaseView()
-
             try:
                 varInput = input(">> ")
                 match varInput:
@@ -157,22 +159,29 @@ def main():
                         assignPairRequest()
                     case '10':
                         currentRuntime = 'mainMenu'
-                        mainMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            mainMenu()
                     case _:
-                        camperSubMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            camperSubMenu()
 
-            except (KeyboardInterrupt, SystemExit):
+            except (KeyboardInterrupt, SystemExit) as e:
+                print(e)
                 shutdown()
                 time.sleep(2)
                 exit()
 
 
         while currentRuntime == 'debugSubMenu':
-            if debugDatabase is True:
-                databaseView()
-
             try:
                 varInput = input(">> ")
+                if debugDatabase is True:
+                    databaseView(currentRuntime)
+
                 match varInput:
                     case '0':
                         changeTodaysDate()
@@ -189,25 +198,19 @@ def main():
                     case '6':
                         resetTribes()
                     case '7':
-                        setEveryBalance()
-                    case '8':
-                        setEveryApplication() # CHECK
-                    case '9':
                         if debugDatabase is False:
                             debugDatabase = True
-
-                            debugSubMenu()
                             showMessage("Database view toggled: True", bottomBracket=True)
 
                         elif debugDatabase is True:
                             debugDatabase = False
-
-                            debugSubMenu()
-
                             showMessage("Database view toggled: False", bottomBracket=True)
-                    case '10':
+                    case '8':
                         currentRuntime = 'mainMenu'
-                        mainMenu()
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            mainMenu()
                     #case '9':
                     #    #autoAssignSessions()
                     #    pass
@@ -221,10 +224,15 @@ def main():
                     #    currentRuntime = 'mainMenu'
                     #    mainMenu()
                     case _:
-                        debugSubMenu()
-            except (KeyboardInterrupt, SystemExit):
+                        if debugDatabase is True:
+                            databaseView(currentRuntime)
+                        else:
+                            debugSubMenu()
+            except (KeyboardInterrupt, SystemExit) as e:
+                print(e)
                 shutdown()
                 time.sleep(2)
                 exit()
+
 
 main()
