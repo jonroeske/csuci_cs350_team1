@@ -7,7 +7,6 @@ from Objects.camper import *
 versionNumber = "Build May082022"
 
 def mainMenu():
-    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Main Menu-------------------|')
@@ -39,7 +38,6 @@ def mainMenu():
 
 
 def camperSubMenu():
-    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|-----------------Camper Menu------------------|')
@@ -65,13 +63,12 @@ def camperSubMenu():
 
 
 def debugSubMenu():
-    clearScreen()
     print('|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Debug Menu------------------|')
     print('| Time                                         |')
-    print('| (0) Change Today\'s Date                     |')
-    print('| (1) Reset Today\'s Date                      |')
+    print('| (0) Change Today\'s Date                      |')
+    print('| (1) Reset Today\'s Date                       |')
     print('|----------------------------------------------|')
     print('| Population                                   |')
     print('| (2) Populate Maximum Campers                 |')
@@ -87,9 +84,13 @@ def debugSubMenu():
     #print('| (10) Auto-Assign All Bunkhouses              |')
     #print('| (11) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
-    print('| (9) Return to Main Menu                      |')
+    print('| Debugging                                    |')
+    print('| (9) Toggle Database View in Menu             |')
+    print('|----------------------------------------------|')
+    print('| (10) Return to Main Menu                     |')
     print('|----------------------------------------------|')
 def showCredits():
+    clearScreen()
     mainMenu()
     print('| COMP-350 Team One                            |')
     print('| Created by:                                  |')
@@ -102,6 +103,7 @@ def showCredits():
 
 
 def showVersion():
+    clearScreen()
     mainMenu()
     print('| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')

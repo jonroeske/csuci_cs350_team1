@@ -11,6 +11,34 @@ from faker import Faker
 
 import time, random
 
+def changeTodaysDate():
+    while True:
+        clearScreen()
+        date = showPrompt("What would you like to set today's date to?",
+                          prompt=["(Month)/(Day)/(Year)", "Example: 12/25/1998", "Press 'Enter' to Return!"], topBracket=True, bottomBracket=True)
+
+        if date == "":
+            mainMenu()
+            return
+
+
+        result = changeDate(date)
+
+        if result == STATUS_CODES["ARGUMENT_ERROR"]:
+            showMessage("Invalid input!", bottomBracket=True, wait=2)
+        elif result == STATUS_CODES["SUCCESS"]:
+            break
+
+    mainMenu()
+    showMessage("Date change successful!", bottomBracket=True)
+
+
+def resetTodaysDate():
+    resetDate()
+    mainMenu()
+    showMessage("Date reset successful!", bottomBracket=True)
+
+
 def populateMaxCampers():
 
     print('| Creating max campers...                      |')
@@ -110,35 +138,66 @@ def resetAllCampers():
     print('|----------------------------------------------|')
 
 
-def changeTodaysDate():
-    while True:
-        clearScreen()
-        date = showPrompt("What would you like to set today's date to?",
-                          prompt=["(Month)/(Day)/(Year)", "Example: 12/25/1998", "Press 'Enter' to Return!"], topBracket=True, bottomBracket=True)
+def resetSessions():
+    print('| Resetting all sessions...                    |')
+    print('|----------------------------------------------|')
 
-        if date == "":
-            mainMenu()
-            return
+    time.sleep(1)
+
+    locations = [summerCamp.getJune(), summerCamp.getJuly(), summerCamp.getAugust()]
+
+    for locations in locations:
+        for camper in locations[0]:
+            camper.setSession(False)
+            camper.setBunkhouse(False)
+            camper.setTribe(False)
+
+    summerCamp.setJune([["" for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in
+                             range(GLOBAL_VALUES["maxBunkhouses"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in
+                             range(GLOBAL_VALUES["maxTribes"])]])
+    summerCamp.setJuly([["" for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in
+                             range(GLOBAL_VALUES["maxBunkhouses"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in
+                             range(GLOBAL_VALUES["maxTribes"])]])
+    summerCamp.setAugust([["" for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in
+                             range(GLOBAL_VALUES["maxBunkhouses"])],
+                            [["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in
+                             range(GLOBAL_VALUES["maxTribes"])]])
 
 
-        result = changeDate(date)
+def databaseView():
+    global summerCamp
 
-        if result == STATUS_CODES["ARGUMENT_ERROR"]:
-            showMessage("Invalid input!", bottomBracket=True, wait=2)
-        elif result == STATUS_CODES["SUCCESS"]:
-            break
-
-    mainMenu()
-    showMessage("Date change successful!", bottomBracket=True)
-
-
-def resetTodaysDate():
-    resetDate()
-    mainMenu()
-    showMessage("Date reset successful!", bottomBracket=True)
-
-
-
-
-
-
+    print()
+    print('|----------------------------------------------|')
+    print("ALL CAMPERS LIST:")
+    print(summerCamp.getAllCampers())
+    print('|----------------------------------------------|')
+    print("JUNE CAMPERS LIST:")
+    print(" JUNE CAMPERS:")
+    print(summerCamp.getJuneCampers())
+    print(" JUNE BUNKHOUSES:")
+    print(summerCamp.getJuneBunkhouses())
+    print(" JUNE TRIBES:")
+    print(summerCamp.getJuneTribes())
+    print('|----------------------------------------------|')
+    print("JULY CAMPERS LIST:")
+    print(" JULY CAMPERS:")
+    print(summerCamp.getJulyCampers())
+    print(" JULY BUNKHOUSES:")
+    print(summerCamp.getJulyBunkhouses())
+    print(" JULY TRIBES:")
+    print(summerCamp.getJulyTribes())
+    print('|----------------------------------------------|')
+    print("AUGUST CAMPERS LIST:")
+    print(" AUGUST CAMPERS:")
+    print(summerCamp.getAugustCampers())
+    print(" AUGUST BUNKHOUSES:")
+    print(summerCamp.getAugustBunkhouses())
+    print(" AUGUST TRIBES:")
+    print(summerCamp.getAugustTribes())
+    print('|----------------------------------------------|')

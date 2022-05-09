@@ -71,24 +71,29 @@ from Handlers.camperHandler import *
 def main():
     initializeData()
     resetDate()
+
     currentRuntime = 'mainMenu'
+    debugDatabase = False
 
     mainMenu()
+
     while True:
         while currentRuntime == 'mainMenu':
+            if debugDatabase is True:
+                databaseView()
+
             try:
                 varInput = input(">> ")
                 match varInput:
                     case '0':
                         exit()
                     case '1':
-                        mainMenu()
                         showCredits()
                     case '2':
-                        mainMenu()
                         showVersion()
                     case '3':
                         currentRuntime = 'camperSubMenu'
+                        clearScreen()
                         camperSubMenu()
                     case '4':
                         signUpCamper()
@@ -112,12 +117,10 @@ def main():
                         viewTribes()
                     case '14':
                         currentRuntime = "debugSubMenu"
+                        clearScreen()
                         debugSubMenu()
                     case _:
-                        print(summerCamp.getAllCampers())
-                        print(summerCamp.getJune())
-                        print(summerCamp.getJuly())
-                        print(summerCamp.getAugust())
+                        clearScreen()
                         mainMenu()
 
             except (KeyboardInterrupt, SystemExit):
@@ -127,6 +130,9 @@ def main():
 
 
         while currentRuntime == 'camperSubMenu':
+            if debugDatabase is True:
+                databaseView()
+
             try:
                 varInput = input(">> ")
                 match varInput:
@@ -156,8 +162,10 @@ def main():
                         assignPairRequest()
                     case '11':
                         currentRuntime = 'mainMenu'
+                        clearScreen()
                         mainMenu()
                     case _:
+                        clearScreen()
                         camperSubMenu()
 
             except (KeyboardInterrupt, SystemExit):
@@ -167,6 +175,9 @@ def main():
 
 
         while currentRuntime == 'debugSubMenu':
+            if debugDatabase is True:
+                databaseView()
+
             try:
                 varInput = input(">> ")
                 match varInput:
@@ -192,7 +203,23 @@ def main():
                     case '8':
                         setEveryApplication() # CHECK
                     case '9':
+                        if debugDatabase is False:
+                            debugDatabase = True
+
+                            clearScreen()
+                            debugSubMenu()
+                            showMessage("Database view toggled: True", bottomBracket=True)
+
+                        elif debugDatabase is True:
+                            debugDatabase = False
+
+                            clearScreen()
+                            debugSubMenu()
+
+                            showMessage("Database view toggled: False", bottomBracket=True)
+                    case '10':
                         currentRuntime = 'mainMenu'
+                        clearScreen()
                         mainMenu()
                     #case '9':
                     #    #autoAssignSessions()
@@ -207,6 +234,7 @@ def main():
                     #    currentRuntime = 'mainMenu'
                     #    mainMenu()
                     case _:
+                        clearScreen()
                         debugSubMenu()
             except (KeyboardInterrupt, SystemExit):
                 shutdown()
