@@ -1,13 +1,14 @@
 import os, time
 
 import Objects.values
+from colorama import Fore, Back, Style
 from Objects.camper import *
 
 versionNumber = "Build May082022"
 
 def mainMenu():
     clearScreen()
-    print('|---------------Gila Breath Camp---------------|')
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
     print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
     print('|------------------Main Menu-------------------|')
     print('| Main Menu                                    |')
@@ -94,7 +95,7 @@ def debugSubMenu():
 def showCredits():
     clearScreen()
     mainMenu()
-    print('| COMP-350 Team One                            |')
+    print(Fore.LIGHTMAGENTA_EX + '| COMP-350 Team One                            |')
     print('| Created by:                                  |')
     print('|  Zachary Drake                               |')
     print('|  Paul Kime                                   |')
@@ -107,7 +108,7 @@ def showCredits():
 def showVersion():
     clearScreen()
     mainMenu()
-    print('| VERSION NUMBER: ' + versionNumber + '              |')
+    print(Fore.LIGHTYELLOW_EX + '| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')
 
 
@@ -122,10 +123,10 @@ def showMessage(message, **kwargs):
     if isinstance(message, list):
         for line in message:
             if isinstance(line, str):
-                print("  INFO: " + line)
+                print(Fore.LIGHTRED_EX + "  INFO: " + line)
 
     elif isinstance(message, str):
-        print("  INFO: " + message)
+        print(Fore.LIGHTRED_EX + "  INFO: " + message)
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
         print('|----------------------------------------------|')
@@ -182,11 +183,11 @@ def printCamperGUI(camper, **kwargs):
             case "applicationStatus":
                 match camper.getAppStatus():
                     case 0:
-                        print('  Application Status: Pending')
+                        print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending')
                     case 1:
-                        print('  Application Status: Accepted')
+                        print(Fore.GREEN + '  Application Status: Accepted')
                     case 2:
-                        print('  Application Status: Rejected')
+                        print(Fore.LIGHTRED_EX + '  Application Status: Rejected')
             case "hasPartner":
                 print('  Partner:  ' + camper.getPartner().getName())
             case "balance":
@@ -227,12 +228,12 @@ def printCamperGUI(camper, **kwargs):
 
         status = camper.getAppStatus()
         if status == 0:
-            print('  Application Status: Pending')
+            print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending')
         elif status == 1:
-            print('  Application Status: Accepted')
+            print(Fore.GREEN + '  Application Status: Accepted')
             if camper.getAppNoticeIsSent() is True:
-                print('   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
-            print('|----------------------------------------------|')
+                print(Fore.LIGHTMAGENTA_EX + '   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
+            print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
 
             print('  Forms Filled: ' + str(camper.getMaterials() is not None))
             print('  Checked In:   ' + str(camper.getCheckedIn()))
@@ -257,7 +258,7 @@ def printCamperGUI(camper, **kwargs):
 
 
         elif status == 2:
-            print('  Application Status: Rejected')
+            print(Fore.LIGHTRED_EX + '  Application Status: Rejected')
 
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
