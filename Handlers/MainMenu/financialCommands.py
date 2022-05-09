@@ -30,11 +30,6 @@ def processPayment():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
 
-    elif camper.getAppStatus() != 1:
-        mainMenu()
-        showMessage("That camper has not been accepted!", bottomBracket=True)
-        return
-
     while True:
         clearScreen()
 

@@ -128,10 +128,10 @@ def showMessage(message, **kwargs):
     if isinstance(message, list):
         for line in message:
             if isinstance(line, str):
-                print(Fore.LIGHTRED_EX + "  INFO: " + line)
+                print(Fore.LIGHTRED_EX + "  INFO: " + line + Fore.LIGHTGREEN_EX)
 
     elif isinstance(message, str):
-        print(Fore.LIGHTRED_EX + "  INFO: " + message)
+        print(Fore.LIGHTRED_EX + "  INFO: " + message + Fore.LIGHTGREEN_EX)
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
         print('|----------------------------------------------|')
@@ -188,11 +188,11 @@ def printCamperGUI(camper, **kwargs):
             case "applicationStatus":
                 match camper.getAppStatus():
                     case 0:
-                        print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending')
+                        print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending' + Fore.LIGHTGREEN_EX)
                     case 1:
-                        print(Fore.GREEN + '  Application Status: Accepted')
+                        print(Fore.GREEN + '  Application Status: Accepted' + Fore.LIGHTGREEN_EX)
                     case 2:
-                        print(Fore.LIGHTRED_EX + '  Application Status: Rejected')
+                        print(Fore.LIGHTRED_EX + '  Application Status: Rejected' + Fore.LIGHTGREEN_EX)
             case "hasPartner":
                 print('  Partner:  ' + camper.getPartner().getName())
             case "balance":
@@ -205,15 +205,17 @@ def printCamperGUI(camper, **kwargs):
                 elif camper.getDateAppNoticeSent() is False:
                     print('  Date Sent:  N/A')
             case "session":
-                match camper.getSession():
-                    case False:
-                        print('  Session:     None')
-                    case 0:
-                        print('  Session:     June')
-                    case 1:
-                        print('  Session:     July')
-                    case 2:
-                        print('  Session:     August')
+                if camper.getSession() is not False:
+                    match camper.getSession():
+                        case 0:
+                            print('  Session:     June')
+                        case 1:
+                            print('  Session:     July')
+                        case 2:
+                            print('  Session:     August')
+                else:
+                    print('  Session:     None')
+
             case "sessionDate":
                 match camper.getSession():
                     case 0:
@@ -224,6 +226,19 @@ def printCamperGUI(camper, **kwargs):
                         print('  August Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
             case "tribe":
                 print('  Tribe:   ' + str(camper.getTribe()+1))
+            case "materials":
+                materials = camper.getMaterials()
+                if isinstance(materials, Materials):
+                    print('  Form Status:')
+                    print('   Medical Form:       ' + str(materials.getMedical()))
+                    print('   Legal Release Form: ' + str(materials.getLegal()))
+                    print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
+                    print('   Helmet:             ' + str(materials.getHelmet()))
+                    print('   Boots:              ' + str(materials.getBoots()))
+                    print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
+                    print('   Water Bottle:       ' + str(materials.getWaterBottle()))
+                    print('   Sunscreen:          ' + str(materials.getSunscreen()))
+                    print('   Bug Spray:          ' + str(materials.getBugSpray()))
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
@@ -241,37 +256,47 @@ def printCamperGUI(camper, **kwargs):
 
         status = camper.getAppStatus()
         if status == 0:
-            print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending')
+            print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending' + Fore.LIGHTGREEN_EX)
         elif status == 1:
-            print(Fore.GREEN + '  Application Status: Accepted')
+            print(Fore.GREEN + '  Application Status: Accepted' + Fore.LIGHTGREEN_EX)
             if camper.getAppNoticeIsSent() is True:
                 print(Fore.LIGHTMAGENTA_EX + '   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
             print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
 
-            print('  Forms Filled: ' + str(camper.getMaterials() is not None))
-            print('  Checked In:   ' + str(camper.getCheckedIn()))
+            print('  Checked In:          ' + str(camper.getCheckedIn()))
+            if isinstance(camper.getMaterials(), Materials):
+                materials = camper.getMaterials()
+                print('  Form Status:')
+                print('   Medical Form:       ' + str(materials.getMedical()))
+                print('   Legal Release Form: ' + str(materials.getLegal()))
+                print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
+                print('   Helmet:             ' + str(materials.getHelmet()))
+                print('   Boots:              ' + str(materials.getBoots()))
+                print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
+                print('   Water Bottle:       ' + str(materials.getWaterBottle()))
+                print('   Sunscreen:          ' + str(materials.getSunscreen()))
+                print('   Bug Spray:          ' + str(materials.getBugSpray()))
+            else:
+                print('  Form Status:         N/A')
 
-            session = camper.getSession()
-            bunkhouse = camper.getBunkhouse()
-            tribe = camper.getTribe()
+            print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
 
-            if session is not False:
-                match session:
-                    case 0:
-                        print('  Session: June')
-                    case 1:
-                        print('  Session: July')
-                    case 2:
-                        print('  Session: August')
+            match camper.getSession():
+                case False:
+                    print('  Session:   None')
+                case 0:
+                    print('  Session:   June')
+                case 1:
+                    print('  Session:   July')
+                case 2:
+                    print('  Session:   August')
 
-            if bunkhouse is not False:
-                print('  Bunkhouse: ' + str(bunkhouse))
-            if tribe is not False:
-                print('  Tribe: ' + str(tribe))
+            print('  Bunkhouse: ' + str(camper.getBunkhouse() + 1))
+            print('  Tribe:     ' + str(camper.getTribe() + 1))
 
 
         elif status == 2:
-            print(Fore.LIGHTRED_EX + '  Application Status: Rejected')
+            print(Fore.LIGHTRED_EX + '  Application Status: Rejected' + Fore.LIGHTGREEN_EX)
 
 
     if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:

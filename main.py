@@ -124,8 +124,7 @@ def main():
                         else:
                             mainMenu()
 
-            except (KeyboardInterrupt, SystemExit) as e:
-                print(e)
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
@@ -144,8 +143,7 @@ def main():
                     case '3':
                         viewAcceptanceNoticeStatus()
                     case '4':
-                        #fillOutForms()
-                        pass
+                        fillOutForms()
                     case '5':
                         #checkInCamper()
                         pass
@@ -169,8 +167,7 @@ def main():
                         else:
                             camperSubMenu()
 
-            except (KeyboardInterrupt, SystemExit) as e:
-                print(e)
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
@@ -179,9 +176,6 @@ def main():
         while currentRuntime == 'debugSubMenu':
             try:
                 varInput = input(">> ")
-                if debugDatabase is True:
-                    databaseView(currentRuntime)
-
                 match varInput:
                     case '0':
                         changeTodaysDate()
@@ -228,11 +222,9 @@ def main():
                             databaseView(currentRuntime)
                         else:
                             debugSubMenu()
-            except (KeyboardInterrupt, SystemExit) as e:
-                print(e)
+            except (KeyboardInterrupt, SystemExit):
                 shutdown()
                 time.sleep(2)
                 exit()
-
 
 main()

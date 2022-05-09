@@ -36,14 +36,14 @@ def acceptCamperApplication():
     monthDifference = abs((((Objects.values.TODAYS_DATE - locations[camper.getSession()]).days)/7)/4)
 
     if monthDifference < 2:
-        showMessage("Applications are due two months in advance of session!", bottomBracket=True)
+        showMessage("Applications are due before two months of the session start date!", bottomBracket=True)
         printCamperGUI(camper, attribute="sessionDate", bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
         return
 
     elif monthDifference > 8:
-        showMessage("Applications are within eight months in advance of session!", bottomBracket=True)
+        showMessage("Applications can not be submitted more than eight months in advance of the session start date!", bottomBracket=True)
         printCamperGUI(camper, attribute="sessionDate", bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
@@ -57,7 +57,7 @@ def acceptCamperApplication():
         return
     elif camper.getBalance() > 0:
         showMessage("Camper must not have any outstanding balance!", bottomBracket=True)
-        printCamperGUI(camper, attribute="session", bottomBracket=True)
+        printCamperGUI(camper, attribute="balance", bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
         return
@@ -110,8 +110,8 @@ def rejectCamperApplication():
 
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
 
-        confirmation = showPrompt(["Are you sure you would like to reject this camper?"
-                                    "If assigned, this will clear Camper's session, bunkhouse, and Tribe!"],
+        confirmation = showPrompt(["Are you sure you would like to reject this camper?",
+                                    " If rejected, this will clear Camper's session, bunkhouse, and Tribe!"],
                                   prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':

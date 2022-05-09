@@ -23,7 +23,7 @@ class Materials:
         return self.legal
 
     def getEmergencyContacts(self):
-        return self.emergencyContactss
+        return self.emergencyContacts
 
 
     def getHelmet(self):
@@ -52,8 +52,8 @@ class Materials:
     def setLegal(self, legal):
         self.legal = legal
 
-    def setEmergencyContacts(self, emergencyContactss):
-        self.emergencyContactss = emergencyContactss
+    def setEmergencyContacts(self, emergencyContacts):
+        self.emergencyContacts = emergencyContacts
 
 
     def setHelmet(self, helmet):
