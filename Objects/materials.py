@@ -15,6 +15,11 @@ class Materials:
         self.sunscreen = False
         self.bugSpray = False
 
+    def getCompletedForms(self):
+        return self.medical + self.legal + self.emergencyContacts \
+                + self.helmet + self.boots + self.sleepingBag \
+                + self.waterBottle + self.sunscreen + self.bugSpray
+
 
     def getMedical(self):
         return self.medical

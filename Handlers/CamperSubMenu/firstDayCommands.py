@@ -214,3 +214,44 @@ def fillOutForms():
     printCamperGUI(camper, attribute="materials", topBracket=True, bottomBracket=True)
     showPrompt("Press 'Enter' to Continue!", bottomBracket=True)
     camperSubMenu()
+
+
+def checkInCamper():
+    clearScreen()
+    name = showPrompt("Please insert camper name:", prompt="(First + Last)", topBracket=True, bottomBracket=True)
+
+    camper = summerCamp.searchCamper(name)
+
+    if camper == STATUS_CODES["NO_CAMPER"]:
+        camperSubMenu()
+        showMessage("That camper doesn't exists!", bottomBracket=True)
+        return
+    elif camper.getAppStatus() != 1:
+        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
+        showMessage('Camper must be accepted!')
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getMaterials() is None or camper.getMaterials().getCompletedForms() is False:
+        printCamperGUI(camper, attribute="materials", topBracket=True, bottomBracket=True)
+        showMessage('Camper have completed their required forms!')
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getBalance() > 0:
+        printCamperGUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
+        showMessage('Camper must have no outstanding balance!')
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+
+    clearScreen()
+
+    camper.setCheckedIn(True)
+
+    showMessage(["Camper has been checked in!",
+                 " You may now assign the camper to bunkhouses/tribes!"], topBracket=True, bottomBracket=True)
+    printCamperGUI(camper, attribute="checkedIn")
+
+    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+    camperSubMenu()

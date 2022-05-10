@@ -92,6 +92,13 @@ def assignCamperToBunkhouse():
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return
+    elif camper.getCheckedIn() is False:
+        printCamperGUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
+        showMessage('Camper must be be checked in before assignment!')
+
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
     elif camper.getBunkhouse() is not False:
         while True:
             printCamperGUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)

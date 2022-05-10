@@ -43,7 +43,7 @@ from Handlers.camperHandler import *
 #  RESET APP        - FULLY WORKING
 # FIRST DAY
 #  VIEW NOTICE      - FULLY WORKING
-#  FILL OUT FORMS   - TODO CREATE
+#  FILL OUT FORMS   - FULLY WORKING
 #  CHECK IN CAMPER  - TODO CREATE
 # ASSIGNMENT
 #  ASSIGN SESSIONS  - FULLY WORKING
@@ -145,8 +145,7 @@ def main():
                     case '4':
                         fillOutForms()
                     case '5':
-                        #checkInCamper()
-                        pass
+                        checkInCamper()
                     case '6':
                         assignCamperToSession()
                     case '7':

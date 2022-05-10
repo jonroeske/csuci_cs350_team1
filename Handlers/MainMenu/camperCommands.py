@@ -140,6 +140,7 @@ def printCamper():
         showMessage("That camper doesn't exist!", bottomBracket=True)
 
     else:
+        clearScreen()
         printCamperGUI(camper, detailed=True, topBracket=True, bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         mainMenu()

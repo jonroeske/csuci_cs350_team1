@@ -204,6 +204,10 @@ def printCamperGUI(camper, **kwargs):
                     print('  Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
                 elif camper.getDateAppNoticeSent() is False:
                     print('  Date Sent:  N/A')
+
+            case "checkedIn":
+                print('  Checked In: ' + str(camper.getCheckedIn()))
+
             case "session":
                 if camper.getSession() is not False:
                     match camper.getSession():
@@ -263,7 +267,6 @@ def printCamperGUI(camper, **kwargs):
                 print(Fore.LIGHTMAGENTA_EX + '   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
             print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
 
-            print('  Checked In:          ' + str(camper.getCheckedIn()))
             if isinstance(camper.getMaterials(), Materials):
                 materials = camper.getMaterials()
                 print('  Form Status:')
@@ -280,19 +283,20 @@ def printCamperGUI(camper, **kwargs):
                 print('  Form Status:         N/A')
 
             print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
+            print('  Checked In: ' + str(camper.getCheckedIn()))
 
             match camper.getSession():
                 case False:
-                    print('  Session:   None')
+                    print('  Session:    None')
                 case 0:
-                    print('  Session:   June')
+                    print('  Session:    June')
                 case 1:
-                    print('  Session:   July')
+                    print('  Session:    July')
                 case 2:
-                    print('  Session:   August')
+                    print('  Session:    August')
 
-            print('  Bunkhouse: ' + str(camper.getBunkhouse() + 1))
-            print('  Tribe:     ' + str(camper.getTribe() + 1))
+            print('  Bunkhouse:  ' + str(camper.getBunkhouse() + 1))
+            print('  Tribe:      ' + str(camper.getTribe() + 1))
 
 
         elif status == 2:
