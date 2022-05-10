@@ -1,7 +1,7 @@
 import os, time
 
 import Objects.values
-from Libraries.colorama import Fore, Back, Style
+from colorama import Fore, Back, Style
 from Objects.camper import *
 
 versionNumber = "Build May082022"

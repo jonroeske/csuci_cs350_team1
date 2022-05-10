@@ -5,8 +5,7 @@ from Objects.camper import Camper
 from Objects.values import STATUS_CODES
 
 # When we get Docker working, remove this!
-from Libraries.faker.proxy import Faker
-
+from faker import Faker
 import random
 
 def populateMaxCampers():
