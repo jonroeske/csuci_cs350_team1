@@ -1,53 +1,106 @@
-import os
-import time
+import os, time
 
+import Objects.values
+from colorama import Fore, Back, Style
 from Objects.camper import *
 
-versionNumber = "Build Mar292022"
+versionNumber = "Build May082022"
 
+def mainMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
 
-def clearScreen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
-def refreshScreen():
-    clearScreen()
-    print('|----------------Camp Clerk CLI----------------| ')
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|------------------Main Menu-------------------|')
+    print('| Main Menu                                    |')
     print('| (0)  Shutdown                                |')
     print('| (1)  Credits                                 |')
-    print('| (2)  Show Version                            |')
+    print('| (2)  Version                                 |')
     print('|----------------------------------------------|')
-    print('| (3)  Create New Camper                       |')
-    print('| (4)  View All Campers                        |')
+    print('| Campers                                      |')
+    print('| (3)  Camper Actions                          |')
+    print('| (4)  Sign Up Camper                          |')
+    print('| (5)  Withdraw Camper                         |')
+    print('| (6)  View Camper                             |')
+    print('| (7)  View All Campers                        |')
     print('|----------------------------------------------|')
-    print('| (5)  View Camper Application Status          |')
-    print('| (6)  Accept Camper Application               |')
-    print('| (7)  Decline/Withdraw Camper Application     |')
+    print('| Finances                                     |')
+    print('| (8)  View Balance                            |')
+    print('| (9)  Process Payment                         |')
+    print('| (10) Process Refund                          |')
     print('|----------------------------------------------|')
-    print('| (8)  View Current Camper Balance             |')
-    print('| (9)  Reduce Camper Balance                   |')
-    print('| (10) Raise Camper Balance                    |')
-    print('| (11) Clear Camper Balance                    |')
+    print('| Sessions                                     |')
+    print('| (11) View Sessions                           |')
+    print('| (12) View Bunkhouse                          |')
+    print('| (13) View Tribes                             |')
     print('|----------------------------------------------|')
-    print('| (12) Show Camper Packet Status               |')
-    print('| (13) Send Camper Packet                      |')
-    print('|----------------------------------------------|')
-    print('| (14) Dump to file                            |')
-    print('| (15) Load from file                          |')
-    print('| (16) Reset file                              |')
-    print('|----------------------------------------------|')
-    print('| (17) Assign tribes                           |')
-    print('| (18) Assign bunkhouses                       |')
-    print('| (19) Certify camper first day reqs           |')
-    print('| (20) Camper pair request                     |')
-    print('| (21) Withdraw camper                         |')
-    print('|----------------------------------------------|')
-    print('| (22) Launch Django GUI                       |')
+    print('| Debug                                        |')
+    print('| (14) Debug Menu                              |')
     print('|----------------------------------------------|')
 
 
+def camperSubMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
+
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|-----------------Camper Menu------------------|')
+    print('| Application                                  |')
+    print('| (0)  View Application Status                 |')
+    print('| (1)  Accept Application                      |')
+    print('| (2)  Reject Application                      |')
+    print('|----------------------------------------------|')
+    print('| First-Day Requirements                       |')
+    print('| (3)  View Acceptance Notice Status           |')
+    print('| (4)  Fill Out Forms                          |')
+    print('| (5)  Check In Camper                         |')
+    print('|----------------------------------------------|')
+    print('| Assignment                                   |')
+    print('| (6)  Assign Session                          |')
+    print('| (7)  Assign Bunkhouse                        |')
+    print('| (8)  Assign Tribe                            |')
+    print('| (9)  Process Pair Request                    |')
+    print('|----------------------------------------------|')
+    print('| (10) Return to Main Menu                     |')
+    print('|----------------------------------------------|')
+
+
+def debugSubMenu(**kwargs):
+    if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
+        clearScreen()
+
+    print(Fore.LIGHTGREEN_EX + '|---------------Gila Breath Camp---------------|')
+    print('| Today\'s Date: ' + datetime.strftime(Objects.values.TODAYS_DATE, "%m/%d/%Y") + '                     |')
+    print('|------------------Debug Menu------------------|')
+    print('| Time                                         |')
+    print('| (0) Change Today\'s Date                      |')
+    print('| (1) Reset Today\'s Date                       |')
+    print('|----------------------------------------------|')
+    print('| Population                                   |')
+    print('| (2) Populate Maximum Campers                 |')
+    print('| (3) Reset All Campers                        |')
+    print('| (4) Reset All Sessions                       |')
+    print('| (5) Reset All Bunkhouses                     |')
+    print('| (6) Reset All Tribes                         |')
+    #print('|----------------------------------------------|')
+    #print('| Automation                                   |')
+    #print('| (9) Auto-Assign All Sessions                |')
+    #print('| (10) Auto-Assign All Bunkhouses              |')
+    #print('| (11) Auto-Assign All Tribes                  |')
+    print('|----------------------------------------------|')
+    print('| Debugging                                    |')
+    print('| (7) Toggle Database View in Menu             |')
+    print('|----------------------------------------------|')
+    print('| (8) Return to Main Menu                      |')
+    print('|----------------------------------------------|')
+
+    
 def showCredits():
-    print('| COMP-350 Team One                            |')
+    clearScreen()
+    mainMenu()
+    print(Fore.LIGHTMAGENTA_EX + '| COMP-350 Team One                            |')
     print('| Created by:                                  |')
     print('|  Zachary Drake                               |')
     print('|  Paul Kime                                   |')
@@ -58,160 +111,203 @@ def showCredits():
 
 
 def showVersion():
-    print('| VERSION NUMBER: ' + versionNumber + '              |')
-    print('|----------------------------------------------|')
-
-
-def namePrompt():
     clearScreen()
+    mainMenu()
+    print(Fore.LIGHTYELLOW_EX + '| VERSION NUMBER: ' + versionNumber + '              |')
     print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper name: (First + Last)    |')
-    print('|  EXAMPLE: "John Doe"                         |')
-    print('|----------------------------------------------|')
-    fullname = str(input(">> "))
-
-    return fullname
 
 
-def agePrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper age:                    |')
-    print('|----------------------------------------------|')
-    age = input(">> ")
-
-    return age
+def clearScreen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def genderPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper gender:                 |')
-    print('|  NOTE: "M" or "F" only, sue us later         |')
-    print('|----------------------------------------------|')
-    gender = str(input(">> "))
+def showMessage(message, **kwargs):
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
 
-    return gender
+    if isinstance(message, list):
+        for line in message:
+            if isinstance(line, str):
+                print(Fore.LIGHTRED_EX + "  INFO: " + line + Fore.LIGHTGREEN_EX)
 
+    elif isinstance(message, str):
+        print(Fore.LIGHTRED_EX + "  INFO: " + message + Fore.LIGHTGREEN_EX)
 
-def addressPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please insert camper home address:           |')
-    print('|----------------------------------------------|')
-    address = str(input(">> "))
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
 
-    return address
+    if "wait" in kwargs and isinstance(kwargs["wait"], int):
+        time.sleep(kwargs["wait"])
 
 
-def amountPrompt():
-    clearScreen()
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return at any time          |')
-    print('|----------------------------------------------|')
-    print('| Please enter amount:                         |')
-    print('|----------------------------------------------|')
-    amount = str(input(">> "))
+def showPrompt(message, **kwargs):
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
 
-    return amount
+    if isinstance(message, list):
+        for line in message:
+            if isinstance(line, str):
+                print("  CONFIRM: " + line)
+    else:
+        print("  CONFIRM: " + message)
 
+    if "prompt" in kwargs:
+        if isinstance(kwargs["prompt"], list):
+            for line in kwargs["prompt"]:
+                if isinstance(line, str):
+                    print('   ' + line)
+        elif isinstance(kwargs["prompt"], str):
+            print('   ' + kwargs["prompt"])
 
-def camperConfirmation(newCamper):
-    print('|----------------------------------------------|')
-    print('| Is this information correct?                 |')
-    print('|  "Y" for Yes, "N" for No                     |')
-    print('|----------------------------------------------|')
-    print('  Name:    ' + newCamper.getName())
-    print('  Age:     ' + str(newCamper.getAge()))
-    print('  Gender:  ' + newCamper.getGender())
-    print('  Address: ' + newCamper.getAddress())
-    print('|----------------------------------------------|')
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
+
     confirm = input(">> ")
 
     return confirm
 
 
-def camperCreateSuccess():
-    print('| Camper successfully created!                 |')
-    print('|----------------------------------------------|')
-
-
-def camperCreateFailure():
-    print('| ERROR: Camper creation failed!               |')
-    print('|----------------------------------------------|')
-
-
-def camperApplicationUpdateSuccess():
-    print('| Camper app status successfully updated!      |')
-    print('|----------------------------------------------|')
-
-
-def camperApplicationUpdateFailure():
-    print('| ERROR: Camper app update failed!             |')
-    print('|----------------------------------------------|')
-
-
-def camperBalanceUpdateSuccess():
-    print('| Camper balance successfully updated!         |')
-    print('|----------------------------------------------|')
-
-
-def camperBalanceUpdateFailure():
-    print('| ERROR: Camper balance update failed!         |')
-    print('|----------------------------------------------|')
-
-
-def camperPacketSentSuccess():
-    print('| Camper packet has been sent!                 |')
-    print('|----------------------------------------------|')
-
-
-def camperPacketSentFailure():
-    print('| ERROR: Camper packet failed to send!         |')
-    print('|----------------------------------------------|')
-
-
-def statusGetFailure():
-    print('| ERROR: Failed to get status!                 |')
-    print('|----------------------------------------------|')
-
-
-def viewCamperBalance(camperArray, name):
-    if len(camperArray) <= 0:
-        refreshScreen()
-        print('| There are currently no campers!              |')
-        print('|----------------------------------------------|')
+def printCamperGUI(camper, **kwargs):
+    if not isinstance(camper, Camper):
         return
-    clearScreen()
-    for Camper in camperArray:
-        if Camper.getName() == name:
-            print('  Balance: ' + str(Camper.getBalance()))
-    print('|----------------------------------------------|')
-    print('| Press "Enter" to return!                     |')
-    print('|----------------------------------------------|')
-    input()
-    refreshScreen()
-    return
+
+    if "topBracket" in kwargs and kwargs["topBracket"] is True:
+        print('|----------------------------------------------|')
 
 
-def nonFatalError(message):
-    print("  ERROR: " + message)
-    print('|----------------------------------------------|')
-    print("| Retrying...                                  | ")
-    print('|----------------------------------------------|')
-    time.sleep(2)
+    if "camperCreation" in kwargs and kwargs["camperCreation"] is True:
+        print('  Name:    ' + camper.getName())
+        print('  Age:     ' + str(camper.getAge()))
+        print('  Gender:  ' + camper.getGender())
+        print('  Address: ' + camper.getAddress())
+
+    elif "attribute" in kwargs and isinstance(kwargs["attribute"], str):
+        print('  Name:    ' + camper.getName())
+
+        match kwargs["attribute"]:
+            case "applicationStatus":
+                match camper.getAppStatus():
+                    case 0:
+                        print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending' + Fore.LIGHTGREEN_EX)
+                    case 1:
+                        print(Fore.GREEN + '  Application Status: Accepted' + Fore.LIGHTGREEN_EX)
+                    case 2:
+                        print(Fore.LIGHTRED_EX + '  Application Status: Rejected' + Fore.LIGHTGREEN_EX)
+            case "hasPartner":
+                print('  Partner:  ' + camper.getPartner().getName())
+            case "balance":
+                print('  Balance: $' + str(camper.getBalance()))
+            case "bunkhouse":
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
+            case "appNotice":
+                if camper.getAppNoticeIsSent() is True:
+                    print('  Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
+                elif camper.getDateAppNoticeSent() is False:
+                    print('  Date Sent:  N/A')
+
+            case "checkedIn":
+                print('  Checked In: ' + str(camper.getCheckedIn()))
+
+            case "session":
+                if camper.getSession() is not False:
+                    match camper.getSession():
+                        case 0:
+                            print('  Session:     June')
+                        case 1:
+                            print('  Session:     July')
+                        case 2:
+                            print('  Session:     August')
+                else:
+                    print('  Session:     None')
+
+            case "sessionDate":
+                match camper.getSession():
+                    case 0:
+                        print('  June Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+                    case 1:
+                        print('  July Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+                    case 2:
+                        print('  August Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+            case "tribe":
+                print('  Tribe:   ' + str(camper.getTribe()+1))
+            case "materials":
+                materials = camper.getMaterials()
+                if isinstance(materials, Materials):
+                    print('  Form Status:')
+                    print('   Medical Form:       ' + str(materials.getMedical()))
+                    print('   Legal Release Form: ' + str(materials.getLegal()))
+                    print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
+                    print('   Helmet:             ' + str(materials.getHelmet()))
+                    print('   Boots:              ' + str(materials.getBoots()))
+                    print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
+                    print('   Water Bottle:       ' + str(materials.getWaterBottle()))
+                    print('   Sunscreen:          ' + str(materials.getSunscreen()))
+                    print('   Bug Spray:          ' + str(materials.getBugSpray()))
+                else:
+                    print('  Form Status: N/A')
 
 
-def notYetImplemented():
-    print("| ERROR: Not yet implemented.                  | ")
-    print('|----------------------------------------------|')
-    time.sleep(2)
-    refreshScreen()
+    elif "simple" in kwargs and kwargs["simple"] is True:
+        print('    Name:     ' + camper.getName())
+        if camper.getHasPartner():
+            print('     Partner:  ' + camper.getPartner().getName())
+
+    elif "detailed" in kwargs and kwargs["detailed"] is True:
+        print('  Name:     ' + camper.getName())
+        if camper.getHasPartner():
+            print('   Partner:  ' + camper.getPartner().getName())
+        print('  Age:      ' + str(camper.getAge()))
+        print('  Gender:   ' + camper.getGender())
+        print('  Address:  ' + camper.getAddress())
+        print('  Balance:  $' + str(camper.getBalance()))
+
+        status = camper.getAppStatus()
+        if status == 0:
+            print(Fore.LIGHTYELLOW_EX + '  Application Status: Pending' + Fore.LIGHTGREEN_EX)
+        elif status == 1:
+            print(Fore.GREEN + '  Application Status: Accepted' + Fore.LIGHTGREEN_EX)
+            if camper.getAppNoticeIsSent() is True:
+                print(Fore.LIGHTMAGENTA_EX + '   Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
+            print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
+
+            if isinstance(camper.getMaterials(), Materials):
+                materials = camper.getMaterials()
+                print('  Form Status:')
+                print('   Medical Form:       ' + str(materials.getMedical()))
+                print('   Legal Release Form: ' + str(materials.getLegal()))
+                print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
+                print('   Helmet:             ' + str(materials.getHelmet()))
+                print('   Boots:              ' + str(materials.getBoots()))
+                print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
+                print('   Water Bottle:       ' + str(materials.getWaterBottle()))
+                print('   Sunscreen:          ' + str(materials.getSunscreen()))
+                print('   Bug Spray:          ' + str(materials.getBugSpray()))
+            else:
+                print('  Form Status:         N/A')
+
+            print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
+            print('  Checked In: ' + str(camper.getCheckedIn()))
+
+            if camper.getSession():
+                match camper.getSession():
+                    case 0:
+                        print('  Session:    June')
+                    case 1:
+                        print('  Session:    July')
+                    case 2:
+                        print('  Session:    August')
+            else:
+                print('  Session:    None')
+            if camper.getBunkhouse() is not False:
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse() + 1))
+            if camper.getTribe() is not False:
+                print('  Tribe:      ' + str(camper.getTribe() + 1))
+
+
+        elif status == 2:
+            print(Fore.LIGHTRED_EX + '  Application Status: Rejected' + Fore.LIGHTGREEN_EX)
+
+
+    if "bottomBracket" in kwargs and kwargs["bottomBracket"] is True:
+        print('|----------------------------------------------|')
+
