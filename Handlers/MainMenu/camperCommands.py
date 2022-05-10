@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 
 from Handlers.guiHandler import *
 
@@ -75,7 +75,6 @@ def signUpCamper():
     createCamper()
 
 
-# TODO - RETROFIT AND TEST
 def withdrawCamper():
     clearScreen()
     name = showPrompt("Please insert camper name:", prompt= "(First + Last)", topBracket=True, bottomBracket=True)
@@ -87,9 +86,9 @@ def withdrawCamper():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
 
-    elif camper.getBalance() < 1000.00:
+    elif camper.getBalance() < 1000:
         showMessage(["Camper has an outstanding balance! Request a refund to continue.",
-                    "Balance:   $" + str(camper.getBalance())], topBracket=True,
+                    "Paid: $" + str(1000-camper.getBalance())], topBracket=True,
                     bottomBracket=True)
 
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
@@ -127,6 +126,7 @@ def withdrawCamper():
 
 
 def printCamper():
+    clearScreen()
     if not any(elem != "" for elem in summerCamp.getAllCampers()):
         mainMenu()
         showMessage("There are currently no campers!", bottomBracket=True)

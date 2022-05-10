@@ -119,6 +119,14 @@ class Camp:
         tribe = camper.getTribe()
 
         if camper.getAppStatus() == 1:
+            locations = [self.tempCampers[0], self.tempCampers[1], self.tempCampers[2]]
+            for location in locations:
+                try:
+                    location.remove(camper)
+                    location.append("")
+                except ValueError:
+                    pass
+
             locations = [self.juneCampers, self.julyCampers, self.augustCampers]
 
             if session is not False:
@@ -186,12 +194,19 @@ class Camp:
 
         elif camper.getAppStatus() == 0:
             locations = [self.tempCampers[0], self.tempCampers[1], self.tempCampers[2]]
+            for location in locations:
+                try:
+                    location.remove(camper)
+                    location.append("")
+                except ValueError:
+                    pass
 
             if session is not False:
                 try:
                     locations[session].remove("")
                     locations[session].append(camper)
                 except ValueError:
+                    locations[session].append("")
                     return STATUS_CODES["NO_CAPACITY"]
 
         return STATUS_CODES["SUCCESS"]
@@ -212,22 +227,22 @@ class Camp:
 
         if session is not False:
             try:
-                self.locations[session][0].remove("")
-                self.locations[session][0].append(camper)
+                locations[session][0].remove("")
+                locations[session][0].append(camper)
             except ValueError:
                 return STATUS_CODES["NO_CAPACITY"]
 
         if bunkhouse is not False and session is not False:
             try:
-                self.locations[session][1][bunkhouse].remove("")
-                self.locations[session][1][bunkhouse].append(camper)
+                locations[session][1][bunkhouse].remove("")
+                locations[session][1][bunkhouse].append(camper)
             except ValueError:
                 return STATUS_CODES["NO_CAPACITY"]
 
         if tribe is not False and session is not False:
             try:
-                self.locations[session][2][tribe].remove("")
-                self.locations[session][2][tribe].append(camper)
+                locations[session][2][tribe].remove("")
+                locations[session][2][tribe].append(camper)
             except ValueError:
                 return STATUS_CODES["NO_CAPACITY"]
 
@@ -314,24 +329,12 @@ class Camp:
 
     #def getTempCampers(self):
         return self.tempCampers
-#
+
     def getTempJuneCampers(self):
         return self.tempCampers[0]
-#
+
     def getTempJulyCampers(self):
         return self.tempCampers[1]
-#
+
     def getTempAugustCampers(self):
         return self.tempCampers[2]
-#
-    #def setTempCampers(self, list):
-    #    self.tempCampers = list
-#
-    #def setTempJuneCampers(self, list):
-    #    self.tempCampers[0] = list
-#
-    #def setTempJulyCampers(self, list):
-    #    self.tempCampers[1] = list
-#
-    #def setTempAugustCampers(self, list):
-    #    self.tempCampers[2] = list

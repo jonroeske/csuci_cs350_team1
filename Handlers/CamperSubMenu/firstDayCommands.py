@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 from Handlers.guiHandler import *
 
 def viewAcceptanceNoticeStatus():
@@ -15,12 +15,12 @@ def viewAcceptanceNoticeStatus():
     elif camper.getAppStatus() != 1:
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
         showMessage('Camper must be accepted!')
-        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
         return
 
     printCamperGUI(camper, attribute="appNotice", bottomBracket=True)
-    showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+    showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     camperSubMenu()
 
 
@@ -234,7 +234,7 @@ def checkInCamper():
         return
     elif camper.getMaterials() is None or camper.getMaterials().getCompletedForms() is False:
         printCamperGUI(camper, attribute="materials", topBracket=True, bottomBracket=True)
-        showMessage('Camper have completed their required forms!')
+        showMessage('Camper has not completed their required forms!')
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return

@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu, clearScreen
 
 def databaseView(runtime):
@@ -34,9 +34,9 @@ def databaseView(runtime):
     print("TEMPORARY CAMPERS LIST:")
     print(" JUNE CAMPERS:")
     print(summerCamp.getTempJuneCampers())
-    print(" JULY BUNKHOUSES:")
+    print(" JULY CAMPERS:")
     print(summerCamp.getTempJulyCampers())
-    print(" AUGUST TRIBES:")
+    print(" AUGUST CAMPERS:")
     print(summerCamp.getTempAugustCampers())
     print('|----------------------------------------------|')
     print()

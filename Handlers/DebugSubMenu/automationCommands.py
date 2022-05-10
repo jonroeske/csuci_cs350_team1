@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 
 from Objects.values import GLOBAL_VALUES
 from Objects.camper import Camper

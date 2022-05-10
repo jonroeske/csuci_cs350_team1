@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 
 from Handlers.guiHandler import *
 
@@ -29,6 +29,10 @@ def processPayment():
         mainMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
+    elif camper.getBalance() <= 0:
+            mainMenu()
+            showMessage("Balance is fully paid!", bottomBracket=True)
+            return
 
     while True:
         clearScreen()
@@ -71,28 +75,26 @@ def processRefund():
         camperSubMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
+    elif camper.getBalance() >= 1000:
+        mainMenu()
+        showMessage("No payments were made!", bottomBracket=True)
+        return
+
 
     while True:
         clearScreen()
 
         balance = camper.getBalance()
-        refund = 0
-
-        if camper.getBalance() >= 1000:
-            mainMenu()
-            showMessage("No payments were made!", bottomBracket=True)
-            return
+        refund = 1000 - balance
 
         if camper.getAppNoticeIsSent() is False and balance < 1000:
-            refund = balance
             showMessage(["Due to not having been sent an acceptance notice, you are eligible for a FULL refund!",
                         "Refund: $" + str(refund)], topBracket=True, bottomBracket=True)
 
         elif camper.getAppNoticeIsSent() is True and balance < 1000:
-            weekDifference = abs((camper.getDateAppNoticeSent() - TODAYS_DATE).days/7)
+            weekDifference = abs((camper.getDateAppNoticeSent() - Objects.values.TODAYS_DATE).days/7)
 
-            if abs((camper.getDateAppNoticeSent() - TODAYS_DATE).days < 1):
-                refund = balance
+            if abs((camper.getDateAppNoticeSent() - Objects.values.TODAYS_DATE).days) < 1:
                 showMessage(["Due to requesting a refund on the same day as Sign-Up,",
                                  " You are eligible for a FULL refund!",
                                  "Paid:   $" + str(1000 - balance),
@@ -113,15 +115,23 @@ def processRefund():
                              "Refund: $" + str(refund)], topBracket=True,bottomBracket=True)
 
             elif weekDifference >= 6:
-                showMessage(["Due to requesting a refund after six weeks after acceptance notice,",
-                             " You are not eligible for a refund at this time."
-                             " If attempting to withdraw a camper, you are able to do so now."], topBracket=True, bottomBracket=True)
-                camper.setBalance(1000.00)
-                summerCamp.updateCamper(camper)
+                while True:
+                    clearScreen()
+                    showMessage(["Due to requesting a refund after six weeks since the acceptance notice,",
+                                 " You are not eligible for a refund at this time."], topBracket=True)
 
-                showPrompt("Press 'Enter' to Return!", bottomBracket=True)
-                mainMenu()
-                return
+                    confirmation = showPrompt("Would you like to reset your balance anyways?", prompt='"Y" for Yes, "N" for No', bottomBracket=True)
+
+                    if confirmation == 'Y':
+                        camper.setBalance(1000.00)
+                        mainMenu()
+                        return
+                    elif confirmation == 'N':
+                        mainMenu()
+                        return
+                    else:
+                        showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
+
 
         confirmation = showPrompt("Would you like to continue with refund?", prompt='"Y" for Yes, "N" for No', bottomBracket=True)
         if confirmation == 'Y':

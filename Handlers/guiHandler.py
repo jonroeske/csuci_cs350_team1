@@ -88,7 +88,7 @@ def debugSubMenu(**kwargs):
     #print('| Automation                                   |')
     #print('| (9) Auto-Assign All Sessions                |')
     #print('| (10) Auto-Assign All Bunkhouses              |')
-    ##print('| (11) Auto-Assign All Tribes                  |')
+    #print('| (11) Auto-Assign All Tribes                  |')
     print('|----------------------------------------------|')
     print('| Debugging                                    |')
     print('| (7) Toggle Database View in Menu             |')
@@ -243,6 +243,9 @@ def printCamperGUI(camper, **kwargs):
                     print('   Water Bottle:       ' + str(materials.getWaterBottle()))
                     print('   Sunscreen:          ' + str(materials.getSunscreen()))
                     print('   Bug Spray:          ' + str(materials.getBugSpray()))
+                else:
+                    print('  Form Status: N/A')
+
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())
@@ -285,18 +288,20 @@ def printCamperGUI(camper, **kwargs):
             print(Fore.LIGHTGREEN_EX + '|----------------------------------------------|')
             print('  Checked In: ' + str(camper.getCheckedIn()))
 
-            match camper.getSession():
-                case False:
-                    print('  Session:    None')
-                case 0:
-                    print('  Session:    June')
-                case 1:
-                    print('  Session:    July')
-                case 2:
-                    print('  Session:    August')
-
-            print('  Bunkhouse:  ' + str(camper.getBunkhouse() + 1))
-            print('  Tribe:      ' + str(camper.getTribe() + 1))
+            if camper.getSession():
+                match camper.getSession():
+                    case 0:
+                        print('  Session:    June')
+                    case 1:
+                        print('  Session:    July')
+                    case 2:
+                        print('  Session:    August')
+            else:
+                print('  Session:    None')
+            if camper.getBunkhouse() is not False:
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse() + 1))
+            if camper.getTribe() is not False:
+                print('  Tribe:      ' + str(camper.getTribe() + 1))
 
 
         elif status == 2:

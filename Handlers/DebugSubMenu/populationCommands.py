@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 from Handlers.guiHandler import *
 from Objects.camp import Camp
 from Objects.camper import Camper
@@ -104,6 +104,7 @@ def resetSessions():
                 camper.setSession(False)
                 camper.setBunkhouse(False)
                 camper.setTribe(False)
+                summerCamp.updateCamper(camper)
 
     summerCamp.setJune([["" for _ in range(GLOBAL_VALUES["maxCampersInSession"])],
                             [["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in
@@ -136,15 +137,17 @@ def resetBunkhouses():
             for camper in bunkhouse:
                 if isinstance(camper, Camper):
                     camper.setBunkhouse(False)
+                    summerCamp.updateCamper(camper)
 
-    summerCamp.setJuneBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
-    summerCamp.setJulyBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
-    summerCamp.setAugustBunkhouses(["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])])
+    summerCamp.setJuneBunkhouses([["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in range(GLOBAL_VALUES["maxBunkhouses"])])
+    summerCamp.setJulyBunkhouses([["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in range(GLOBAL_VALUES["maxBunkhouses"])])
+    summerCamp.setAugustBunkhouses([["" for _ in range(GLOBAL_VALUES["maxCampersInBunkhouse"])] for _ in range(GLOBAL_VALUES["maxBunkhouses"])])
 
     clearScreen()
     debugSubMenu()
 
     showMessage("All bunkhouses reset!", bottomBracket=True)
+
 
 def resetTribes():
     showMessage("Resetting all tribes...", bottomBracket=True, wait=1)
@@ -156,10 +159,11 @@ def resetTribes():
             for camper in tribe:
                 if isinstance(camper, Camper):
                     camper.setTribe(False)
+                    summerCamp.updateCamper(camper)
 
-    summerCamp.setJuneTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
-    summerCamp.setJulyTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
-    summerCamp.setAugustTribes(["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])])
+    summerCamp.setJuneTribes([["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in range(GLOBAL_VALUES["maxTribes"])])
+    summerCamp.setJulyTribes([["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in range(GLOBAL_VALUES["maxTribes"])])
+    summerCamp.setAugustTribes([["" for _ in range(GLOBAL_VALUES["maxCampersInTribe"])] for _ in range(GLOBAL_VALUES["maxTribes"])])
 
     clearScreen()
     debugSubMenu()

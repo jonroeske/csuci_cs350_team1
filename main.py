@@ -13,7 +13,7 @@ from Handlers.DebugSubMenu.populationCommands import *
 from Handlers.DebugSubMenu.timeCommands import *
 
 from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu
-from Handlers.camperHandler import *
+from Handlers.dataHandler import *
 
 # TODO LIST, MAIN MENU:
 # MAIN MENU
@@ -44,7 +44,7 @@ from Handlers.camperHandler import *
 # FIRST DAY
 #  VIEW NOTICE      - FULLY WORKING
 #  FILL OUT FORMS   - FULLY WORKING
-#  CHECK IN CAMPER  - TODO CREATE
+#  CHECK IN CAMPER  - FULLY WORKING
 # ASSIGNMENT
 #  ASSIGN SESSIONS  - FULLY WORKING
 #  ASSIGN BUNKS     - FULLY WORKING

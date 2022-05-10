@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 from Handlers.CamperSubMenu.assignmentCommands import assignCamperToSession
 
 from Handlers.guiHandler import *
@@ -32,7 +32,18 @@ def acceptCamperApplication():
         camperSubMenu()
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
-
+    elif camper.getAppStatus() == 1:
+        showMessage("This camper has already been accepted!", bottomBracket=True)
+        printCamperGUI(camper, attribute="applicationStatus", bottomBracket=True)
+        showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getAppStatus() == 2:
+        showMessage("This camper has been rejected!", bottomBracket=True)
+        printCamperGUI(camper, attribute="applicationStatus", bottomBracket=True)
+        showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+        camperSubMenu()
+        return
     monthDifference = abs((((Objects.values.TODAYS_DATE - locations[camper.getSession()]).days)/7)/4)
 
     if monthDifference < 2:
@@ -61,7 +72,6 @@ def acceptCamperApplication():
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
         return
-
 
     while True:
         clearScreen()
@@ -111,7 +121,7 @@ def rejectCamperApplication():
         printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
 
         confirmation = showPrompt(["Are you sure you would like to reject this camper?",
-                                    " If rejected, this will clear Camper's session, bunkhouse, and Tribe!"],
+                                    " If rejected, this camper will no longer be able to be accepted!"],
                                   prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':

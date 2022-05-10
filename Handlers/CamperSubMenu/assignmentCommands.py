@@ -1,4 +1,4 @@
-from Handlers.camperHandler import summerCamp
+from Handlers.dataHandler import summerCamp
 from Handlers.guiHandler import *
 
 def assignCamperToSession():
@@ -12,27 +12,12 @@ def assignCamperToSession():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
 
-    elif camper.getSession() is not False:
-        while True:
-            printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
-            confirmation = showPrompt(["Camper already has a session. Would you like to reassign?",
-                                       "This will clear Camper's session, bunkhouse, and Tribe!"],
-                                      prompt='"Y" for Yes, "N" for No', bottomBracket=True)
-
-            if confirmation == 'Y':
-                camper.setSession(False)
-                camper.setBunkhouse(False)
-                camper.setTribe(False)
-
-                summerCamp.updateCamper(camper)
-
-                break
-            elif confirmation == 'N':
-                camperSubMenu()
-                showMessage("Action aborted.", bottomBracket=True)
-                return
-            else:
-                showMessage('Must be "Y" or "N"', bottomBracket=True, wait=2)
+    elif camper.getSession() is not False and camper.getAppStatus() == 1:
+        showMessage("This camper has already been accepted!", bottomBracket=True)
+        printCamperGUI(camper, attribute="applicationStatus", bottomBracket=True)
+        showPrompt("Press 'Enter' to Return!", bottomBracket=True)
+        camperSubMenu()
+        return
 
     locations = [summerCamp.getJuneCampers(), summerCamp.getJulyCampers(), summerCamp.getAugustCampers()]
 
@@ -53,8 +38,11 @@ def assignCamperToSession():
         if int(location) != 0 and int(location) != 1 and int(location) != 2:
             showMessage("That is not a session!", bottomBracket=True, wait=2)
         else:
+            sessionLocations = [JUNE_SESSION_DATE, JULY_SESSION_DATE, AUGUST_SESSION_DATE]
             if not any(elem == "" for elem in locations[int(location)]):
                 showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
+            if abs((((Objects.values.TODAYS_DATE - sessionLocations[int(location)]).days) / 7) / 4) < 2:
+                showMessage("That session is less than two months away!", bottomBracket=True, wait=2)
             else:
                 break
 
@@ -155,13 +143,13 @@ def assignCamperToBunkhouse():
             continue
 
         if not 0 <= location <= 2:
-            showMessage("That is not a session!", bottomBracket=True, wait=2)
+            showMessage("That is not a bunkhouse!", bottomBracket=True, wait=2)
         else:
             if gender == "F":
                 location += 3
 
             if not any(elem == "" for elem in session[location]):
-                showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
+                showMessage("There is no availability in that bunkhouse!", bottomBracket=True, wait=2)
             else:
                 camper.setBunkhouse(location)
                 break
@@ -196,6 +184,13 @@ def assignCamperToTribe():
     elif camper.getSession() is False:
         printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
         showMessage('Camper must be assigned to a session!')
+
+        showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
+        camperSubMenu()
+        return
+    elif camper.getCheckedIn() is False:
+        printCamperGUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
+        showMessage('Camper must be be checked in before assignment!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
@@ -248,10 +243,10 @@ def assignCamperToTribe():
             continue
 
         if not 0 <= location <= 5:
-            showMessage("That is not a session!", bottomBracket=True, wait=2)
+            showMessage("That is not a tribe!", bottomBracket=True, wait=2)
         else:
             if not any(elem == "" for elem in session[location]):
-                showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
+                showMessage("There is no availability in that tribe!", bottomBracket=True, wait=2)
             else:
                 camper.setTribe(location)
                 break

@@ -8,7 +8,6 @@ summerCamp = Camp()
 locations = ["allCampers", "juneCampers", "julyCampers", "augustCampers"]
 
 def initializeData():
-
     global summerCamp
 
     for location in locations:
