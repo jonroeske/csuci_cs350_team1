@@ -1,6 +1,24 @@
 # CSUCI COMP-350, Software Engineering 
 ## Team One, Spring 2022
-## Developers: Aaron Urrea, Jon Roeske, Zachary Drake, Paul Kime & Connor Moore*
+## Developers: Aaron Urrea, Jon Roeske, Zachary Drake, Paul Kime & Connor Moore
+## Description:
+### Todo
+
+### Dependencies:
+#### Faker, Colorama
+
+##Objects
+
+### camp.py
+
+### camper.py
+
+### materials.py
+
+### values.py
+
+
+
 ## Handlers
 ### dataHandler.py
 This is the file we use for managing the persistent data of our application. Within it are two functions with the following purposes:
@@ -97,6 +115,7 @@ This is the file we use for managing the UI of our application. Within it are ni
       - *Tribe* (If camper has Tribe)
 
 ### Main Menu
+####The Main Menu of our program, which has access to several categories of commands, as well as access to our two sub menus.
 
 #### camperCommands.py
 This is the file we use for creation, deletion, and displaying of individual and all campers within our database. Within are four functions:
@@ -154,6 +173,7 @@ This is the file where we can view a camper's balance, process payments and proc
  as well as showing gender composition and total amount of campers.
 
 ### Camper Sub-Menu
+####This sub menu will allow us to further manipulate our campers, their assignment, and their status.
 
 #### applicationCommands.py
 This is the file for managing camper applications, such as the ability to view, accept, or reject any application. Within it holds three functions:
@@ -174,27 +194,95 @@ This is the file for managing camper applications, such as the ability to view, 
 
 
 - **rejectCamperApplication():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
-  We will prompt whether the user will be accepted. If yes, remove from temporary session list and assign to actual session list.
+ We will prompt whether the user will be rejected. If yes, remove from temporary session list. Since the camper is rejected, they will no longer be able to be accepted again.
+ The camper must be recreated . 
+
 #### assignmentCommands.py
+This is the file that allows for the assignment of a camper to a session, bunkhouse, and tribe. This file also offers the ability to process a pair request between two campers. There are four distinct functions:
+
+- **assignCamperToSession():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+  - If the user has a session and the user has been accepted, then print their application status, as well as return to camper menu.
+    - In the event that the clerk resets the sessions, we're going to need a way to reassign already accepted campers to other sessions. This logic respects that.
+  
+  We will then print the sessions, as well as their availability. Then we will prompt the user to select a session
+  - If todaysDate is less than two months away from the session start date, try again
+  - If there is not enough availibity in the session, try again
+
+  We will then set the users session to the session, then add the user to the session list in summerCamp.
+
+
+- **assignCamperToBunkhouse():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+    - If the user has not been accepted, then print their application status, as well as return to camper menu.
+    - If the user does not have a session, return to camper menu
+    - If the user is not checked in, return to camper menu
+    - If the user already has a bunkhouse, ask if they'll like to change bunkhouses. If yes, continue, if not return to camper menu.
+    
+  We will then print the bunkhouses, as well as their availability. Then we will prompt the user to select a bunkhouse.
+  NOTE: The bunkhouses are gender specific, so there is no cross-gender assignment.
+  - If there is not enough availibity in the bunkhouse, try again
+
+  We will then set the users bunkhouse to the bunkhouse, then add the user to the session's bunkhouse list in summerCamp.
+
+
+- **assignCamperToTribe():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+    - If the user has not been accepted, then print their application status, as well as return to camper menu.
+    - If the user does not have a session, return to camper menu
+    - If the user is not checked in, return to camper menu
+    - If the user already has a bunkhouse, ask if they'll like to change bunkhouses. If yes, continue, if not return to camper menu.
+    
+  We will then print the tribes, as well as their availability. Then we will prompt the user to select a tribe.
+  - If there is not enough availibity in the tribe, try again
+
+  We will then set the users tribe to the tribe, then add the user to the session's tribe list in summerCamp.
 
 #### firstDayCommands.py
+This file allows us to view the acceptance notice date of a camper, to allow them to fill out required forms, and to check them in. It has three functions:
+
+- **viewAcceptanceNoticeStatus():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+ If the camper is not accepted, return to camper menu.
+ Else, print the status and date of the camper's acceptance notice
+
+
+- **fillOutForms():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+ It will then create a materials object for the camper object, if one does not already exist.
+ It will then prompt yes or no questions for the following materials:  - Medical Forms
+  - Legal Forms
+  - Emergency Contacts
+  - Helmet
+  - Boots
+  - Sleeping Bag
+  - Water Bottle
+  - Sunscreen
+  - Bug Spray
+ 
+  If user inputs yes, then set material to True, else remind the user they must complete before check in.
+ Once complete, it will print the forms status to the user, then return to camper menu.
+ NOTE: The camper may return to fill out other forms at a different times. Only incomplete forms will be prompted.
+
+
+- **checkInCamper():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+  - If the camper is not accepted, return to camper menu.
+  - If the camper does not have materials, or has incomplete materials, print materials and return to camper menu.
+  - If the user has an outstanding balance, (balance > 0) print balance and return to camper menu
+  
+  After all that, set the camper to checked in, then return to menu.
 
 ### Debug Sub-Menu
+####This menu is used for testing and debugging primarily. In a real clerk program, this section would not be included.
 
 #### automationCommands.py
+This file was to be used to automatically assign campers to sessions, bunkhouses, and tribes. Due to time constraints, as well as difficult algorithms to create, it was scrapped in final release.
 
 #### debugCommands.py
+This file is used to print debug information regarding the lists located in summerCamp. It is pretty self-explanatory.
 
 #### populationCommands.py
+This file is used to edit the population of the different lists stored within summerCamp. It has five distinct files:
+
+- **populateMaxCampers():** Using random and faker, we will populate every slot within our "allCampers" list that does not have a camper.
+ The camper's name, age, address, and gender will be randomly generated, but there will always be an equal amount of Males and Females.
+ Here, we also find every camper with the same last name. They then have a 1/4 chance of being partners, given they are the same gender.
+ This isn't really to be used by a clerk, which is why it is found in debug
 
 #### timeCommands.py
 
-##Objects
-
-### camp.py
-
-### camper.py
-
-### materials.py
-
-### values.py
