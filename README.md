@@ -282,7 +282,29 @@ This file is used to edit the population of the different lists stored within su
 - **populateMaxCampers():** Using random and faker, we will populate every slot within our "allCampers" list that does not have a camper.
  The camper's name, age, address, and gender will be randomly generated, but there will always be an equal amount of Males and Females.
  Here, we also find every camper with the same last name. They then have a 1/4 chance of being partners, given they are the same gender.
- This isn't really to be used by a clerk, which is why it is found in debug
+
+
+- **resetAllCampers():** Very simply, this reinitializes summerCamp, to be completely empty
+
+
+- **resetAllSessions():** This goes through every session, (June, July, August) and every camper encountered, they will have their session, bunkhouse, and tribe set to False
+  They will then be updated.
+  Finally, all sessions will be reinitialized
+
+
+- **resetAllBunkhouses():** This goes through every session, (June, July, August) and every camper encountered, they will have their bunkhouse set to False
+  They will then be updated.
+  Finally, all bunkhouses will be reinitialized
+
+
+- **resetAllTribes():** This goes through every session, (June, July, August) and every camper encountered, they will have their tribe set to False
+  They will then be updated.
+  Finally, all tribes will be reinitialized
 
 #### timeCommands.py
+This file is used to manipulate time, which is an important aspect when it comes to camper applications and refunds. It has two functions:
 
+- **changeTodaysDate:** This will edit the value TODAYS_DATE to a date in datetime format. This will then be reflected across the application, and used in calculations.
+
+
+- **resetTodaysDate:** This will edit the value TODAYS_DATE to the current date in datetime format. This will then be reflected across the application, and used in calculations.
