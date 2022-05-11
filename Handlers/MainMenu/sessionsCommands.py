@@ -60,20 +60,21 @@ def viewBunkhouses():
             print('| (1)  July                                    |')
             print('| (2)  August                                  |')
             print('|----------------------------------------------|')
+            try:
+                location = int(showPrompt("Which session would you like to view?", bottomBracket=True))
+            except ValueError:
+                showMessage("Invalid input!", bottomBracket=True, wait=2)
+                continue
 
-            location = showPrompt("Which session would you like to view?", bottomBracket=True)
-
-            if int(location) != 0 and int(location) != 1 and int(location) != 2:
-                mainMenu()
+            if location != 0 and location != 1 and location != 2:
                 showMessage("That is not a session!", bottomBracket=True, wait=2)
-                return
             else:
                 break
 
         clearScreen()
 
         bunkhouseNumber = 1
-        for bunkhouse in locations[int(location)]:
+        for bunkhouse in locations[location]:
             print(f'  Bunkhouse {bunkhouseNumber}:')
 
             print(f'   Amount: {sum(x != "" for x in bunkhouse)}')
@@ -105,19 +106,21 @@ def viewTribes():
             print('| (2)  August                                  |')
             print('|----------------------------------------------|')
 
-            location = showPrompt("Which session would you like to view?", bottomBracket=True)
+            try:
+                location = int(showPrompt("Which session would you like to view?", bottomBracket=True))
+            except ValueError:
+                showMessage("Invalid input!", bottomBracket=True, wait=2)
+                continue
 
-            if int(location) != 0 and int(location) != 1 and int(location) != 2:
-                mainMenu()
+            if location != 0 and location != 1 and location != 2:
                 showMessage("That is not a session!", bottomBracket=True, wait=2)
-                return
             else:
                 break
 
         clearScreen()
 
         bunkhouseNumber = 1
-        for bunkhouse in locations[int(location)]:
+        for bunkhouse in locations[location]:
             print(f'  Tribe {bunkhouseNumber}:')
 
             print(f'   Amount: {sum(x != "" for x in bunkhouse)}')

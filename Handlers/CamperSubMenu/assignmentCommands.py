@@ -20,6 +20,7 @@ def assignCamperToSession():
         return
 
     locations = [summerCamp.getJuneCampers(), summerCamp.getJulyCampers(), summerCamp.getAugustCampers()]
+    sessionDates = [Objects.values.JUNE_SESSION_DATE, Objects.values.JULY_SESSION_DATE, Objects.values.AUGUST_SESSION_DATE]
 
     while True:
         clearScreen()
@@ -33,22 +34,27 @@ def assignCamperToSession():
         print('| (2)  August                                  |')
         print(f'        Availability: {sum(elem == "" for elem in summerCamp.getAugustCampers())}')
         print('|----------------------------------------------|')
-        location = showPrompt("Which session would you like to assign?", bottomBracket=True)
-
-        if int(location) != 0 and int(location) != 1 and int(location) != 2:
+        try:
+            location = int(showPrompt("Which session would you like to assign?", bottomBracket=True))
+        except ValueError:
+            showMessage("Invalid input!", bottomBracket=True, wait=2)
+            continue
+        if location != 0 and location != 1 and location != 2:
             showMessage("That is not a session!", bottomBracket=True, wait=2)
         else:
             sessionLocations = [JUNE_SESSION_DATE, JULY_SESSION_DATE, AUGUST_SESSION_DATE]
-            if not any(elem == "" for elem in locations[int(location)]):
+            if not any(elem == "" for elem in locations[location]):
                 showMessage("There is no availability in that session!", bottomBracket=True, wait=2)
-            if abs((((Objects.values.TODAYS_DATE - sessionLocations[int(location)]).days) / 7) / 4) < 2:
-                showMessage("That session is less than two months away!", bottomBracket=True, wait=2)
+            if abs((((Objects.values.TODAYS_DATE - sessionLocations[location]).days) / 7) / 4) < 2:
+
+                showMessage(["That session is less than two months away!",
+                             " Session date: " + datetime.strftime(sessionDates[location], "%m/%d/%Y")], bottomBracket=True, wait=4)
             else:
                 break
 
     clearScreen()
 
-    camper.setSession(int(location))
+    camper.setSession(location)
     summerCamp.updateCamper(camper)
 
     printCamperUI(camper, attribute="session", topBracket=True, bottomBracket=True)
