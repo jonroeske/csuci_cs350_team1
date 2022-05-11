@@ -2,10 +2,20 @@
 ## Developers: Aaron Urrea, Jon Roeske, Zachary Drake, Paul Kime & Connor Moore
 ### Team One, Spring 2022
 ## Description:
-### Todo
+### The project is to create software for “Gila Breath Camp,” a summer camp for kids, located in a remote, scenic part of the US. The software must support the work of the camp’s registration clerk.
+### Task Requirements:
+####- Handling documents
+####  - applications to camp
+####  - payments
+####  - notices of acceptance
+####  - arrival instruction packets
+####- Processing refunds and post-acceptance issues
+####- Dealing with “first day” issues
+####  - check-in of campers
+####  - assignment of campers to bunkhouses
+####  - assignment of campers to “tribes”
 
-### Dependencies:
-#### Faker, Colorama
+***
 
 ## Objects
 
