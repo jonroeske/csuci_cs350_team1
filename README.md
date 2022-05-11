@@ -4,16 +4,16 @@
 ## Description:
 ### The project is to create software for “Gila Breath Camp,” a summer camp for kids, located in a remote, scenic part of the US. The software must support the work of the camp’s registration clerk.
 ### Task Requirements:
-#### - Handling documents
-####   - applications to camp
-####   - payments
-####   - notices of acceptance
-####   - arrival instruction packets
-#### - Processing refunds and post-acceptance issues
-#### - Dealing with “first day” issues
-####   - check-in of campers
-####   - assignment of campers to bunkhouses
-####   - assignment of campers to “tribes”
+> - Handling documents
+>   - Applications to camp
+>   - Payments
+>   - Notices of acceptance
+>   - Arrival instruction packets
+> - Processing refunds and post-acceptance issues
+> - Dealing with “first day” issues
+>   - Check-in of campers
+>   - Assignment of campers to bunkhouses
+>   - Assignment of campers to “tribes”
 
 ***
 
