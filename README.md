@@ -21,7 +21,6 @@
 
 ## Handlers
 
-***
 
 #### dataHandler.py
 This is the file we use for managing the persistent data of our application. Within it are two functions with the following purposes:
