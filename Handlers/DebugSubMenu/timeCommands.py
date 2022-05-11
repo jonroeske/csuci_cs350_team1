@@ -1,5 +1,5 @@
 from Objects.values import STATUS_CODES, changeDate, resetDate
-from Handlers.guiHandler import debugSubMenu, clearScreen, showMessage, showPrompt
+from Handlers.uiHandler import debugSubMenu, clearScreen, showMessage, showPrompt
 
 def changeTodaysDate():
     while True:

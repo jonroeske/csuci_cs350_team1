@@ -1,4 +1,4 @@
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 from Objects.camper import Camper
 from Objects.camp import Camp
 
@@ -35,7 +35,7 @@ def initializeData():
                                 break
 
                     except EOFError:
-                        print(location + ' loaded successfully!')
+                        #print(location + ' loaded successfully!')
                         break
         elif not os.path.exists(path):
             fp = open(path, 'x')

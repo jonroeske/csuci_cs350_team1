@@ -1,5 +1,5 @@
 from Handlers.dataHandler import summerCamp
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 from Objects.camp import Camp
 from Objects.camper import Camper
 from Objects.values import STATUS_CODES

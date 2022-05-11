@@ -1,27 +1,200 @@
-# CSUCI CS 350 Team 1
-CSUCI Software Engineering Team 1 Spring 2022:
-*Jon Roeske, Zachary Drake, Aaron Urrea, Paul Kime & Connor Moore*
-## docHandler.py
-### Camp Applications
-#### submitApplication()
-#### checkApplicationDate()
-#### withdrawApplication()
-### Payments
-#### reduceBalance()
-#### raiseBalance()
-#### resetBalance()
-### Acceptance Notices
-#### sentAcceptanceNotice()
-#### camperAcceptedNotice()
-#### camperDeclinedNotice()
-### Arrival Instruction Packets
-#### instructionPacketSent()
-## postAcceptance.py
-### Refunds
-### Misc Issues
-## firstDay.py
-### Check-in
-### Bunkhouse Assignment
-### Tribe Assignment
-## main.py
-### CLI
+# CSUCI COMP-350, Software Engineering 
+## Team One, Spring 2022
+## Developers: Aaron Urrea, Jon Roeske, Zachary Drake, Paul Kime & Connor Moore*
+## Handlers
+### dataHandler.py
+This is the file we use for managing the persistent data of our application. Within it are two functions with the following purposes:
+- **initializeData():** This will load data from our database folder to be used in the application. 
+ If there are valid .pickle files within our database folder, the function will load the contents of the files into our Camp object summerCamp, which is used globally throughout the application. 
+ If there are no files, or missing files, those files will be created. 
+
+
+- **shutDown():** This will load data from our summerCamp Camp object into the four files within our database.
+
+### uiHandler.py
+This is the file we use for managing the UI of our application. Within it are nine functions with the following purposes:
+
+- **mainMenu():** Prints the Main Menu UI.
+
+
+- **camperSubMenu():** Prints the Camper Sub-Menu UI.
+
+
+- **debugSubMenu():** Prints the Debug Sub-Menu UI.
+
+
+- **showCredits():** Prints the credits of the team which developed this program.
+
+
+- **showVersion():** Prints the current version number of the project. This is stored in a variable known as "versionNumber".
+
+
+- **clearScreen():** Clears the screen. Implementation checks for the OS of the system, so this works on Unix and Windows systems.
+
+
+- **showMessage(message, kwargs):** This will print a message according to the arguments located in **kwargs.
+ The parameter "message" itself can be either a singular string, or a list of strings. 
+ In the case of a list of strings, it will print every string in the list for each line. 
+ Else, it will print a singular message. Kwargs has three arguments which can also affect how the function prints:
+  - _"topBracket":_ Will print a bracket at the top of the message.
+
+  - _"bottomBracket":_ Will print a bracket at the bottom of the message.
+  
+  - _"wait":_ Will time.sleep() for the integer value within kwargs["wait"].
+
+
+- **showPrompt(message, kwargs):** This will print a message, as well as prompting the user for an input depending on its purpose. 
+ The function will then return the input. The parameter "message" itself can be either a singular string, or a list of strings. 
+ In the case of a list of strings, it will print every string in the list for each line. Else, it will print a singular message. 
+ Kwargs has three arguments which can also affect how the function prints:
+  - _"topBracket":_ Will print a bracket at the top of the message.
+  
+  - _"bottomBracket":_ Will print a bracket at the bottom of the message.
+  
+  - _"prompt":_ This is an optional message, with the exact same specifications of "message". 
+   It will be printed below the message with special formatting.
+
+
+- **printCamperUI(camper, kwargs):** This will print relevant information about a camper object that is given. 
+ If there is not a camper instance, or there are no kwargs arguments, then it will return. 
+ Kwargs has several arguments which can also affect how the function prints:
+
+  - _"topBracket":_ Will print a bracket at the top of the message.
+  
+  - _"bottomBracket":_ Will print a bracket at the bottom of the message.
+  
+  - _"camperCreation":_ This will print out the basic information of the camper. This is used solely for when a new Camper object is created.
+  
+  - _"attribute":_ This will print camper information based on the attribute argument. The following attribute arguments are as follows:
+    - _"applicationStatus":_ This will print the status of the camper's application. ("Pending", "Approved", or "Rejected)
+    - _"appNotice":_ This will print the date that the camper received their acceptance notice. If the camper has not been accepted, it will print N/A.
+    - _"balance":_ This will print the camper's current balance.
+    - _"bunkhouse":_ This will print the camper's current bunkhouse.
+    - _"checkedIn":_ This will print the camper's check-in status.
+    - _"hasPartner":_ If the camper has a partner, this will print the partner's full name.
+    - _"materials":_ If the camper has an initialized Materials object, it will print the status of the Material's attributes. 
+     (Medical, Legal, Emergency Contacts, Helmet, Boots, Sleeping Bag, Water Bottle, Sunscreen, Bug Spray). If not, it will print N/A.
+    - _"session":_ If the camper has a session, it will print the session. If not, will print "None".
+    - _"sessionDate":_ If the camper has a session, it will print the date that the session begins.
+    - _"tribe":_ This will print the camper's current tribe.
+    
+  - _"simple":_ This will print the camper's name, and if the camper has a partner, will print the partner's name:
+  
+  - _"detailed":_ This will print ALL relevant info about the camper:
+    - *Name*
+    - *Partner* (If the camper has a partner)
+    - *Age*
+    - *Gender*
+    - *Address*
+    - *Balance*
+    - *Application Status*
+    - (If appStatus is Approved)
+      - *Date of Acceptance*
+      - *Materials*
+      - *Check-In Status*
+      - *Session* (If camper has session)
+      - *Bunkhouse* (If camper has bunkhouse)
+      - *Tribe* (If camper has Tribe)
+
+### Main Menu
+
+#### camperCommands.py
+This is the file we use for creation, deletion, and displaying of individual and all campers within our database. Within are four functions:
+
+- **signUpCamper():** This will prompt the user to input a name, age, gender, and address. 
+  - If any are incorrectly inputted, the user will be prompted to try again, ensuring that they are able of creating a camper with input mistakes. 
+  - Once all four attributes are assigned, the user will be displayed the camper, and asked if they would like to continue creation. 
+  - If yes, then the camper will be created and added to the "allCamper" list in summerCamp. 
+  - If not, then the user will be prompted if they would like to try again. If yes, the process will repeat, if not, will exit to the main menu.
+
+
+- **withdrawCamper():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to main menu. 
+  - If the camper has made payments, (balance < 1000) return to main menu, else the camper in question will be displayed with all detail.
+  - The user will be prompted if they would like to continue with deletion. If yes, the camper is removed from all lists in summerCamp, else return to main menu.
+
+
+- **printCamper():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to main menu. 
+ It will then print all relevant data attached to the camper.
+
+
+- **printAllCampers():** This will print ALL campers in summerCamp. It will only display the campers name, and if applicable, the name of the camper's partner. 
+ It will also count the composition of males/females and total number of campers
+
+#### financialCommands.py
+This is the file where we can view a camper's balance, process payments and process refunds. There are three central functions within this file:
+
+- **viewBalance():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to main menu.
+ It will then print the balance of the current camper.
+
+
+- **processPayment():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to main menu.
+   - If the camper's balance is equal to 1000, print that no payments were made, then return to main menu.
+   - Else, prompt the user for how much they would like to pay. If the payment is greater than 1000, automatically set balance to 0.
+   - Else, set balance to the current balance minus their input. Then print balance and return to main menu.
+
+
+- **processRefund():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to main menu.
+  - If the camper's balance is equal to zero, print that the balance is fully paid, then return to main menu.
+  - Else, if the user was never sent an acceptance letter, prompt that a full refund it in order. 
+  - Else, if the user was sent an acceptance letter, they will recieve a percentage based on the time difference:
+    - 90% if within three weeks of notice,
+    - 45% if within six weeks of notice,
+    - None if greater than six weeks
+  - Prompt, and assign if yes or exit if no.
+
+#### sessionsCommands.py
+
+- **viewSessions():** This will print all campers within every session, as well as showing gender composition and total amount of campers.
+
+
+- **viewBunkhouses():** This will prompt the user to select a session. This will print all bunkhouses within that session, along with campers within every bunkhouse, 
+ as well as showing gender composition and total amount of campers.
+
+- **viewTribes():** This will prompt the user to select a session. This will print all tribes within that session, along with campers within every tribe, 
+ as well as showing gender composition and total amount of campers.
+
+### Camper Sub-Menu
+
+#### applicationCommands.py
+This is the file for managing camper applications, such as the ability to view, accept, or reject any application. Within it holds three functions:
+
+- **viewCamperApplication():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+ It will then print the status of the camper's application, then return to camper menu.
+
+
+- **acceptCamperApplication():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+  - If the camper has already been accepted, will print status and return to camper menu.
+  - If the camper has already been rejected, will print status and return to camper menu.
+  - If the camper hasn't selected a session they'd wish to join, return to camper menu.
+  - If the camper is applying less than two months before their desired session, return to camper menu.
+  - If the camper is applying more than eight months before their desired session, return to camper menu.
+  - If the camper has an unpaid balance, return to camper menu.
+ 
+  FINALLY, we will prompt whether the user will be accepted. If yes, remove from temporary session list and assign to actual session list.
+
+
+- **rejectCamperApplication():** This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
+  We will prompt whether the user will be accepted. If yes, remove from temporary session list and assign to actual session list.
+#### assignmentCommands.py
+
+#### firstDayCommands.py
+
+### Debug Sub-Menu
+
+#### automationCommands.py
+
+#### debugCommands.py
+
+#### populationCommands.py
+
+#### timeCommands.py
+
+##Objects
+
+### camp.py
+
+### camper.py
+
+### materials.py
+
+### values.py

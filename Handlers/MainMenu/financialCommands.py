@@ -1,6 +1,6 @@
 from Handlers.dataHandler import summerCamp
 
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 
 def viewBalance():
     clearScreen()
@@ -14,7 +14,7 @@ def viewBalance():
         return
 
     clearScreen()
-    printCamperGUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
+    printCamperUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     mainMenu()
 
@@ -37,7 +37,7 @@ def processPayment():
     while True:
         clearScreen()
 
-        printCamperGUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="balance", topBracket=True, bottomBracket=True)
 
         try:
             amount = float(showPrompt("What size payment would you like to make?", prompt="($0 is minimum balance!)", bottomBracket=True))
@@ -47,7 +47,7 @@ def processPayment():
 
         clearScreen()
         showMessage("Old balance:", topBracket=True, bottomBracket=True)
-        printCamperGUI(camper, attribute="balance")
+        printCamperUI(camper, attribute="balance")
 
         amount = camper.getBalance() - amount
 
@@ -59,7 +59,7 @@ def processPayment():
 
 
     showMessage("New balance:",topBracket=True, bottomBracket=True)
-    printCamperGUI(camper, attribute="balance")
+    printCamperUI(camper, attribute="balance")
 
     showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     mainMenu()

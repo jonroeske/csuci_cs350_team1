@@ -1,6 +1,6 @@
 from Handlers.dataHandler import summerCamp
 
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 
 # TODO - DEBUGGING
 def viewSessions():
@@ -17,7 +17,7 @@ def viewSessions():
 
         for camper in summerCamp.getJuneCampers():
             if isinstance(camper, Camper):
-                printCamperGUI(camper, simple=True)
+                printCamperUI(camper, simple=True)
 
         print(f'   July:')
         print(f'    Amount: {sum(elem != "" for elem in summerCamp.getJulyCampers())}')
@@ -27,7 +27,7 @@ def viewSessions():
         for camper in summerCamp.getJulyCampers():
             if isinstance(camper, Camper):
                 if isinstance(camper, Camper):
-                    printCamperGUI(camper, simple=True)
+                    printCamperUI(camper, simple=True)
 
         print(f'   July:')
         print(f'    Amount: {sum(elem != "" for elem in summerCamp.getAugustCampers())}')
@@ -36,7 +36,7 @@ def viewSessions():
 
         for camper in summerCamp.getAugustCampers():
             if isinstance(camper, Camper):
-                printCamperGUI(camper, simple=True)
+                printCamperUI(camper, simple=True)
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         mainMenu()
@@ -79,7 +79,7 @@ def viewBunkhouses():
             print(f'   Amount: {sum(x != "" for x in bunkhouse)}')
 
             for camper in bunkhouse:
-                printCamperGUI(camper, simple=True)
+                printCamperUI(camper, simple=True)
             bunkhouseNumber += 1
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
@@ -123,7 +123,7 @@ def viewTribes():
             print(f'   Amount: {sum(x != "" for x in bunkhouse)}')
 
             for camper in bunkhouse:
-                printCamperGUI(camper, simple=True)
+                printCamperUI(camper, simple=True)
             bunkhouseNumber += 1
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)

@@ -1,5 +1,5 @@
 from Handlers.dataHandler import summerCamp
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 
 def assignCamperToSession():
     clearScreen()
@@ -14,7 +14,7 @@ def assignCamperToSession():
 
     elif camper.getSession() is not False and camper.getAppStatus() == 1:
         showMessage("This camper has already been accepted!", bottomBracket=True)
-        printCamperGUI(camper, attribute="applicationStatus", bottomBracket=True)
+        printCamperUI(camper, attribute="applicationStatus", bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         camperSubMenu()
         return
@@ -51,7 +51,7 @@ def assignCamperToSession():
     camper.setSession(int(location))
     summerCamp.updateCamper(camper)
 
-    printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
+    printCamperUI(camper, attribute="session", topBracket=True, bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     camperSubMenu()
 
@@ -67,21 +67,21 @@ def assignCamperToBunkhouse():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
     elif camper.getAppStatus() != 1:
-        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
         showMessage('Camper must be accepted!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return
     elif camper.getSession() is False:
-        printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="session", topBracket=True, bottomBracket=True)
         showMessage('Camper must be assigned to a session!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return
     elif camper.getCheckedIn() is False:
-        printCamperGUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
         showMessage('Camper must be be checked in before assignment!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
@@ -89,7 +89,7 @@ def assignCamperToBunkhouse():
         return
     elif camper.getBunkhouse() is not False:
         while True:
-            printCamperGUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
+            printCamperUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
             confirmation = showPrompt("Camper already has a bunkhouse. Would you like to reassign?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
@@ -159,7 +159,7 @@ def assignCamperToBunkhouse():
 
     summerCamp.updateCamper(camper)
 
-    printCamperGUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
+    printCamperUI(camper, attribute="bunkhouse", topBracket=True, bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     camperSubMenu()
 
@@ -175,21 +175,21 @@ def assignCamperToTribe():
         showMessage("That camper doesn't exists!", bottomBracket=True)
         return
     elif camper.getAppStatus() != 1:
-        printCamperGUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="applicationStatus", topBracket=True, bottomBracket=True)
         showMessage('Camper must be accepted!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return
     elif camper.getSession() is False:
-        printCamperGUI(camper, attribute="session", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="session", topBracket=True, bottomBracket=True)
         showMessage('Camper must be assigned to a session!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
         camperSubMenu()
         return
     elif camper.getCheckedIn() is False:
-        printCamperGUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
+        printCamperUI(camper, attribute="checkedIn", topBracket=True, bottomBracket=True)
         showMessage('Camper must be be checked in before assignment!')
 
         showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
@@ -197,7 +197,7 @@ def assignCamperToTribe():
         return
     elif camper.getTribe() is not False:
         while True:
-            printCamperGUI(camper, attribute="tribe", topBracket=True, bottomBracket=True)
+            printCamperUI(camper, attribute="tribe", topBracket=True, bottomBracket=True)
             confirmation = showPrompt("Camper already has a tribe. Would you like to reassign?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
 
@@ -255,7 +255,7 @@ def assignCamperToTribe():
 
     summerCamp.updateCamper(camper)
 
-    printCamperGUI(camper, attribute="tribe", topBracket=True, bottomBracket=True)
+    printCamperUI(camper, attribute="tribe", topBracket=True, bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)
     camperSubMenu()
 
@@ -272,7 +272,7 @@ def assignPairRequest():
         return
     elif camper.getHasPartner() is not False:
         while True:
-            printCamperGUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
+            printCamperUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
             showMessage('Camper already has a partner!')
 
             confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
@@ -309,7 +309,7 @@ def assignPairRequest():
         return
     elif partner.getHasPartner() is not False:
         while True:
-            printCamperGUI(partner, attribute="hasPartner", topBracket=True, bottomBracket=True)
+            printCamperUI(partner, attribute="hasPartner", topBracket=True, bottomBracket=True)
             showMessage('Camper already has a partner!')
 
             confirmation = showPrompt("Camper already has a partner! Would you like to reassign?",
@@ -345,8 +345,8 @@ def assignPairRequest():
     summerCamp.updateCamper(camper)
     summerCamp.updateCamper(partner)
 
-    printCamperGUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
-    printCamperGUI(partner, attribute="hasPartner", bottomBracket=True)
+    printCamperUI(camper, attribute="hasPartner", topBracket=True, bottomBracket=True)
+    printCamperUI(partner, attribute="hasPartner", bottomBracket=True)
 
     showMessage("Partner partner successful!", bottomBracket=True)
     showPrompt("Press 'Enter' to Return!", bottomBracket=True)

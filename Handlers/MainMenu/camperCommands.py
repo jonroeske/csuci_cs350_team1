@@ -1,6 +1,6 @@
 from Handlers.dataHandler import summerCamp
 
-from Handlers.guiHandler import *
+from Handlers.uiHandler import *
 
 def signUpCamper():
     if not any(elem == "" for elem in summerCamp.getAllCampers()):
@@ -47,7 +47,7 @@ def signUpCamper():
     while True:
         clearScreen()
 
-        printCamperGUI(newCamper, camperCreation= True, topBracket=True, bottomBracket=True)
+        printCamperUI(newCamper, camperCreation= True, topBracket=True, bottomBracket=True)
         confirmation = showPrompt("Is this information correct?", prompt= '"Y" for Yes, "N" for No', bottomBracket=True)
 
         if confirmation == 'Y':
@@ -97,7 +97,7 @@ def withdrawCamper():
 
     while True:
         clearScreen()
-        printCamperGUI(camper, detailed=True, topBracket=True, bottomBracket=True)
+        printCamperUI(camper, detailed=True, topBracket=True, bottomBracket=True)
 
         confirmation = showPrompt("Are you sure you want to withdraw this camper?",
                                       prompt='"Y" for Yes, "N" for No', bottomBracket=True)
@@ -141,7 +141,7 @@ def printCamper():
 
     else:
         clearScreen()
-        printCamperGUI(camper, detailed=True, topBracket=True, bottomBracket=True)
+        printCamperUI(camper, detailed=True, topBracket=True, bottomBracket=True)
         showPrompt("Press 'Enter' to Return!", bottomBracket=True)
         mainMenu()
 
@@ -163,7 +163,7 @@ def printAllCampers():
 
     for camper in summerCamp.getAllCampers():
         if isinstance(camper, Camper):
-            printCamperGUI(camper, simple=True)
+            printCamperUI(camper, simple=True)
 
     showPrompt("Press 'Enter' to Return!", topBracket=True, bottomBracket=True)
     mainMenu()

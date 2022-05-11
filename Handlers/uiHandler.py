@@ -6,6 +6,7 @@ from Objects.camper import *
 
 versionNumber = "Build May082022"
 
+
 def mainMenu(**kwargs):
     if "clearScreen" not in kwargs or kwargs["clearScreen"] is True:
         clearScreen()
@@ -167,7 +168,7 @@ def showPrompt(message, **kwargs):
     return confirm
 
 
-def printCamperGUI(camper, **kwargs):
+def printCamperUI(camper, **kwargs):
     if not isinstance(camper, Camper):
         return
 
@@ -193,20 +194,40 @@ def printCamperGUI(camper, **kwargs):
                         print(Fore.GREEN + '  Application Status: Accepted' + Fore.LIGHTGREEN_EX)
                     case 2:
                         print(Fore.LIGHTRED_EX + '  Application Status: Rejected' + Fore.LIGHTGREEN_EX)
-            case "hasPartner":
-                print('  Partner:  ' + camper.getPartner().getName())
-            case "balance":
-                print('  Balance: $' + str(camper.getBalance()))
-            case "bunkhouse":
-                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
+
             case "appNotice":
                 if camper.getAppNoticeIsSent() is True:
                     print('  Date Sent:  ' + datetime.strftime(camper.getDateAppNoticeSent(), "%m/%d/%Y"))
                 elif camper.getDateAppNoticeSent() is False:
                     print('  Date Sent:  N/A')
 
+            case "balance":
+                print('  Balance: $' + str(camper.getBalance()))
+
+            case "bunkhouse":
+                print('  Bunkhouse:  ' + str(camper.getBunkhouse()+1))
+
             case "checkedIn":
                 print('  Checked In: ' + str(camper.getCheckedIn()))
+
+            case "hasPartner":
+                print('  Partner:  ' + camper.getPartner().getName())
+
+            case "materials":
+                materials = camper.getMaterials()
+                if isinstance(materials, Materials):
+                    print('  Form Status:')
+                    print('   Medical Form:       ' + str(materials.getMedical()))
+                    print('   Legal Release Form: ' + str(materials.getLegal()))
+                    print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
+                    print('   Helmet:             ' + str(materials.getHelmet()))
+                    print('   Boots:              ' + str(materials.getBoots()))
+                    print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
+                    print('   Water Bottle:       ' + str(materials.getWaterBottle()))
+                    print('   Sunscreen:          ' + str(materials.getSunscreen()))
+                    print('   Bug Spray:          ' + str(materials.getBugSpray()))
+                else:
+                    print('  Form Status: N/A')
 
             case "session":
                 if camper.getSession() is not False:
@@ -228,24 +249,9 @@ def printCamperGUI(camper, **kwargs):
                         print('  July Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
                     case 2:
                         print('  August Session: ' + datetime.strftime(Objects.values.JUNE_SESSION_DATE, "%m/%d/%Y"))
+
             case "tribe":
                 print('  Tribe:   ' + str(camper.getTribe()+1))
-            case "materials":
-                materials = camper.getMaterials()
-                if isinstance(materials, Materials):
-                    print('  Form Status:')
-                    print('   Medical Form:       ' + str(materials.getMedical()))
-                    print('   Legal Release Form: ' + str(materials.getLegal()))
-                    print('   Emergency Contacts: ' + str(materials.getEmergencyContacts()))
-                    print('   Helmet:             ' + str(materials.getHelmet()))
-                    print('   Boots:              ' + str(materials.getBoots()))
-                    print('   Sleeping Bag:       ' + str(materials.getSleepingBag()))
-                    print('   Water Bottle:       ' + str(materials.getWaterBottle()))
-                    print('   Sunscreen:          ' + str(materials.getSunscreen()))
-                    print('   Bug Spray:          ' + str(materials.getBugSpray()))
-                else:
-                    print('  Form Status: N/A')
-
 
     elif "simple" in kwargs and kwargs["simple"] is True:
         print('    Name:     ' + camper.getName())

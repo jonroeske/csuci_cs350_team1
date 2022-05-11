@@ -1,5 +1,5 @@
 from Handlers.dataHandler import summerCamp
-from Handlers.guiHandler import mainMenu, camperSubMenu, debugSubMenu, clearScreen
+from Handlers.uiHandler import mainMenu, camperSubMenu, debugSubMenu, clearScreen
 
 def databaseView(runtime):
     clearScreen()
