@@ -17,9 +17,12 @@
 
 ### values.py
 
-
+***
 
 ## Handlers
+
+***
+
 #### dataHandler.py
 This is the file we use for managing the persistent data of our application. Within it are two functions with the following purposes:
 
@@ -31,6 +34,8 @@ This is the file we use for managing the persistent data of our application. Wit
 
 - **shutDown():** 
  >This will load data from our summerCamp Camp object into the four files within our database.
+
+***
 
 #### uiHandler.py
 This is the file we use for managing the UI of our application. Within it are nine functions with the following purposes:
@@ -126,8 +131,12 @@ This is the file we use for managing the UI of our application. Within it are ni
  >     - *Bunkhouse* (If camper has bunkhouse)
  >     - *Tribe* (If camper has Tribe)
 
+***
+
 ### Main Menu
 #### The Main Menu of our program, which has access to several categories of commands, as well as access to our two sub menus.
+
+***
 
 #### camperCommands.py
 This is the file we use for creation, deletion, and displaying of individual and all campers within our database. Within are four functions:
@@ -155,6 +164,8 @@ This is the file we use for creation, deletion, and displaying of individual and
  >This will print ALL campers in summerCamp. It will only display the campers name, and if applicable, the name of the camper's partner. 
  >It will also count the composition of males/females and total number of campers
 
+***
+
 #### financialCommands.py
 This is the file where we can view a camper's balance, process payments and process refunds. There are three central functions within this file:
 
@@ -180,6 +191,8 @@ This is the file where we can view a camper's balance, process payments and proc
  >  - None if greater than six weeks
  >- Prompt, and assign if yes or exit if no.
 
+***
+
 #### sessionsCommands.py
 
 - **viewSessions():**
@@ -194,8 +207,12 @@ This is the file where we can view a camper's balance, process payments and proc
  >This will prompt the user to select a session. This will print all tribes within that session, along with campers within every tribe, 
  >as well as showing gender composition and total amount of campers.
 
+***
+
 ### Camper Sub-Menu
 #### This sub menu will allow us to further manipulate our campers, their assignment, and their status.
+
+***
 
 #### applicationCommands.py
 This is the file for managing camper applications, such as the ability to view, accept, or reject any application. Within it holds three functions:
@@ -221,6 +238,8 @@ This is the file for managing camper applications, such as the ability to view, 
  >This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
  >We will prompt whether the user will be rejected. If yes, remove from temporary session list. Since the camper is rejected, they will no longer be able to be accepted again.
  >The camper must be recreated . 
+
+***
 
 #### assignmentCommands.py
 This is the file that allows for the assignment of a camper to a session, bunkhouse, and tribe. This file also offers the ability to process a pair request between two campers. There are four distinct functions:
@@ -263,6 +282,8 @@ This is the file that allows for the assignment of a camper to a session, bunkho
 >
  > We will then set the users tribe to the tribe, then add the user to the session's tribe list in summerCamp.
 
+***
+
 #### firstDayCommands.py
 This file allows us to view the acceptance notice date of a camper, to allow them to fill out required forms, and to check them in. It has three functions:
 
@@ -301,11 +322,17 @@ This file allows us to view the acceptance notice date of a camper, to allow the
 ### Debug Sub-Menu
 #### This menu is used for testing and debugging primarily. In a real clerk program, this section would not be included.
 
+***
+
 #### automationCommands.py
 This file was to be used to automatically assign campers to sessions, bunkhouses, and tribes. Due to time constraints, as well as difficult algorithms to create, it was scrapped in final release.
 
+***
+
 #### debugCommands.py
 This file is used to print debug information regarding the lists located in summerCamp. It is pretty self-explanatory.
+
+***
 
 #### populationCommands.py
 This file is used to edit the population of the different lists stored within summerCamp. It has five distinct files:
@@ -336,6 +363,8 @@ This file is used to edit the population of the different lists stored within su
  >This goes through every session, (June, July, August) and every camper encountered, they will have their tribe set to False
  > They will then be updated.
  > Finally, all tribes will be reinitialized
+
+***
 
 #### timeCommands.py
 This file is used to manipulate time, which is an important aspect when it comes to camper applications and refunds. It has two functions:
