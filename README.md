@@ -1,6 +1,6 @@
-# CSUCI COMP-350, Software Engineering 
-## Team One, Spring 2022
+# CSUCI, COMP-350 Software Engineering
 ## Developers: Aaron Urrea, Jon Roeske, Zachary Drake, Paul Kime & Connor Moore
+### Team One, Spring 2022
 ## Description:
 ### Todo
 
@@ -10,17 +10,164 @@
 ## Objects
 
 ### camp.py
+This file contains our Camp object, an object which has five attributes: allCampers, juneCampers, julyCampers, augustCampers, and tempCampers.
+
+ **selfCampers represents every single camper within our camp**
+>- **self.allCampers:** A list with length equal to 216. (Max campers in a camp)
+ 
+ 
+ **juneCampers represents the June session.**
+ The first list containing every camper in the session; 
+ The second list containing every bunkhouse, and every camper in each bunkhouse;
+ The third list containing every tribe, and every camper in each tribe.
+>- **self.juneCampers:** A list which contains three lists, known respectively as allJuneCampers, allJuneBunkhouses, and allJuneTribes
+>  - **self.juneCampers[0]:** A list with length equal to 72. (Max amount of campers in a session)
+>  - **self.juneCampers[1]:** A list of 6 lists, (Max bunkhouses) each with length equal to 12. (Max campers in bunkhouse)
+>  - **self.juneCampers[2]:** A list of 6 lists, (Max tribes) each with length equal to 12. (Max campers in tribe)
+
+ **julyCampers represents the July session.**
+ The first list containing every camper in the session; 
+ The second list containing every bunkhouse, and every camper in each bunkhouse;
+ The third list containing every tribe, and every camper in each tribe.
+>- **self.julyCampers:** A list which contains three lists, known respectively as allJulyCampers, allJulyBunkhouses, and allJulyTribes
+>  - **self.julyCampers[0]:** A list with length equal to 72. (Max amount of campers in a session)
+>  - **self.julyCampers[1]:** A list of 6 lists, (Max bunkhouses) each with length equal to 12. (Max campers in bunkhouse)
+>  - **self.julyCampers[2]:** A list of 6 lists, (Max tribes) each with length equal to 12. (Max campers in tribe)
+>
+> 
+ **augustCampers represents the August session.** 
+ The first list containing every camper in the session; 
+ The second list containing every bunkhouse, and every camper in each bunkhouse;
+ The third list containing every tribe, and every camper in each tribe.
+>- **self.augustCampers:** A list which contains three lists, known respectively as allAugustCampers, allAugustBunkhouses, and allAugustTribes
+>  - **self.augustCampers[0]:** A list with length equal to 72. (Max amount of campers in a session)
+>  - **self.augustCampers[1]:** A list of 6 lists, (Max bunkhouses) each with length equal to 12. (Max campers in bunkhouse)
+>  - **self.augustCampers[2]:** A list of 6 lists, (Max tribes) each with length equal to 12. (Max campers in tribe)
+
+ **tempCampers represents a temporary list of all three sessions**
+ Each list represents a different session. When a camper has been assigned a sesison, but has not been accepted, they will be added to one of these three lists.
+ When a camper is finally accepted, they will be removed from this list and added to the above lists.
+>- **self.tempCampers:** A list which contains three lists, known respectively as tempJuneCampers, tempJulyCampers, and tempAugustCampers
+>  - **self.tempCampers[0]:** A list with length equal to 72. (Max amount of campers in a session)
+>  - **self.tempCampers[1]:** A list with length equal to 72. (Max amount of campers in a session)
+>  - **self.tempCampers[2]:** A list with length equal to 72. (Max amount of campers in a session)
+
+***
 
 ### camper.py
+This file contains our Camper object, which contains the following attributes:
+
+> **self.name:** The camper's name; Type: String
+> 
+> **self.age:** The camper's age; Type: Int
+> 
+> **self.gender:** The camper's gender; Type: String
+> 
+> **self.address:** The camper's address; Type: String
+> 
+> **self.hasPartner:** Identifier if the camper has a partner; Type: Bool
+> 
+> **self.partner:** The camper's partner; Type: Camper
+> 
+> **self.session:** The camper's assigned session; Type: Int
+> 
+> **self.bunkhouse:** The camper's assigned bunkhouse; Type: Int
+> 
+> **self.tribe:** The camper's assigned tribe; Type: Int
+> 
+> **self.checkedIn:** Identifier if the camper has a partner; Type: Bool
+> 
+> **self.appNoticeIsSent:** Identifier if the camper has had an acceptance notice sent; Type: Bool
+> 
+> **self.dateAppNoticeSent:** The date the camper's acceptance notice was sent; Type: datetime.Date
+> 
+> **self.materials:** The various materials of the camper; Type: Materials
+
+*** 
 
 ### materials.py
+This file contains our Materials object, a sub-object for the Camper object. Materials contains the following attributes:
+
+> 
+> **self.medical:** Identifier if the camper has completed medical forms; Type: Bool
+>  
+> **self.legal:** Identifier if the camper has completed legal forms; Type: Bool
+>  
+> **self.emergencyContacts:** Identifier if the camper has emergency contacts; Type: Bool
+>  
+> **self.helmet:** Identifier if the camper has a helmet; Type: Bool
+>  
+> **self.boots:** Identifier if the camper has boots; Type: Bool
+>  
+> **self.sleepingBag:** Identifier if the camper has a sleeping bag; Type: Bool
+>  
+> **self.waterBottle:** Identifier if the camper has a water bottle; Type: Bool
+>  
+> **self.sunscreen:** Identifier if the camper has sunscreen; Type: Bool
+>  
+> **self.bugSpray:** Identifier if the camper has a bug spray; Type: Bool
+
+***
 
 ### values.py
+This is where we hold various dictionaries and static values to be used across the program as a whole:
+
+ **STATUS_CODES is a dictionary of various status codes:**
+> **SUCCESS**
+> 
+> **NO_CAMPER**
+> 
+> **NO_CAMPER_SESSION**
+> 
+> **NO_CAMPER_BUNKHOUSE**
+> 
+> **NO_CAMPER_TRIBE**
+> 
+> **NO_SESSION**
+> 
+> **NO_BUNKHOUSE**
+> 
+> **NO_TRIBE**
+> 
+> **NO_CAPACITY**
+> 
+> **DUPLICATE**
+> 
+> **ARGUMENT_ERROR**
+
+ **GLOBAL_VALUES is a dictionary of various values:**
+> **maxCampersTotal**
+> 
+> **maxCampersInSession**
+> 
+> **maxGendersInSession**
+> 
+> **maxBunkhouses**
+> 
+> **maxCampersinBunkhouse**
+> 
+> **maxTribes**
+> 
+> **maxCampersInTribes**
+
+ **TODAYS_DATE represents a date, which can be manipulated to represent a different point in time**
+
+ **JUNE_SESSION_DATE represents a static date: June 6, 2022**
+
+ **JULY_SESSION_DATE represents a static date: July 4, 2022**
+
+ **AUGUST_SESSION_DATE represents a static date: August 8, 2022**
+
+ There are also three different sort keys that we use elsewhere in the project:
+> **sortByName(camper):** Returns "", else camper.name 
+> 
+> **sortByAge(camper):** Returns "", else camper.age
+> 
+> **sortByAssignmentRequest(camper):** Returns "", else camper.getHasPartner
 
 ***
 
 ## Handlers
-
 
 #### dataHandler.py
 This is the file we use for managing the persistent data of our application. Within it are two functions with the following purposes:
