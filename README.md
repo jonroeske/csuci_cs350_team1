@@ -452,7 +452,8 @@ This file allows us to view the acceptance notice date of a camper, to allow the
 - **fillOutForms():** 
  >This will prompt the user for a name, at which if "allCampers" contains the camper, then the camper will be selected, else return to camper menu. 
  >It will then create a materials object for the camper object, if one does not already exist.
- >It will then prompt yes or no questions for the following materials:  - Medical Forms
+ >It will then prompt yes or no questions for the following materials:  
+ > - Medical Forms
  > - Legal Forms
  > - Emergency Contacts
  > - Helmet

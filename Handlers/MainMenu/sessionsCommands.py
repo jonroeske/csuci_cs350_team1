@@ -29,7 +29,7 @@ def viewSessions():
                 if isinstance(camper, Camper):
                     printCamperUI(camper, simple=True)
 
-        print(f'   July:')
+        print(f'   August:')
         print(f'    Amount: {sum(elem != "" for elem in summerCamp.getAugustCampers())}')
         genders = summerCamp.countGender(session=2)
         print(f'    Composition: {genders[0]} Male(s), {genders[1]} Female(s)')
