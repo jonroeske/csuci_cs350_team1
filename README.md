@@ -7,7 +7,7 @@
 ### Dependencies:
 #### Faker, Colorama
 
-##Objects
+## Objects
 
 ### camp.py
 
@@ -115,7 +115,7 @@ This is the file we use for managing the UI of our application. Within it are ni
       - *Tribe* (If camper has Tribe)
 
 ### Main Menu
-####The Main Menu of our program, which has access to several categories of commands, as well as access to our two sub menus.
+#### The Main Menu of our program, which has access to several categories of commands, as well as access to our two sub menus.
 
 #### camperCommands.py
 This is the file we use for creation, deletion, and displaying of individual and all campers within our database. Within are four functions:
@@ -173,7 +173,7 @@ This is the file where we can view a camper's balance, process payments and proc
  as well as showing gender composition and total amount of campers.
 
 ### Camper Sub-Menu
-####This sub menu will allow us to further manipulate our campers, their assignment, and their status.
+#### This sub menu will allow us to further manipulate our campers, their assignment, and their status.
 
 #### applicationCommands.py
 This is the file for managing camper applications, such as the ability to view, accept, or reject any application. Within it holds three functions:
@@ -268,7 +268,7 @@ This file allows us to view the acceptance notice date of a camper, to allow the
   After all that, set the camper to checked in, then return to menu.
 
 ### Debug Sub-Menu
-####This menu is used for testing and debugging primarily. In a real clerk program, this section would not be included.
+#### This menu is used for testing and debugging primarily. In a real clerk program, this section would not be included.
 
 #### automationCommands.py
 This file was to be used to automatically assign campers to sessions, bunkhouses, and tribes. Due to time constraints, as well as difficult algorithms to create, it was scrapped in final release.
